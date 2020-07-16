@@ -6,10 +6,10 @@ from collections import namedtuple
 from copy import deepcopy
 import logging
 
-from elev_sim.conf.elevator_conf import ELEV_CONFIG
+from elev_sim.conf.elevator_conf import ELEV_CONFIG, ELEV_INFEASIBLE
 from elev_sim.elevator.simple_data_structure import Mission
 from elev_sim.elevator.event import Event
-from elev_sim.elevator.logger import Customer_logger
+from elev_sim.elevator.logger import Queue_logger
 
 
 def cid_generator():
@@ -43,9 +43,10 @@ class Customer:
 
 
 class Queue:
-    def __init__(self, env, floor, direction, EVENT:Event):
+    def __init__(self, env, floor, floorIndex, direction, EVENT:Event, queue_logger:Queue_logger=None):
         self.env = env
         self.floor = floor
+        self.floorIndex = floorIndex
         self.direction = direction
         self.queue_array = []
         self.arrival_event = self.env.event()
@@ -55,6 +56,7 @@ class Queue:
         self.outflow_proc = self.env.process(self.outflow())
 
         self.EVENT = EVENT
+        self.queue_logger = queue_logger
 
     def inflow(self):
         while True:
@@ -76,35 +78,41 @@ class Queue:
             logging.info('[INFLOW] {} people waiting on {} floor'.format(
                 len(self.queue_array), self.floor))
 
+            if(self.queue_logger != None):
+                self.queue_logger.log_inflow(len(self.queue_array), self.floorIndex, self.direction, float(self.env.now))
+
     def outflow(self):
         while True:
-
             # elevator arrives
             availible, elevIndex = yield self.EVENT.ELEV_ARRIVAL[self.direction][self.floor]
 
             riders = []
 
+            customerIndex = 0
             while (availible > 0) and (len(self.queue_array) > 0):
+                customer = self.queue_array[customerIndex]
 
-                customer = self.queue_array.pop()
-                customer.boarding_time = float(self.env.now)
-
-                riders.append(customer)
-
-                availible -= 1
+                if(customer.destination not in ELEV_INFEASIBLE[elevIndex]):
+                    customer.boarding_time = float(self.env.now)
+                    riders.append(customer)
+                    self.queue_array.pop(customerIndex)
+                    availible -= 1
+                else:
+                    customerIndex += 1
 
             # time the customers take to on board
             yield self.env.timeout(len(riders) * random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX))
             logging.info('[OUTFLOW] {} People Enters'.format(len(riders)))
-#             print('[OUTFLOW] {} People Enters'.format(len(riders)))
+            
+            if(self.queue_logger != None):
+                self.queue_logger.log_outflow(len(self.queue_array), self.floorIndex, self.direction, float(self.env.now))
 
             # customers on board
             self.EVENT.ELEV_LEAVE[elevIndex].succeed(value=riders)
             self.EVENT.ELEV_LEAVE[elevIndex] = self.env.event()
 
-
 class Floor:
-    def __init__(self, env, floor, direction, IAT, DD, cid_gen, EVENT:Event):
+    def __init__(self, env, floor, floorIndex, direction, IAT, DD, cid_gen, EVENT:Event, queue_logger:Queue_logger=None):
         self.env = env
         self.floor = floor
         self.direction = direction
@@ -114,7 +122,7 @@ class Floor:
         self.DD = DD if len(DD) == 1 else DD/DD.sum()
 
         # start process
-        self.queue = Queue(env, self.floor, self.direction, EVENT)
+        self.queue = Queue(env, self.floor, floorIndex, self.direction, EVENT, queue_logger=queue_logger)
         self.source_proc = env.process(self.Source(env))
         
         # global

@@ -5,9 +5,12 @@ class ELEV_CONFIG:
     WALKING_MIN = 1
     RANDOM_SEED = 50
     ELEV_CAPACITY = 20
+    VERSION = 3
 
-
-class ELEVLOG_CONFIG:
-    IDLE = 0
-    ARRIVE = 1
-    SERVE = 2
+ELEV_INFEASIBLE = {
+    "3001":[], 
+    "3002":[], 
+    "3003":[], 
+    "3004":[], 
+    "3005":[], 
+}

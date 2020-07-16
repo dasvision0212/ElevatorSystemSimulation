@@ -8,8 +8,6 @@ class IAT_Distribution:
 
     def __init__(self, path):
         self.df = pd.read_csv(path)
-        print(path)
-        print(self.df.head())
         self.df["Floor"] = self.df["Floor"].apply(lambda x: x.lstrip('0'))
 
     def getter(self, location, section, direction, floor):
@@ -18,11 +16,14 @@ class IAT_Distribution:
         temp = self.df[(self.df['Location'] == location) & (self.df['Section'] == section) &
                        (self.df['Direction'] == direction) & (self.df['Floor'] == floor)][['Distribution', 'Parameters']]
 
-        # return distribution name and parsed parameters
-        return {
-            'dist': getattr(st, temp['Distribution'].values[0]),
-            'params': self.params_parser(temp['Parameters'].values[0])
-        }
+        if(temp.shape[0] == 0):
+            return None
+        else:
+            # return distribution name and parsed parameters
+            return {
+                'dist': getattr(st, temp['Distribution'].values[0]),
+                'params': self.params_parser(temp['Parameters'].values[0])
+            }
 
     @staticmethod
     def params_parser(params_string):
