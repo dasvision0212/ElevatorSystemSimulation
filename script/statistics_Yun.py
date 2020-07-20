@@ -16,7 +16,7 @@ if(__name__ == "__main__"):
 
     Dist_InterArrival = '../data/BestFitDistribution.csv'
     timeSection = 2
-    
+
     # Variable
     Ratio_byFloor = {"北棟病床": '../data/FloorRatio_NHB.csv',
                      "研究大樓": '../data/FloorRatio_Research.csv',
@@ -29,15 +29,15 @@ if(__name__ == "__main__"):
         Statistic_df = []
         elevatorList = ELEVATOR_GROUP[location]
         floorList    = BUILDING_FLOOR[location]
-        for eleNum in range(1, len(elevatorList)):
-            for floorNum in [5, len(floorList)]: # !!! if you adjust the number of floor, you should simultaneously update IAT
-                df = []
+        for eleNum in range(1, 6):
+            meanStatistic_EleNum = []
+            for floorNum in [5, len(floorList)]:
                 for j in range(100):
+                    randomSeed = int(random.rand(1)*10000)
                     # Enviornment Variable
                     env = simpy.Environment()
                     cid_gen = cid_generator()
-                    randomSeed = int(random.rand(1)*10000)
-                    
+
                     # Global
                     customer_logger = Customer_logger(status=True)
                     elev_logger = Elev_logger(status=True)
@@ -49,28 +49,21 @@ if(__name__ == "__main__"):
                                           customer_logger=customer_logger, elev_logger=elev_logger, queue_logger=queue_logger)
 
                     result = customer_logger.df
-                    df.append({
-                        'location': location
-                        ,'floorNum': floorNum
-                        ,'version':3 
-                        ,'Elevator Amount': eleNum+1
-                        ,'TimeType':'waiting_time'
-                        ,'Time': result['waiting_time'].mean()})
-                    df.append({
-                        'location': location
-                        ,'floorNum': floorNum
-                        ,'version':3 
-                        ,'Elevator Amount': eleNum+1
-                        ,'TimeType':'journey_Time'
-                        ,'Time': result['journey_time'].mean()})
-                    
+                    meanStatistic_EleNum.append({
+                        'location': location, 
+                        'floorNum': floorNum, 'Elevator Amount': eleNum+1,
+                        'waiting_Time': result['waiting_time'].mean(),
+                        'journey_Time': result['journey_time'].mean()})
 
                     # used for animation
-                    # elev_logger.to_csv(r"../data/elevator_log.csv")
-                    # queue_logger.to_csv(r"../data/queue_log.csv")
+                    elev_logger.to_csv(r"../data/elevator_log.csv")
+                    queue_logger.to_csv(r"../data/queue_log.csv")
 
-                df = pd.DataFrame(df)
-                df.to_csv('tryData.csv', mode = 'a', header = False, index= False)
-        print('finish',locationI)
-
-
+            meanStatistic_EleNum = pd.DataFrame(meanStatistic_EleNum)
+            Statistic_df.append({
+                'location': location,
+                'elevator Amount': eleNum+1,
+                'waiting_Time': meanStatistic_EleNum['waiting_Time'].mean(), 
+                'journey_Time': meanStatistic_EleNum['journey_Time'].mean()})
+                
+        Statistic_df = pd.DataFrame(Statistic_df)

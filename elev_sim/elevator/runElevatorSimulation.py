@@ -9,7 +9,7 @@ from elev_sim.elevator.event import Event
 from elev_sim.elevator.elevator_ctrl import ElevatorController
 from elev_sim.elevator.IAT_Distribution import IAT_Distribution
 from elev_sim.elevator.logger import Customer_logger, Elev_logger, Queue_logger
-from elev_sim.conf.NTU_hospital_conf import ELEVATOR_GROUP
+from elev_sim.conf.NTUH_conf import ELEVATOR_GROUP
 
 import logging
 

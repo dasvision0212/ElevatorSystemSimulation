@@ -78,6 +78,8 @@ class StopList:
         self._list[direction][currentIndex] = StopList.ACTIVE
 
     def pushInner(self, elev, destination):
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!", destination)
+        print(self.index)
         currentIndex = self.index[elev.direction][destination]
 
         # illegal index

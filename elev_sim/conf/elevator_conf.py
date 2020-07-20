@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 class ELEV_CONFIG:
     ARRIVAL_MAX = 2
     ARRIVAL_MIN = 1    
@@ -7,10 +9,4 @@ class ELEV_CONFIG:
     ELEV_CAPACITY = 20
     VERSION = 3
 
-ELEV_INFEASIBLE = {
-    "3001":[], 
-    "3002":[], 
-    "3003":[], 
-    "3004":[], 
-    "3005":[], 
-}
+ELEV_INFEASIBLE = defaultdict(list)
