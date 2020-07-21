@@ -6,7 +6,8 @@ from collections import namedtuple
 from copy import deepcopy
 import logging
 
-from elev_sim.conf.elevator_conf import ELEV_CONFIG, ELEV_INFEASIBLE
+from elev_sim.conf.NTUH_conf import ELEV_INFEASIBLE
+from elev_sim.conf.elevator_conf import ELEV_CONFIG
 from elev_sim.elevator.simple_data_structure import Mission
 from elev_sim.elevator.event import Event
 from elev_sim.elevator.logger import Queue_logger

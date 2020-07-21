@@ -1,14 +1,14 @@
 from elev_sim.conf.log_conf import ELEVLOG_CONFIG
 from elev_sim.conf.animation_conf import posConfig, colConfig
-from elev_sim.animation.delay import (delay_by_interval, delay_by_time)
+from elev_sim.animation.env import Env
 
 
 class Queue:
     debug = 1
-    def __init__(self, now:list, canvas, posConfig, floorIndex, direction, log, name=None):
+    def __init__(self, env:Env, canvas, posConfig, floorIndex, direction, log, name=None):
         self.riderNum   = 0
 
-        self.now        = now
+        self.env        = env
         self.canvas     = canvas
         self.posConfig  = posConfig
         self.floorIndex = floorIndex
@@ -38,14 +38,19 @@ class Queue:
             self.update()
 
     def update(self):
+        if(not self.env.status):
+            self.canvas.after(self.env.delay_by_interval(1), self.update)
+            return
+
         if(self.logPtr > self.log.shape[0]-1):
             return
 
-        currentAction = self.log.iloc[self.logPtr] 
-        self.riderNum = int(currentAction["riderNumAfter"])
-        self.canvas.itemconfigure(self.customerLabel, text=str(self.riderNum))
-            
-        if self.logPtr < self.log.shape[0]-1: # there exists another action to take # ignore the latest log
-            nextAction = self.log.iloc[self.logPtr+1]
+        currentAction = self.log.iloc[self.logPtr]
+        while(currentAction["time"] <= self.env.now[0]):
+            self.riderNum = int(currentAction["riderNumAfter"])
+            self.canvas.itemconfigure(self.customerLabel, text=str(self.riderNum))        
+
             self.logPtr += 1
-            self.canvas.after(delay_by_time(nextAction["time"], self.now), self.update)        
+            currentAction = self.log.iloc[self.logPtr]
+
+        self.canvas.after(self.env.delay_by_interval(1), self.update) 

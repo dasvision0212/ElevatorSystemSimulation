@@ -30,7 +30,7 @@ if(__name__ == "__main__"):
         elevatorList = ELEVATOR_GROUP[location]
         floorList    = BUILDING_FLOOR[location]
         for eleNum in range(1, len(elevatorList)):
-            for floorNum in [5, len(floorList)]: # !!! if you adjust the number of floor, you should simultaneously update IAT
+            for floorNum in [len(floorList)]: # !!! if you adjust the number of floor, you should simultaneously update IAT
                 df = []
                 for j in range(100):
                     # Enviornment Variable
@@ -70,7 +70,7 @@ if(__name__ == "__main__"):
                     # queue_logger.to_csv(r"../data/queue_log.csv")
 
                 df = pd.DataFrame(df)
-                df.to_csv('tryData.csv', mode = 'a', header = False, index= False)
-        print('finish',locationI)
+                df.to_csv('../data/tryData.csv', mode = 'a', header = False, index= False)
+        print('finish', location)
 
 

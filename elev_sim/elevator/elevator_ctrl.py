@@ -4,18 +4,22 @@ import random
 from elev_sim.conf.elevator_conf import ELEV_CONFIG
 from elev_sim.elevator.elevator import Elevator, displacement
 from elev_sim.elevator.simple_data_structure import Mission
-from elev_sim.elevator.logger import (Customer_logger, Elev_logger)
+from elev_sim.elevator.logger import (Customer_logger, Elev_logger, StopList_logger)
 
 
 class ElevatorController:
-    def __init__(self, env, elevatorList, floorList, EVENT, customer_logger:Customer_logger = None, elev_logger:Elev_logger = None):
+    def __init__(self, env, elevatorList, floorList, EVENT, 
+                 customer_logger:Customer_logger = None, elev_logger:Elev_logger = None, stopList_logger:StopList_logger=None):
         self.env = env
         self.elevatorList = elevatorList
         self.elevators = dict()
         self.EVENT = EVENT
 
         for elevatorName in elevatorList:
-            self.elevators[elevatorName] = Elevator(env, elevatorName, floorList, self.EVENT, customer_logger=customer_logger, elev_logger=elev_logger)
+            self.elevators[elevatorName] = Elevator(env, elevatorName, floorList, self.EVENT, 
+                                                    customer_logger=customer_logger, 
+                                                    elev_logger=elev_logger, 
+                                                    stopList_logger=stopList_logger)
         self.env.process(self.assignCalls())
 
 

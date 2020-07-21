@@ -1,11 +1,15 @@
+import json
 import sys
+from collections import defaultdict
 sys.path.append('../')
 
-from elev_sim import Animation
+from elev_sim import Animation, ELEV_INFEASIBLE
 
-building_name = "北棟客梯"
-floorList = ['B4','B3','B1','1','2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
-# Elevator ID
-elevatorList = ['3001', "3002", "3003", "3004", "3005"]
+background = None
+with open("../data/log/background.json", 'r', encoding="utf-8") as file:
+    background = json.load(file)
 
-Animation(building_name, "../data/elevator_log.csv", "../data/queue_log.csv", elevatorList, floorList)
+background["elev_infeasible"] = defaultdict(list, background["elev_infeasible"])
+background["elev_infeasible"]["3006"] += ['1', "3"]
+Animation(background["buildingName"], "../data/log/elev_log.csv", "../data/log/queue_log.csv", "../data/log/stopList_log.csv", 
+          background["elevatorList"], background["floorList"], defaultdict(list, background["elev_infeasible"]))

@@ -1,14 +1,13 @@
 from elev_sim.conf.log_conf import ELEVLOG_CONFIG
 from elev_sim.conf.animation_conf import colConfig, DEFAULT_ANIMA_CONFIG
-from elev_sim.animation.delay import (delay_by_interval, delay_by_time)
-from elev_sim.animation.general import cal_floorNum
+from elev_sim.animation.env import Env
 from elev_sim.animation.elevator import Elevator
 from elev_sim.animation.queue import Queue
 
 
 class Building:
-    def __init__(self, now:list, canvas, posConfig, name, elev_log, queue_log, elevatorList, floorList):
-        self.now = now
+    def __init__(self, env:Env, canvas, posConfig, name, elev_log, queue_log, elevatorList, floorList):
+        self.env = env
         self.canvas = canvas
         self.posConfig = posConfig
         self.name = name
@@ -16,20 +15,19 @@ class Building:
         self.queue_log = queue_log
 
         # draw Elevator
-        self.elevators = {name:Elevator(self.now, self.canvas, self.posConfig, name, i, 
+        self.elevators = {name:Elevator(self.env, self.canvas, self.posConfig, name, i, 
                                         self.elev_log[self.elev_log["name"]==name], floorList) \
                                         for i, name in enumerate(elevatorList)}
 
         # draw queue
-        # self, now:list, canvas, posConfig, floorIndex, direction, log, name=None
         self.queues = {
-            1:[Queue(self.now, self.canvas, self.posConfig, floorIndex, 1, 
+            1:[Queue(self.env, self.canvas, self.posConfig, floorIndex, 1, 
                 self.queue_log[(self.queue_log["floorIndex"]==floorIndex) & (self.queue_log["direction"]==1)]) \
-                for floorIndex in range(cal_floorNum(floorList))], 
+                for floorIndex in range(len(floorList))], 
                 
-            -1:[Queue(self.now, self.canvas, self.posConfig, floorIndex, -1,  
+            -1:[Queue(self.env, self.canvas, self.posConfig, floorIndex, -1,  
                 self.queue_log[(self.queue_log["floorIndex"]==floorIndex) & (self.queue_log["direction"]==-1)]) \
-                for floorIndex in range(cal_floorNum(floorList))]
+                for floorIndex in range(len(floorList))]
         }
 
         # draw building
@@ -67,7 +65,7 @@ class Building:
                                      fill=colConfig.building, width=0)
         
         ## draw horizontal gap
-        floorNum = cal_floorNum(floorList)
+        floorNum = len(floorList)
         for i in range(floorNum-1):
             x1 = self.posConfig.building_left
             y1 = self.posConfig.building_top + self.posConfig.building_ceiling + \
@@ -90,6 +88,14 @@ class Building:
             y2 = self.posConfig.building_btm
             
             self.canvas.create_rectangle(x1, y1, x2, y2, fill=colConfig.building, width=0)
+        
+        ## draw floor label
+        for i, floorIndex in enumerate(floorList):
+            x = self.posConfig.building_left - posConfig.floor_label_space
+            y = self.posConfig.building_btm - self.posConfig.building_base - \
+                i * (self.posConfig.elev_height + self.posConfig.elev_gap_v) - \
+                self.posConfig.elev_height/2
+            self.canvas.create_text(x, y, text=floorIndex, fill=colConfig.building_floor_label)
 
         ## draw queue label
         self.canvas.create_rectangle(self.posConfig.queue_left [1], self.posConfig.building_top, 

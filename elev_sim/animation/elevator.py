@@ -1,14 +1,13 @@
 from elev_sim.conf.log_conf import ELEVLOG_CONFIG
 from elev_sim.conf.animation_conf import colConfig, DEFAULT_ANIMA_CONFIG
-from elev_sim.animation.delay import (delay_by_interval, delay_by_time)
-
+from elev_sim.animation.env import Env
 
 class Elevator:
     default_floor = 1
-    def __init__(self, now:list, canvas, posConfig, name, index, log, floorList):
+    def __init__(self, env:Env, canvas, posConfig, name, index, log, floorList):
         self.posConfig = posConfig
         self.log = log
-        self.now = now
+        self.env = env
 
         base_floor = int(floorList[0]) if not 'B' in floorList[0] else -int(floorList[0][1:]) + 1
         self.floorIndex = Elevator.default_floor-base_floor # 1st floort is not definitely on index 0, e.g. ["B1", "1"]
@@ -39,39 +38,41 @@ class Elevator:
             self.update()
         
     def up(self):
-        self.canvas.move(self.riderLabel, 0, -(self.posConfig.elev_gap_v + self.posConfig.elev_height)/DEFAULT_ANIMA_CONFIG.SMOOTH)
-        self.canvas.move(self.elev, 0, -(self.posConfig.elev_gap_v + self.posConfig.elev_height)/DEFAULT_ANIMA_CONFIG.SMOOTH)
+        self.canvas.move(self.riderLabel, 0, -(self.posConfig.elev_gap_v + self.posConfig.elev_height))
+        self.canvas.move(self.elev, 0, -(self.posConfig.elev_gap_v + self.posConfig.elev_height))
 #         self.coord1[1] -= (self.posConfig.elev_gap_v + self.posConfig.elev_height)/SMOOTH
 #         self.coord1[1] -= (self.posConfig.elev_gap_v + self.posConfig.elev_height)/SMOOTH
     
     def down(self):
-        self.canvas.move(self.riderLabel, 0, (self.posConfig.elev_gap_v + self.posConfig.elev_height)/DEFAULT_ANIMA_CONFIG.SMOOTH)
-        self.canvas.move(self.elev, 0, (self.posConfig.elev_gap_v + self.posConfig.elev_height)/DEFAULT_ANIMA_CONFIG.SMOOTH) 
+        self.canvas.move(self.riderLabel, 0, (self.posConfig.elev_gap_v + self.posConfig.elev_height))
+        self.canvas.move(self.elev, 0, (self.posConfig.elev_gap_v + self.posConfig.elev_height)) 
 #         self.coord1[1] += (self.posConfig.elev_gap_v + self.posConfig.elev_height)/SMOOTH
 #         self.coord1[1] += (self.posConfig.elev_gap_v + self.posConfig.elev_height)/SMOOTH
     
     def update(self):
+        if(not self.env.status):
+            self.canvas.after(self.env.delay_by_interval(1), self.update)
+            return
+        
         if(self.logPtr > self.log.shape[0]-1):
             return
 
         currentAction = self.log.iloc[self.logPtr]
-        if(currentAction["action"] == ELEVLOG_CONFIG.ARRIVE):
-            self.current_floor = currentAction["riderNumAfter"]
-        elif(currentAction["action"] == ELEVLOG_CONFIG.SERVE):
-            self.riderNum = int(currentAction["riderNumAfter"])
-            self.canvas.itemconfigure(self.riderLabel, text=str(self.riderNum))
+        while(currentAction["time"] <= self.env.now[0]):
+            if(currentAction["action"] == ELEVLOG_CONFIG.ARRIVE):
+                self.current_floor = currentAction["floor"]
+                if(currentAction["direction"] == 1):
+                    self.up()
+                elif(currentAction["direction"] == -1):
+                    self.down()
+                else:
+                    print(currentAction["direction"])
+                    raise Exception("[!] invalid direction")
 
-        if self.logPtr < self.log.shape[0]-1: # there exists another action to take # ignore the latest log
-            nextAction = self.log.iloc[self.logPtr+1]
-            if(nextAction["action"] == ELEVLOG_CONFIG.ARRIVE):
-                interval = (float)(nextAction["time"] - currentAction["time"])/3
-                for i in range(3):
-                    if(nextAction["direction"] == 1):
-                        self.canvas.after(delay_by_interval(interval), self.up)
-                    elif(nextAction["direction"] == -1):
-                        self.canvas.after(delay_by_interval(interval), self.down)
-                    else:
-                        print(nextAction["direction"])
-                        raise Exception("[!] invalid direction")
+            elif(currentAction["action"] == ELEVLOG_CONFIG.SERVE):
+                self.riderNum = int(currentAction["riderNumAfter"])
+                self.canvas.itemconfigure(self.riderLabel, text=str(self.riderNum))
+
             self.logPtr += 1
-            self.canvas.after(delay_by_time(nextAction["time"], self.now), self.update)
+            currentAction = self.log.iloc[self.logPtr]
+        self.canvas.after(self.env.delay_by_interval(1), self.update)

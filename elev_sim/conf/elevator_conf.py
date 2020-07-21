@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 class ELEV_CONFIG:
     ARRIVAL_MAX = 2
     ARRIVAL_MIN = 1    
@@ -8,5 +6,3 @@ class ELEV_CONFIG:
     RANDOM_SEED = 50
     ELEV_CAPACITY = 20
     VERSION = 3
-
-ELEV_INFEASIBLE = defaultdict(list)

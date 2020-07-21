@@ -1,5 +1,6 @@
 import pandas as pd
-from elev_sim.conf.log_conf import ELEVLOG_CONFIG, QUEUE_LOG_CONFIG
+from elev_sim.conf.log_conf import ELEVLOG_CONFIG, QUEUE_LOG_CONFIG, STOPLIST_LOG_CONFIG
+
 
 class Logger:
     def __init__(self, status=False):
@@ -104,3 +105,25 @@ class Queue_logger(Logger):
             "time"         : time
         })
     
+
+class StopList_logger(Logger):
+    def __init__(self, status):
+        super().__init__(status)
+
+    def log_active(self, elevIndex, direction, floorIndex, time):
+        self._log.append({
+            "elevIndex"    : elevIndex, 
+            "direction"    : direction, 
+            "floorIndex"        : floorIndex, 
+            'latterStatus' : STOPLIST_LOG_CONFIG.ACTIVE,
+            "time"         : time
+        })
+
+    def log_idle(self, elevIndex, direction, floorIndex, time):
+        self._log.append({
+            "elevIndex"    : elevIndex, 
+            "direction"    : direction, 
+            "floorIndex"   : floorIndex, 
+            'latterStatus' : STOPLIST_LOG_CONFIG.IDLE,
+            "time"         : time
+        })

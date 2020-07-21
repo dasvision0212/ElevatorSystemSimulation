@@ -3,11 +3,12 @@ import random
 from copy import deepcopy
 import logging
 
-from elev_sim.conf.elevator_conf import ELEV_CONFIG, ELEV_INFEASIBLE
+from elev_sim.conf.NTUH_conf import ELEV_INFEASIBLE
+from elev_sim.conf.elevator_conf import ELEV_CONFIG
 from elev_sim.conf.log_conf import ELEVLOG_CONFIG
 from elev_sim.elevator.simple_data_structure import Mission
 from elev_sim.elevator.event import Event
-from elev_sim.elevator.logger import Elev_logger, Customer_logger
+from elev_sim.elevator.logger import Elev_logger, Customer_logger, StopList_logger
 from elev_sim.animation.general import cal_floorNum
 
 
@@ -27,8 +28,9 @@ class StopList:
     ACTIVE = 1
     NA = -1
 
-    def __init__(self, FloorList, infeasible):
+    def __init__(self, FloorList, infeasible, stopList_logger:StopList_logger=None):
         self.floorList = deepcopy(FloorList)
+        self.stopList_logger = stopList_logger
 
         self._list = {
              1: [0] * (len(FloorList)),
@@ -76,18 +78,21 @@ class StopList:
 
         # add outer call to stoplist
         self._list[direction][currentIndex] = StopList.ACTIVE
+        if(self.stopList_logger != None):
+            self.stopList_logger.log_active(elev.elevIndex, direction, currentIndex, float(elev.env.now))
 
     def pushInner(self, elev, destination):
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!", destination)
-        print(self.index)
-        currentIndex = self.index[elev.direction][destination]
+        floorIndex = self.index[elev.direction][destination]
 
         # illegal index
-        if self._list[elev.direction][currentIndex] == StopList.NA:
+        if self._list[elev.direction][floorIndex] == StopList.NA:
             raise IndexError()
 
         # add inner call to stoplist
-        self._list[elev.direction][currentIndex] = StopList.ACTIVE
+        self._list[elev.direction][floorIndex] = StopList.ACTIVE
+        if(self.stopList_logger != None):
+            self.stopList_logger.log_active(elev.elevIndex, elev.direction, floorIndex, float(elev.env.now))
+
 
     def pop(self, elev):
         currentIndex = self.index[elev.direction][elev.current_floor]
@@ -98,6 +103,9 @@ class StopList:
 
         # remove target floor from stoplist
         self._list[elev.direction][currentIndex] = StopList.IDLE
+        if(self.stopList_logger != None):
+            self.stopList_logger.log_idle(elev.elevIndex, elev.direction, currentIndex, float(elev.env.now))
+            
         logging.debug('[POP] ele {}, curFlo {}, dir {}'.format(
             elev.elevIndex, elev.current_floor, elev.direction))
 
@@ -179,7 +187,7 @@ class StopList:
 
 class Elevator:
     def __init__(self, env, elevIndex, floorList, EVENT: Event,
-                 customer_logger: Customer_logger=None, elev_logger: Elev_logger=None):
+                 customer_logger: Customer_logger=None, elev_logger: Elev_logger=None, stopList_logger:StopList_logger=None):
         self.env = env
         self.elevIndex = str(elevIndex)
         self.capacity = ELEV_CONFIG.ELEV_CAPACITY
@@ -188,7 +196,7 @@ class Elevator:
         self.floorList = floorList
 
         # schedule list
-        self.stop_list = StopList(self.floorList, ELEV_INFEASIBLE[self.elevIndex])
+        self.stop_list = StopList(self.floorList, ELEV_INFEASIBLE[self.elevIndex], stopList_logger)
 
         # initial states
         self.current_floor = '1'
@@ -245,7 +253,6 @@ class Elevator:
 
     def onMission(self):
         while not self.stop_list.isEmpyty():
-            #             print(self.stop_list)
 
             nextTarget = self.stop_list.next_target(self)
 #             logging.info('[ONMISSION] NEXT TARGET {}'.format(nextTarget))
@@ -377,10 +384,8 @@ class Elevator:
             logging.debug('[SERVING] Elev {}, currFloor {}, nextTarget {}'.format(
                 self.elevIndex, self.current_floor, nextTarget))
             if displacement(self.current_floor, nextTarget) > 0:
-                #                 print('change direction: up')
                 self.direction = 1
             elif displacement(self.current_floor, nextTarget) < 0:
-                #                 print('change direction: down')
                 self.direction = -1
             else:
                 # make a turn

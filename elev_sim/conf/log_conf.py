@@ -7,3 +7,9 @@ class ELEVLOG_CONFIG:
 class QUEUE_LOG_CONFIG:
     INFLOW  = 1
     OUTFLOW = 2
+    
+
+class STOPLIST_LOG_CONFIG:
+    IDLE = 0
+    ACTIVE = 1
+    NA = -1
