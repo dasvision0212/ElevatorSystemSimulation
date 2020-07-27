@@ -12,3 +12,7 @@ class Block:
         self.btm   = y[0] + grid_unit[1] * (vertical_grid[1]) - padding[3]
 
         self.center = (x[0] + (self.left + self.right)/2, y[0] + (self.top + self.btm)/2)
+
+    @property
+    def coord(self):
+        return (self.left, self.top, self.right, self.btm)

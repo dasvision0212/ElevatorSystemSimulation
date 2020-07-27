@@ -8,7 +8,7 @@ class StopList:
         self.canvas = canvas
         self.name = name
         self.index = index
-        self.log = log
+        self.log = log.reset_index()
         self.floorList = floorList
         self.infeasible = elev_infeasible[self.name]
 
@@ -129,8 +129,11 @@ class StopList:
         if(self.logPtr > self.log.shape[0]-1):
             return
 
-        currentAction = self.log.iloc[self.logPtr]
-        while(currentAction["time"] <= self.env.now[0]):
+        while(self.logPtr <= self.log.shape[0]-1):
+            currentAction = self.log.iloc[self.logPtr]
+            if(currentAction["time"] > self.env.now[0]):
+                break
+
             floorIndex = None
             if(currentAction["direction"] == 1):
                 floorIndex = int(currentAction["floorIndex"])
@@ -141,8 +144,7 @@ class StopList:
 
             self.canvas.itemconfigure(self.stop_list[int(currentAction["direction"])][floorIndex], 
                                       fill=colConfig.sl_flag[int(currentAction["latterStatus"])])
-
+            
             self.logPtr += 1
-            currentAction = self.log.iloc[self.logPtr]
         self.canvas.after(self.env.delay_by_interval(1), self.update)
     

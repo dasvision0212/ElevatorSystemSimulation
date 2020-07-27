@@ -2,7 +2,7 @@ from elev_sim.conf.block import Block
 from elev_sim.conf.log_conf import STOPLIST_LOG_CONFIG
 
 class DEFAULT_ANIMA_CONFIG:
-    SPEED = 10
+    SPEED = 50
 
 class colConfig:
     canvas_bg   = "#3b424b"
@@ -57,16 +57,28 @@ class posConfig: # position config
     elev_gap_h       = 20 # horizontal
     
     # block definition
+    ## building
     floor_label_space = 10
     building_block    = Block((0, canvas_size[0]), (0, canvas_size[1]), 
                               horizontal_grid=(0, 6), vertical_grid=(0, 9))
+   
+    ## timer
     timer_block       = Block((0, canvas_size[0]), (0, canvas_size[1]), 
                               horizontal_grid=(10, 12), vertical_grid=(0, 1), padding=(10, 10))
     
+    ## stopList
     sl_label_space = 10
     stopList_block    = Block((0, canvas_size[0]), (0, canvas_size[1]), 
                               horizontal_grid=(6, 12), vertical_grid=(1, 9), padding=(sl_label_space, 10, 10, 28))
     
+    ## WT_displayer
+    wt_block = Block((0, canvas_size[0]), (0, canvas_size[1]), 
+                     horizontal_grid=(0, 6), vertical_grid=(9, 13), padding=(10, 10, 10, 10))
+
+    ## JT_displayer
+    jt_block = Block((0, canvas_size[0]), (0, canvas_size[1]), 
+                     horizontal_grid=(6, 12), vertical_grid=(9, 13), padding=(10, 10, 10, 10))
+
     # building config
     building_title_top = building_block.top + 25
     building_title_btm = building_title_top + 25
@@ -125,7 +137,7 @@ class posConfig: # position config
         self.stopList_subBlock = [
             Block((posConfig.stopList_block.left, posConfig.stopList_block.right), 
                   (posConfig.stopList_block.top, posConfig.stopList_block.btm),
-                  horizontal_grid=(0, 5), vertical_grid=(i, i+1), grid_num=5, padding=(0, 0)) \
+                  horizontal_grid=(0, elevatorNum), vertical_grid=(i, i+1), grid_num=elevatorNum, padding=(0, 0)) \
             for i in range(elevatorNum)
         ]
 

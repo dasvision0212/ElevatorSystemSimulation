@@ -12,7 +12,7 @@ from os.path import join as joinPath
 
 if(__name__ == "__main__"):
     logging.basicConfig(level=logging.WARNING)
-    untilTime = 1000
+    untilTime = 2000
 
     Dist_InterArrival = '../data/BestFitDistribution.csv'
     timeSection = 2
@@ -52,6 +52,7 @@ if(__name__ == "__main__"):
     elev_logger.to_csv (joinPath(log_folder, "elev_log.csv"))
     queue_logger.to_csv(joinPath(log_folder, "queue_log.csv"))
     stopList_logger.to_csv(joinPath(log_folder, "stopList_log.csv"))
+    customer_logger.to_csv(joinPath(log_folder, "customer_log.csv"))
     
     background = dict()
     background["buildingName"] = location

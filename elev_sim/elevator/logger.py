@@ -114,7 +114,7 @@ class StopList_logger(Logger):
         self._log.append({
             "elevIndex"    : elevIndex, 
             "direction"    : direction, 
-            "floorIndex"        : floorIndex, 
+            "floorIndex"   : floorIndex, 
             'latterStatus' : STOPLIST_LOG_CONFIG.ACTIVE,
             "time"         : time
         })

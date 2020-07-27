@@ -45,12 +45,14 @@ class Queue:
         if(self.logPtr > self.log.shape[0]-1):
             return
 
-        currentAction = self.log.iloc[self.logPtr]
-        while(currentAction["time"] <= self.env.now[0]):
+        while(self.logPtr <= self.log.shape[0]-1):
+            currentAction = self.log.iloc[self.logPtr]
+            if(currentAction["time"] > self.env.now[0]):
+                break
+            
             self.riderNum = int(currentAction["riderNumAfter"])
             self.canvas.itemconfigure(self.customerLabel, text=str(self.riderNum))        
 
             self.logPtr += 1
-            currentAction = self.log.iloc[self.logPtr]
 
         self.canvas.after(self.env.delay_by_interval(1), self.update) 

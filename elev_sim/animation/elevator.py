@@ -57,8 +57,11 @@ class Elevator:
         if(self.logPtr > self.log.shape[0]-1):
             return
 
-        currentAction = self.log.iloc[self.logPtr]
-        while(currentAction["time"] <= self.env.now[0]):
+        while(self.logPtr <= self.log.shape[0]-1):
+            currentAction = self.log.iloc[self.logPtr]
+            if(currentAction["time"] > self.env.now[0]):
+                break
+
             if(currentAction["action"] == ELEVLOG_CONFIG.ARRIVE):
                 self.current_floor = currentAction["floor"]
                 if(currentAction["direction"] == 1):
@@ -74,5 +77,4 @@ class Elevator:
                 self.canvas.itemconfigure(self.riderLabel, text=str(self.riderNum))
 
             self.logPtr += 1
-            currentAction = self.log.iloc[self.logPtr]
         self.canvas.after(self.env.delay_by_interval(1), self.update)
