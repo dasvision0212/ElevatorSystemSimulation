@@ -1,8 +1,8 @@
-from elev_sim.conf.log_conf import ELEVLOG_CONFIG
-from elev_sim.conf.animation_conf import colConfig, DEFAULT_ANIMA_CONFIG
-from elev_sim.animation.env import Env
-from elev_sim.animation.elevator import Elevator
-from elev_sim.animation.queue import Queue
+from elev_system.conf.log_conf import ELEVLOG_CONFIG
+from elev_system.conf.animation_conf import colConfig, DEFAULT_ANIMA_CONFIG
+from elev_system.animation.env import Env
+from elev_system.animation.elevator import Elevator
+from elev_system.animation.queue import Queue
 
 
 class Building:

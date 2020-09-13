@@ -1,5 +1,5 @@
-from elev_sim.conf.animation_conf import colConfig
-from elev_sim.conf.log_conf import STOPLIST_LOG_CONFIG
+from elev_system.conf.animation_conf import colConfig
+from elev_system.conf.log_conf import STOPLIST_LOG_CONFIG
 
 
 class StopList:

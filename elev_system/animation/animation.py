@@ -6,16 +6,16 @@ from collections import defaultdict
 from copy import deepcopy
 import datetime
 
-from elev_sim.conf.NTUH_conf  import ELEV_INFEASIBLE
-from elev_sim.conf.log_conf  import ELEVLOG_CONFIG
-from elev_sim.animation.building  import Building
-from elev_sim.conf.animation_conf import (colConfig, posConfig)
-from elev_sim.animation.env import Env
-from elev_sim.animation.general import cal_floorNum
-from elev_sim.animation.timer import Timer
-from elev_sim.animation.stopList import StopList
-from elev_sim.animation.wt_displayer import WT_displayer
-from elev_sim.animation.jt_displayer import JT_displayer
+from elev_system.conf.NTUH_conf  import ELEV_INFEASIBLE
+from elev_system.conf.log_conf  import ELEVLOG_CONFIG
+from elev_system.animation.building  import Building
+from elev_system.conf.animation_conf import (colConfig, posConfig)
+from elev_system.animation.env import Env
+from elev_system.animation.general import cal_floorNum
+from elev_system.animation.timer import Timer
+from elev_system.animation.stopList import StopList
+from elev_system.animation.wt_displayer import WT_displayer
+from elev_system.animation.jt_displayer import JT_displayer
 
 
 class Animation:

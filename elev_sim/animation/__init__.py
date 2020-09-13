@@ -1,1 +1,0 @@
-from elev_sim.animation.animation_ctrl import Animation

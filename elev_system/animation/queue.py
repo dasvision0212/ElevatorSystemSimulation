@@ -1,6 +1,6 @@
-from elev_sim.conf.log_conf import ELEVLOG_CONFIG
-from elev_sim.conf.animation_conf import posConfig, colConfig
-from elev_sim.animation.env import Env
+from elev_system.conf.log_conf import ELEVLOG_CONFIG
+from elev_system.conf.animation_conf import posConfig, colConfig
+from elev_system.animation.env import Env
 
 
 class Queue:

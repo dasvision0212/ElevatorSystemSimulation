@@ -1,5 +1,5 @@
-from elev_sim.animation.env import Env
-from elev_sim.conf.animation_conf import colConfig
+from elev_system.animation.env import Env
+from elev_system.conf.animation_conf import colConfig
 import datetime
 
 class Timer:

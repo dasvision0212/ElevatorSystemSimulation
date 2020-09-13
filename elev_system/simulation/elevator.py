@@ -6,9 +6,9 @@ import logging
 from elev_sim.conf.NTUH_conf import ELEV_INFEASIBLE
 from elev_sim.conf.elevator_conf import ELEV_CONFIG
 from elev_sim.conf.log_conf import ELEVLOG_CONFIG
-from elev_sim.elevator.simple_data_structure import Mission
-from elev_sim.elevator.event import Event
-from elev_sim.elevator.logger import Elev_logger, Customer_logger, StopList_logger
+from elev_sim.simulation.simple_data_structure import Mission
+from elev_sim.simulation.event import Event
+from elev_sim.simulation.logger import Elev_logger, Customer_logger, StopList_logger
 from elev_sim.animation.general import cal_floorNum
 
 

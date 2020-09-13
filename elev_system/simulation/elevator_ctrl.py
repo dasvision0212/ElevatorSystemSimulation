@@ -2,9 +2,9 @@ import logging
 import random
 
 from elev_sim.conf.elevator_conf import ELEV_CONFIG
-from elev_sim.elevator.elevator import Elevator, displacement
-from elev_sim.elevator.simple_data_structure import Mission
-from elev_sim.elevator.logger import (Customer_logger, Elev_logger, StopList_logger)
+from elev_sim.simulation.elevator import Elevator, displacement
+from elev_sim.simulation.simple_data_structure import Mission
+from elev_sim.simulation.logger import (Customer_logger, Elev_logger, StopList_logger)
 
 
 class ElevatorController:
