@@ -4,8 +4,8 @@ import pandas as pd
 import sys
 sys.path.append('../')
 
-from elev_sim import *
-from elev_sim.conf.NTUH_conf import ELEVATOR_GROUP, BUILDING_FLOOR
+from elev_system import *
+from elev_system.conf.NTUH_conf import ELEVATOR_GROUP, BUILDING_FLOOR
 import logging
 
 # !!! ISSUE: we should consider the situation where the size of log is zero. On that situation, we could not do any operation on it. 

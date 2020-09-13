@@ -3,7 +3,7 @@ import sys
 from collections import defaultdict
 sys.path.append('../')
 
-from elev_sim import Animation, ELEV_INFEASIBLE
+from elev_system import Animation, ELEV_INFEASIBLE
 
 
 background = None # first initialized to catch the data read from json file below
