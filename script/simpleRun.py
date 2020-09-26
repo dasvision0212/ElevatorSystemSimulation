@@ -5,8 +5,8 @@ import json
 import sys
 sys.path.append('../')
 
-from elev_system import *
-from elev_system.conf.NTUH_conf import ELEVATOR_GROUP, BUILDING_FLOOR, ELEV_INFEASIBLE
+from elev_sys import *
+from elev_sys.conf.NTUH_conf import ELEVATOR_GROUP, BUILDING_FLOOR, ELEV_INFEASIBLE
 import logging
 from os.path import join as joinPath
 

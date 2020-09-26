@@ -1,4 +1,4 @@
-from elev_system.conf.animation_conf import DEFAULT_ANIMA_CONFIG
+from elev_sys.conf.animation_conf import DEFAULT_ANIMA_CONFIG
 
 
 class Env:

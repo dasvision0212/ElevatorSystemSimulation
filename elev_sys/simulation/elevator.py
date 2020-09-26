@@ -3,13 +3,13 @@ import random
 from copy import deepcopy
 import logging
 
-from elev_sim.conf.NTUH_conf import ELEV_INFEASIBLE
-from elev_sim.conf.elevator_conf import ELEV_CONFIG
-from elev_sim.conf.log_conf import ELEVLOG_CONFIG
-from elev_sim.simulation.simple_data_structure import Mission
-from elev_sim.simulation.event import Event
-from elev_sim.simulation.logger import Elev_logger, Customer_logger, StopList_logger
-from elev_sim.animation.general import cal_floorNum
+from elev_sys.conf.NTUH_conf import ELEV_INFEASIBLE
+from elev_sys.conf.elevator_conf import ELEV_CONFIG
+from elev_sys.conf.log_conf import ELEVLOG_CONFIG
+from elev_sys.simulation.simple_data_structure import Mission
+from elev_sys.simulation.event import Event
+from elev_sys.simulation.logger import Elev_logger, Customer_logger, StopList_logger
+from elev_sys.animation.general import cal_floorNum
 
 
 def displacement(floor1, floor2):

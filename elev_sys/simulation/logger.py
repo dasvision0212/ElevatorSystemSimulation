@@ -1,5 +1,5 @@
 import pandas as pd
-from elev_sim.conf.log_conf import ELEVLOG_CONFIG, QUEUE_LOG_CONFIG, STOPLIST_LOG_CONFIG
+from elev_sys.conf.log_conf import ELEVLOG_CONFIG, QUEUE_LOG_CONFIG, STOPLIST_LOG_CONFIG
 
 
 class Logger:

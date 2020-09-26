@@ -6,11 +6,11 @@ from collections import namedtuple
 from copy import deepcopy
 import logging
 
-from elev_sim.conf.NTUH_conf import ELEV_INFEASIBLE
-from elev_sim.conf.elevator_conf import ELEV_CONFIG
-from elev_sim.simulation.simple_data_structure import Mission
-from elev_sim.simulation.event import Event
-from elev_sim.simulation.logger import Queue_logger
+from elev_sys.conf.NTUH_conf import ELEV_INFEASIBLE
+from elev_sys.conf.elevator_conf import ELEV_CONFIG
+from elev_sys.simulation.simple_data_structure import Mission
+from elev_sys.simulation.event import Event
+from elev_sys.simulation.logger import Queue_logger
 
 
 def cid_generator():

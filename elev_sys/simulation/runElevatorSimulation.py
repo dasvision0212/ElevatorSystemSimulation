@@ -4,12 +4,12 @@ import pandas as pd
 import sys
 sys.path.append('../')
 
-from elev_sim.simulation.floor import Floor
-from elev_sim.simulation.event import Event
-from elev_sim.simulation.elevator_ctrl import ElevatorController
-from elev_sim.simulation.IAT_Distribution import IAT_Distribution
-from elev_sim.simulation.logger import Customer_logger, Elev_logger, Queue_logger, StopList_logger
-from elev_sim.conf.NTUH_conf import ELEVATOR_GROUP
+from elev_sys.simulation.floor import Floor
+from elev_sys.simulation.event import Event
+from elev_sys.simulation.elevator_ctrl import ElevatorController
+from elev_sys.simulation.IAT_Distribution import IAT_Distribution
+from elev_sys.simulation.logger import Customer_logger, Elev_logger, Queue_logger, StopList_logger
+from elev_sys.conf.NTUH_conf import ELEVATOR_GROUP
 
 import logging
 

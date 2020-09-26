@@ -1,7 +1,7 @@
 import threading
 import tkinter as tk
 
-from elev_system.animation.animation import Animation
+from elev_sys.animation.animation import Animation
 
 
 class Animation_ctrl:

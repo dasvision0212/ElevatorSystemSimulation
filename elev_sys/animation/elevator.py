@@ -1,6 +1,6 @@
-from elev_system.conf.log_conf import ELEVLOG_CONFIG
-from elev_system.conf.animation_conf import colConfig, DEFAULT_ANIMA_CONFIG
-from elev_system.animation.env import Env
+from elev_sys.conf.log_conf import ELEVLOG_CONFIG
+from elev_sys.conf.animation_conf import colConfig, DEFAULT_ANIMA_CONFIG
+from elev_sys.animation.env import Env
 
 class Elevator:
     default_floor = 1
