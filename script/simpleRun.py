@@ -37,18 +37,14 @@ if(__name__ == "__main__"):
 
     # sub_group_setting
     sub_group_setting = {
-        "A": {
-            "infeasible": ["B4", "B3", "B2", "B1", "1", "2", "3", "4", "5", ],
-            "elevNum": 2
+        'a': {
+            'infeasible': ['6', '7', '8', '9', '10', '11', '12', '13', '14', '15'],
+            'elevNum': 2
         },
-        "B": {
-            "infeasible": ["1", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
-            "elevNum": 2
-        },
-        "C": {
-            "infeasible": ["1", "15"],
-            "elevNum": 2
-        }
+        'b': {
+            'infeasible': ['B4', 'B3', 'B2', 'B1', '2', '3', '4'],
+            'elevNum': 2
+            }
     }
     # Enviornment Variable
     env = simpy.Environment()
