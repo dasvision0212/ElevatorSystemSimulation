@@ -44,13 +44,17 @@ class Customer:
 
 
 class Queue:
-    def __init__(self, env, floor, floorIndex, direction, EVENT:Event, queue_logger:Queue_logger=None):
+    def __init__(self, env, floor, floorIndex, direction, sub_group_setting, EVENT:Event, queue_logger:Queue_logger=None):
         self.env = env
         self.floor = floor
         self.floorIndex = floorIndex
         self.direction = direction
         self.queue_array = []
         self.arrival_event = self.env.event()
+
+        # !!subgroup
+        self.panels = dict(zip(sub_group_setting, [False]*len(sub_group_setting)))
+        self.sub_group_setting = sub_group_setting
 
         # start process
         self.inflow_proc = self.env.process(self.inflow())
@@ -62,17 +66,29 @@ class Queue:
     def inflow(self):
         while True:
             customers = yield self.arrival_event
+            
             logging.info('[INFLOW] Outer Call {} Floor {} '.format(
                 self.floor, 'up' if self.direction == 1 else 'down'))
 
             # disable call if already assigned
-            if(len(self.queue_array) == 0):
-                mission = Mission(direction=self.direction,
-                                  destination=self.floor)
-                self.EVENT.CALL.succeed(value=mission)
+            for customer in customers:
+                for sub_group_name in self.sub_group_setting.keys():
+                    if customer.destination not in self.sub_group_setting[sub_group_name]['infeasible']:
+                        if self.panels[sub_group_name] == False:
+                            self.panels[sub_group_name] == True
+                            mission = Mission(direction=self.direction, destination=self.floor)
+                            self.EVENT.CALL[sub_group_name].succeed(value=mission)
+                            
+                            # reactivate event
+                            self.EVENT.CALL[sub_group_name] = self.env.event()
 
-                # reactivate event
-                self.EVENT.CALL = self.env.event()
+            # if(len(self.queue_array) == 0):
+            #     mission = Mission(direction=self.direction,
+            #                       destination=self.floor)
+            #     self.EVENT.CALL.succeed(value=mission)
+
+            #     # reactivate event
+            #     self.EVENT.CALL = self.env.event()
 
             # add customers to waiting queue
             self.queue_array = self.queue_array + customers
@@ -86,6 +102,10 @@ class Queue:
         while True:
             # elevator arrives
             availible, elevIndex = yield self.EVENT.ELEV_ARRIVAL[self.direction][self.floor]
+
+            # cancel panel
+            sub_group_name = elevIndex[0]
+            self.panels[sub_group_name] = False
 
             riders = []
 
@@ -113,7 +133,7 @@ class Queue:
             self.EVENT.ELEV_LEAVE[elevIndex] = self.env.event()
 
 class Floor:
-    def __init__(self, env, floor, floorIndex, direction, IAT, distination_dist, cid_gen, EVENT:Event, queue_logger:Queue_logger=None):
+    def __init__(self, env, floor, floorIndex, direction, IAT, distination_dist, sub_group_setting, cid_gen, EVENT:Event, queue_logger:Queue_logger=None):
         self.env = env
         self.floor = floor
         self.direction = direction
@@ -123,7 +143,7 @@ class Floor:
         self.distination_dist = distination_dist if len(distination_dist) == 1 else distination_dist/distination_dist.sum()
 
         # start process
-        self.queue = Queue(env, self.floor, floorIndex, self.direction, EVENT, queue_logger=queue_logger)
+        self.queue = Queue(env, self.floor, floorIndex, self.direction, sub_group_setting, EVENT, queue_logger=queue_logger)
         self.source_proc = env.process(self.Source(env))
         
         # global

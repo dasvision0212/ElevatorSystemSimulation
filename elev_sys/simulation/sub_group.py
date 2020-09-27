@@ -8,7 +8,7 @@ from elev_sys.simulation.logger import (Customer_logger, Elev_logger, StopList_l
 
 
 class SubGroup:
-    def __init__(self, env, floorList, setting, EVENT, 
+    def __init__(self, env, floorList,  sub_group_name, setting, EVENT, 
                  customer_logger:Customer_logger = None, elev_logger:Elev_logger = None, stopList_logger:StopList_logger=None):
         '''
         @param setting: tuple(sub_group_name, { "infeasible":["1", "15"], 
@@ -19,11 +19,10 @@ class SubGroup:
         self.EVENT = EVENT
 
         self.elevators = dict()
-        sub_group_name = setting[0]
-        sub_group_setting = setting[1]
-        for i in range(sub_group_setting["elevNum"]):
-            elevName = sub_group_name + str(i)
-            self.elevators[elevName] = Elevator(env, elevName, floorList, self.EVENT, 
+        self.sub_group_name = sub_group_name
+        for i in range(setting["elevNum"]):
+            elev_name = sub_group_name + str(i)
+            self.elevators[elev_name] = Elevator(env, elev_name, floorList, self.EVENT, 
                                                     customer_logger=customer_logger, 
                                                     elev_logger=elev_logger, 
                                                     stopList_logger=stopList_logger)
@@ -32,7 +31,7 @@ class SubGroup:
 
     def assignCalls(self):
         while True:
-            mission = yield self.EVENT.CALL
+            mission = yield self.EVENT.CALL[self.sub_group_name]
 
             # candidate = random.choices(self.elevNameList, weights=[1/len(self.elevNameList)] * len(self.elevNameList))[0]
             candidate = self.bestCandidate(mission)

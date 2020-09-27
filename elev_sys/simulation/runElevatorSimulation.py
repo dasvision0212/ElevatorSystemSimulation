@@ -22,21 +22,22 @@ def runElevatorSimulation(env, IAT_D, distination_dist, floorList, sub_group_set
     random.seed(randomSeed)
 
     # get the list of elevName
+    sub_group_names = sub_group_setting.keys()
     elevNameList = []
-    for groupName, setting in sub_group_setting.items():
+    for sub_group_name, setting in sub_group_setting.items():
         for i in range(setting["elevNum"]):
-            elevNameList.append(groupName + str(i))
+            elevNameList.append(sub_group_name + str(i))
 
     # initialization
-    event = Event(env, floorList, elevNameList)
+    event = Event(env, floorList, sub_group_names, elevNameList)
     
     # process
     floors_upward = [Floor(env, floorName, floorIndex, 1, IAT_D.getter('up', floorName), 
-                            distination_dist.loc[floorName][floorName.lstrip("0"):], cid_gen, event, queue_logger=queue_logger) \
+                            distination_dist.loc[floorName][floorName.lstrip("0"):], sub_group_setting, cid_gen, event, queue_logger=queue_logger) \
                                 for floorIndex, floorName in enumerate(floorList[:-1]) \
                                 if IAT_D.getter('up', floorName)  != None]
     floors_downward = [Floor(env, floorName, floorIndex, -1, IAT_D.getter('down', floorName), 
-                            distination_dist.loc[floorName][:floorName.lstrip("0")], cid_gen, event, queue_logger=queue_logger) \
+                            distination_dist.loc[floorName][:floorName.lstrip("0")], sub_group_setting, cid_gen, event, queue_logger=queue_logger) \
                                 for floorIndex, floorName in enumerate(floorList[1:]) \
                                 if IAT_D.getter('up', floorName) != None]
     

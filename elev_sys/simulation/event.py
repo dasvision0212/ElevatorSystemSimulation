@@ -15,10 +15,10 @@ testConfig = {
 
 
 class Event:
-    def __init__(self, env, floorList, elevNameList):
+    def __init__(self, env, floorList, sub_group_names, elevNameList):
         self.env = env
 
-        self.CALL = env.event()
+        self.CALL = {name :env.event() for name in sub_group_names}
         self.ELEV_ARRIVAL = { 1: {i: env.event() for i in floorList},
                              -1: {i: env.event() for i in floorList}}
         self.ELEV_LEAVE = {i: env.event() for i in elevNameList}

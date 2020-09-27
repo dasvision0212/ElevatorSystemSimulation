@@ -7,8 +7,8 @@ class Elevator_group:
         
         self.env = env
         self.sub_group = {}
-        for groupName, setting in sub_group_setting.items():
-            self.sub_group[groupName] = SubGroup(env, floorList, (groupName, setting), event, 
+        for sub_group_name, setting in sub_group_setting.items():
+            self.sub_group[sub_group_name] = SubGroup(env, floorList, sub_group_name, setting, event, 
                                        customer_logger=customer_logger, 
                                        elev_logger=elev_logger, 
                                        stopList_logger=stopList_logger)
