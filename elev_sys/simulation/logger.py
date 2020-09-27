@@ -10,12 +10,18 @@ class Logger:
 
     @property
     def df(self):
-        if(self._df == None):
+        if(self._df is None):
             self._df = pd.DataFrame(self._log)
         elif(self._df.shape[0] != len(self._log) or len(self._log) == 0):
             self._df = pd.DataFrame(self._log)
-
+        
         return self._df
+
+    @df.setter
+    def df(self, num):
+        if(hasattr(self, "_df")):
+            raise AttributeValue("[!] Can't change the log. ")
+        self._df = num
 
     def to_csv(self, export_path, preserveIndex=False):
         self.df.to_csv(export_path, index=preserveIndex)
