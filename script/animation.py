@@ -17,4 +17,4 @@ Animation(background["buildingName"],
           "../data/log/queue_log.csv", 
           "../data/log/stopList_log.csv", 
           "../data/log/customer_log.csv", 
-          background["elevatorList"], background["floorList"], defaultdict(list, background["elev_infeasible"]))
+          background["elevNameList"], background["floorList"], defaultdict(list, background["elev_infeasible"]))

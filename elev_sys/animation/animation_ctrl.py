@@ -5,10 +5,10 @@ from elev_sys.animation.animation import Animation
 
 
 class Animation_ctrl:
-    def __init__(self, building_name, elev_log_path, queue_log_path, elevatorList, floorList, title=None):
+    def __init__(self, building_name, elev_log_path, queue_log_path, elevNameList, floorList, title=None):
         self.terminate_event = threading.Event()
         self.check_terminate = threading.Event()
-        self.animation = Animation(building_name, elev_log_path, queue_log_path, elevatorList, floorList, 
+        self.animation = Animation(building_name, elev_log_path, queue_log_path, elevNameList, floorList, 
                                     self.terminate_event, self.check_terminate, title)
         self.status = True # True denotes processing, False denotes pausing
 

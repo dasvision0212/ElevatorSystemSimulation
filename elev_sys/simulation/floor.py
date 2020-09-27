@@ -113,14 +113,14 @@ class Queue:
             self.EVENT.ELEV_LEAVE[elevIndex] = self.env.event()
 
 class Floor:
-    def __init__(self, env, floor, floorIndex, direction, IAT, DD, cid_gen, EVENT:Event, queue_logger:Queue_logger=None):
+    def __init__(self, env, floor, floorIndex, direction, IAT, distination_dist, cid_gen, EVENT:Event, queue_logger:Queue_logger=None):
         self.env = env
         self.floor = floor
         self.direction = direction
 
         # statistical data
         self.IAT = IAT
-        self.DD = DD if len(DD) == 1 else DD/DD.sum()
+        self.distination_dist = distination_dist if len(distination_dist) == 1 else distination_dist/distination_dist.sum()
 
         # start process
         self.queue = Queue(env, self.floor, floorIndex, self.direction, EVENT, queue_logger=queue_logger)
@@ -144,7 +144,7 @@ class Floor:
                 # 3. set customer destination based on given posibility
                 customer = Customer(self.cid_gen)
                 customer.source = self.floor
-                customer.destination = random.choice(self.DD.index, p=self.DD)
+                customer.destination = random.choice(self.distination_dist.index, p=self.distination_dist)
                 customer.start_time = float(self.env.now)
 
                 customers.append(customer)

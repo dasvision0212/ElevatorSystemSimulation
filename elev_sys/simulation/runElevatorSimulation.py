@@ -6,36 +6,43 @@ sys.path.append('../')
 
 from elev_sys.simulation.floor import Floor
 from elev_sys.simulation.event import Event
-from elev_sys.simulation.elevator_ctrl import ElevatorController
-from elev_sys.simulation.IAT_Distribution import IAT_Distribution
+from elev_sys.simulation.elevator_group import Elevator_group
 from elev_sys.simulation.logger import Customer_logger, Elev_logger, Queue_logger, StopList_logger
 from elev_sys.conf.NTUH_conf import ELEVATOR_GROUP
 
 import logging
 
-def runElevatorSimulation(env, Dist_InterArrival, Ratio_byFloor, location, timeSection, floorList, elevatorList,
-                          randomSeed, floorNum, untilTime, cid_gen=None, 
+def runElevatorSimulation(env, IAT_D, distination_dist, floorList, sub_group_setting, 
+                          randomSeed, untilTime, cid_gen=None, 
                           customer_logger:Customer_logger=None, 
                           elev_logger:Elev_logger=None, 
                           queue_logger:Queue_logger=None, 
                           stopList_logger:StopList_logger=None):
-    random.seed(randomSeed)
-    IAT_D = IAT_Distribution(Dist_InterArrival)
-    DD    = pd.read_csv(Ratio_byFloor).iloc[:, 1:].set_index('from').iloc[0:floorNum+1, 0:floorNum+1]
-    DD    = DD.drop(['B2'], axis=1).drop(['B2'], axis=0) # !!!!!! not reusable
 
-    event = Event(env, floorList, elevatorList)
+    random.seed(randomSeed)
+
+    # get the list of elevName
+    elevNameList = []
+    for groupName, setting in sub_group_setting.items():
+        for i in range(setting["elevNum"]):
+            elevNameList.append(groupName + str(i))
+
+    # initialization
+    event = Event(env, floorList, elevNameList)
+    
     # process
-    floors_upward = [Floor(env, floorName, floorIndex, 1, IAT_D.getter(location, timeSection, 'up', floorName), 
-                            DD.loc[floorName][floorName.lstrip("0"):], cid_gen, event, queue_logger=queue_logger) \
+    floors_upward = [Floor(env, floorName, floorIndex, 1, IAT_D.getter('up', floorName), 
+                            distination_dist.loc[floorName][floorName.lstrip("0"):], cid_gen, event, queue_logger=queue_logger) \
                                 for floorIndex, floorName in enumerate(floorList[:-1]) \
-                                if IAT_D.getter(location, timeSection, 'up', floorName)  != None]
-    floors_downward = [Floor(env, floorName, floorIndex, -1, IAT_D.getter(location, timeSection, 'down', floorName), 
-                            DD.loc[floorName][:floorName.lstrip("0")], cid_gen, event, queue_logger=queue_logger) \
+                                if IAT_D.getter('up', floorName)  != None]
+    floors_downward = [Floor(env, floorName, floorIndex, -1, IAT_D.getter('down', floorName), 
+                            distination_dist.loc[floorName][:floorName.lstrip("0")], cid_gen, event, queue_logger=queue_logger) \
                                 for floorIndex, floorName in enumerate(floorList[1:]) \
-                                if IAT_D.getter(location, timeSection, 'up', floorName) != None]
-    elevator_ctrl = ElevatorController(env, elevatorList, floorList, event, 
-                                       customer_logger=customer_logger, 
-                                       elev_logger=elev_logger, 
-                                       stopList_logger=stopList_logger)
+                                if IAT_D.getter('up', floorName) != None]
+    
+    elevator_group = Elevator_group(env, sub_group_setting, floorList, event, 
+                                customer_logger=customer_logger, 
+                                elev_logger=elev_logger, 
+                                stopList_logger=stopList_logger)
+
     env.run(until=untilTime)

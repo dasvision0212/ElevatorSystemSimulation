@@ -6,7 +6,7 @@ from elev_sys.animation.queue import Queue
 
 
 class Building:
-    def __init__(self, env:Env, canvas, posConfig, name, elev_log, queue_log, elevatorList, floorList):
+    def __init__(self, env:Env, canvas, posConfig, name, elev_log, queue_log, elevNameList, floorList):
         self.env = env
         self.canvas = canvas
         self.posConfig = posConfig
@@ -17,7 +17,7 @@ class Building:
         # draw Elevator
         self.elevators = {name:Elevator(self.env, self.canvas, self.posConfig, name, i, 
                                         self.elev_log[self.elev_log["name"]==name], floorList) \
-                                        for i, name in enumerate(elevatorList)}
+                                        for i, name in enumerate(elevNameList)}
 
         # draw queue
         self.queues = {
@@ -78,7 +78,7 @@ class Building:
             self.canvas.create_rectangle(x1, y1, x2, y2, fill=colConfig.building, width=0)
         
         ## draw horizontal gap
-        for i in range(len(elevatorList)-1):
+        for i in range(len(elevNameList)-1):
             x1 = self.posConfig.building_left + self.posConfig.building_wall + \
                  self.posConfig.elev_width * (i+1) + self.posConfig.elev_gap_h * (i)
             y1 = self.posConfig.building_top

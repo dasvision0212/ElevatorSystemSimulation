@@ -27,9 +27,9 @@ if(__name__ == "__main__"):
 
     for location in location[:4]:
         Statistic_df = []
-        elevatorList = ELEVATOR_GROUP[location]
+        elevNameList = ELEVATOR_GROUP[location]
         floorList    = BUILDING_FLOOR[location]
-        for eleNum in range(1, len(elevatorList)):
+        for eleNum in range(1, len(elevNameList)):
             for floorNum in [len(floorList)]: # !!! if you adjust the number of floor, you should simultaneously update IAT
                 df = []
                 for j in range(100):
@@ -44,7 +44,7 @@ if(__name__ == "__main__"):
                     queue_logger = Queue_logger(status=True)
 
                     runElevatorSimulation(env, Dist_InterArrival, Ratio_byFloor[location], location, 2, 
-                                          floorList[:floorNum], elevatorList[:eleNum], randomSeed, floorNum, untilTime, 
+                                          floorList[:floorNum], elevNameList[:eleNum], randomSeed, floorNum, untilTime, 
                                           cid_gen=cid_gen, 
                                           customer_logger=customer_logger, elev_logger=elev_logger, queue_logger=queue_logger)
 

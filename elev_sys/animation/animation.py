@@ -20,7 +20,7 @@ from elev_sys.animation.jt_displayer import JT_displayer
 
 class Animation:
     def __init__(self, building_name, elev_log_path, queue_log_path, stopList_log_path, customer_log_path, 
-                 elevatorList, floorList, elev_infeasible:defaultdict=ELEV_INFEASIBLE, title=None):
+                 elevNameList, floorList, elev_infeasible:defaultdict=ELEV_INFEASIBLE, title=None):
         self.env = Env()
 
         # extract log
@@ -37,7 +37,7 @@ class Animation:
         # self.customer_log = self.customer_log.applymap(lambda x:datetime.timedelta(seconds=x))
 
         # the stuff about tkinter
-        self.posConfig = posConfig(len(elevatorList), cal_floorNum(floorList))
+        self.posConfig = posConfig(len(elevNameList), cal_floorNum(floorList))
         self.building_name = building_name
 
         self.window = tk.Tk()
@@ -70,14 +70,14 @@ class Animation:
         
         # widget
         self.building = Building(self.env, self.canvas, self.posConfig, self.building_name, 
-                                 self.elev_log, self.queue_log,elevatorList, floorList)
+                                 self.elev_log, self.queue_log,elevNameList, floorList)
         
         self.timer = Timer(self.env, self.canvas, self.posConfig)
         
         self.stopList = {
             StopList(self.env, self.canvas, self.posConfig, elevIndex, i, 
             self.stopList_log[self.stopList_log["elevIndex"]==elevIndex], floorList, elev_infeasible) \
-            for i, elevIndex in enumerate(elevatorList)
+            for i, elevIndex in enumerate(elevNameList)
         }
         
         self.wt_displayer = WT_displayer(self.env, self.canvas, self.posConfig, deepcopy(self.customer_log))

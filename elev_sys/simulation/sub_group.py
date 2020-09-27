@@ -7,16 +7,23 @@ from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.logger import (Customer_logger, Elev_logger, StopList_logger)
 
 
-class ElevatorController:
-    def __init__(self, env, elevatorList, floorList, EVENT, 
+class SubGroup:
+    def __init__(self, env, floorList, setting, EVENT, 
                  customer_logger:Customer_logger = None, elev_logger:Elev_logger = None, stopList_logger:StopList_logger=None):
+        '''
+        @param setting: tuple(sub_group_name, { "infeasible":["1", "15"], 
+                                                "elevNum": 2})
+        '''
+        
         self.env = env
-        self.elevatorList = elevatorList
-        self.elevators = dict()
         self.EVENT = EVENT
 
-        for elevatorName in elevatorList:
-            self.elevators[elevatorName] = Elevator(env, elevatorName, floorList, self.EVENT, 
+        self.elevators = dict()
+        sub_group_name = setting[0]
+        sub_group_setting = setting[1]
+        for i in range(sub_group_setting["elevNum"]):
+            elevName = sub_group_name + str(i)
+            self.elevators[elevName] = Elevator(env, elevName, floorList, self.EVENT, 
                                                     customer_logger=customer_logger, 
                                                     elev_logger=elev_logger, 
                                                     stopList_logger=stopList_logger)
@@ -27,7 +34,7 @@ class ElevatorController:
         while True:
             mission = yield self.EVENT.CALL
 
-            # candidate = random.choices(self.elevatorList, weights=[1/len(self.elevatorList)] * len(self.elevatorList))[0]
+            # candidate = random.choices(self.elevNameList, weights=[1/len(self.elevNameList)] * len(self.elevNameList))[0]
             candidate = self.bestCandidate(mission)
             self.elevators[candidate].assign_event.succeed(value=mission)
 

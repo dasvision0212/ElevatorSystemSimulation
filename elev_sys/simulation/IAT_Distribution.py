@@ -6,14 +6,16 @@ class IAT_Distribution:
     inter-arrival time distribution
     '''
 
-    def __init__(self, path):
+    def __init__(self, path, location, section):
         self.df = pd.read_csv(path)
         self.df["Floor"] = self.df["Floor"].apply(lambda x: x.lstrip('0'))
+        self.location = location
+        self.section = section
 
-    def getter(self, location, section, direction, floor):
+    def getter(self, direction, floor):
 
         # filter row by mulitple conditions
-        temp = self.df[(self.df['Location'] == location) & (self.df['Section'] == section) &
+        temp = self.df[(self.df['Location'] == self.location) & (self.df['Section'] == self.section) &
                        (self.df['Direction'] == direction) & (self.df['Floor'] == floor)][['Distribution', 'Parameters']]
 
         if(temp.shape[0] == 0):
