@@ -46,6 +46,7 @@ if(__name__ == "__main__"):
             'elevNum': 2
             }
     }
+    
     # Enviornment Variable
     env = simpy.Environment()
     cid_gen = cid_generator()
