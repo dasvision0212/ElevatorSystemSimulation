@@ -109,12 +109,12 @@ class Customer_logger(Logger):
         # calculate total_waiting_time and total_journey_time
         waiting_time_list  = list()
         journey_time_list  = list()
-        transfer_time_list = list()
+        transfer_num_list = list()
         for i, row in self._df.iterrows():
             if(row["pass_by"][-1] == row["destination"]):
-                transfer_time_list.append(len(row["pass_by"])-2)
+                transfer_num_list.append(len(row["pass_by"])-2)
             else:
-                transfer_time_list.append(len(row["pass_by"])-1)
+                transfer_num_list.append(len(row["pass_by"])-1)
 
 
             # deal with exception
@@ -152,7 +152,7 @@ class Customer_logger(Logger):
 
         self._df["total_waiting_time"] = waiting_time_list
         self._df["total_journey_time"] = journey_time_list
-        self._df["transfer_time"]      = transfer_time_list
+        self._df["transfer_num"]      = transfer_num_list
 
         return self._df
 
