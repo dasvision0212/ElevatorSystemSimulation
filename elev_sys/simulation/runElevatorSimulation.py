@@ -12,7 +12,7 @@ from elev_sys.conf.NTUH_conf import ELEVATOR_GROUP
 
 import logging
 
-def runElevatorSimulation(env, IAT_D, distination_dist, floorList, sub_group_setting, 
+def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, 
                           randomSeed, untilTime, cid_gen=None, 
                           customer_logger:Customer_logger=None, 
                           elev_logger:Elev_logger=None, 
@@ -22,10 +22,10 @@ def runElevatorSimulation(env, IAT_D, distination_dist, floorList, sub_group_set
     random.seed(randomSeed)
 
     # get the list of elevName
-    sub_group_names = sub_group_setting.keys()
+    sub_group_names = group_setting.keys()
     elevNameList = []
-    for sub_group_name, setting in sub_group_setting.items():
-        for i in range(setting["elevNum"]):
+    for sub_group_name, sub_group_setting in group_setting.items():
+        for i in range(len(sub_group_setting["infeasibles"])):
             elevNameList.append(sub_group_name + str(i))
 
     # initialization
@@ -33,15 +33,15 @@ def runElevatorSimulation(env, IAT_D, distination_dist, floorList, sub_group_set
     
     # process
     floors_upward = [Floor(env, floorName, floorIndex, 1, IAT_D.getter('up', floorName), 
-                            distination_dist.loc[floorName][floorName.lstrip("0"):], sub_group_setting, cid_gen, event, queue_logger=queue_logger) \
+                            distination_dist.loc[floorName][floorName.lstrip("0"):], group_setting, cid_gen, event, queue_logger=queue_logger) \
                                 for floorIndex, floorName in enumerate(floorList[:-1]) \
                                 if IAT_D.getter('up', floorName)  != None]
     floors_downward = [Floor(env, floorName, floorIndex, -1, IAT_D.getter('down', floorName), 
-                            distination_dist.loc[floorName][:floorName.lstrip("0")], sub_group_setting, cid_gen, event, queue_logger=queue_logger) \
+                            distination_dist.loc[floorName][:floorName.lstrip("0")], group_setting, cid_gen, event, queue_logger=queue_logger) \
                                 for floorIndex, floorName in enumerate(floorList[1:]) \
                                 if IAT_D.getter('up', floorName) != None]
     
-    elevator_group = Elevator_group(env, sub_group_setting, floorList, event, 
+    elevator_group = Elevator_group(env, group_setting, floorList, event, 
                                 customer_logger=customer_logger, 
                                 elev_logger=elev_logger, 
                                 stopList_logger=stopList_logger)

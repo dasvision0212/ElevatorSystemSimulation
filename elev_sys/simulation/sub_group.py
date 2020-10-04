@@ -8,7 +8,7 @@ from elev_sys.simulation.logger import (Customer_logger, Elev_logger, StopList_l
 
 
 class SubGroup:
-    def __init__(self, env, floorList,  sub_group_name, setting, EVENT, 
+    def __init__(self, env, floorList,  sub_group_name, sub_group_setting, EVENT, 
                  customer_logger:Customer_logger = None, elev_logger:Elev_logger = None, stopList_logger:StopList_logger=None):
         '''
         @param setting: tuple(sub_group_name, { "infeasible":["1", "15"], 
@@ -20,9 +20,9 @@ class SubGroup:
 
         self.elevators = dict()
         self.sub_group_name = sub_group_name
-        for i in range(setting["elevNum"]):
+        for i in range(len(sub_group_setting["infeasibles"])):
             elev_name = sub_group_name + str(i)
-            self.elevators[elev_name] = Elevator(env, elev_name, floorList, self.EVENT, 
+            self.elevators[elev_name] = Elevator(env, elev_name, floorList, sub_group_setting["infeasibles"][i], self.EVENT, 
                                                     customer_logger=customer_logger, 
                                                     elev_logger=elev_logger, 
                                                     stopList_logger=stopList_logger)
@@ -68,6 +68,9 @@ class SubGroup:
                 elif(direction == elevator.direction and displacement(elevator.current_floor, source) * direction <= 0):
                     elevator_score  = SAME_DIR_BACK_BASE + displacement(elevator.current_floor, source) * -elevator.direction
                     
+                if source in elevator.infeasible:
+                    elevator_score += 50000000
+
                 if(elevator_score < minDistance):
                     bestElevator = elevator.elevIndex
                     minDistance = elevator_score

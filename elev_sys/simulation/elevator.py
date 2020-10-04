@@ -186,7 +186,7 @@ class StopList:
 
 
 class Elevator:
-    def __init__(self, env, elevIndex, floorList, EVENT: Event,
+    def __init__(self, env, elevIndex, floorList, infeasible, EVENT: Event,
                  customer_logger: Customer_logger=None, elev_logger: Elev_logger=None, stopList_logger:StopList_logger=None):
         self.env = env
         self.elevIndex = str(elevIndex)
@@ -196,7 +196,9 @@ class Elevator:
         self.floorList = floorList
 
         # schedule list
-        self.stop_list = StopList(self.floorList, ELEV_INFEASIBLE[self.elevIndex], stopList_logger)
+        # print('!!!!!!!!!!!!',elevIndex, infeasible)
+        self.stop_list = StopList(self.floorList, infeasible, stopList_logger)
+        self.infeasible = infeasible
 
         # initial states
         self.current_floor = '1'
@@ -335,8 +337,13 @@ class Elevator:
 
         # customers leave
         leaveCount = 0
+        transfer_customers= []
         for i in range(len(self.riders)-1, -1, -1):
-            if self.riders[i].destination == self.current_floor:
+            if self.riders[i].temp_destination ==  self.current_floor:
+                customer = self.riders.pop(i)
+                transfer_customers.append(customer)
+                leaveCount += 1
+            elif self.riders[i].destination == self.current_floor:
 
                 customer = self.riders.pop(i)
                 customer.leave_time = float(self.env.now)
@@ -347,6 +354,11 @@ class Elevator:
         yield self.env.timeout(leaveCount*1)
         logging.info('[SERVING] Elev {}, {} Customers Leave'.format(
             self.elevIndex, leaveCount))
+
+        if transfer_customers:
+            print('asassasa',transfer_customers)
+            self.EVENT.ELEV_TRANSFER[self.direction][self.current_floor].succeed(value=transfer_customers)
+            self.EVENT.ELEV_TRANSFER[self.direction][self.current_floor] = self.env.event()
 
         # exclude 'peak' condition
         if not((self.current_floor == self.floorList[-1] and self.direction == 1) or
@@ -363,8 +375,12 @@ class Elevator:
 
             # add inner calls
             for customer in riders:
+                # print(self.current_floor, customer.destination)
+                # print('infeasible:', self.infeasible)
+                destination = customer.select_destination(self.current_floor, self.direction,  self.infeasible)
+                # print(customer.destination,destination)
 
-                self.stop_list.pushInner(self, customer.destination)
+                self.stop_list.pushInner(self, destination)
             self.riders = self.riders + riders
 
             if(self.elev_logger != None):
@@ -405,19 +421,17 @@ class Elevator:
 
     def boarding(self):
         # boarding
-        self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor].succeed(
-            value=(self.capacity-len(self.riders), self.elevIndex))
-        self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor] = self.env.event(
-        )
+        self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor].succeed(value=(self.capacity-len(self.riders), self.elevIndex))
+        self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor] = self.env.event()
 
+
+        # new customers
         riders = yield self.EVENT.ELEV_LEAVE[self.elevIndex]
         logging.info('[SERVING] Elev {}, Customers Aboard: \n {} '.format(
             self.elevIndex, [vars(i) for i in riders]))
 #         print('[SERVING] Customers Aboard: \n  ', riders)
-
-        # new customers
         for customer in riders:
-            self.stop_list.pushInner(self, customer.destination)
+            self.stop_list.pushInner(self, customer.select_destination(self.infeasible))
         self.riders = self.riders + riders
 
     @staticmethod

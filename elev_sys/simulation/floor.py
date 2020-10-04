@@ -42,9 +42,28 @@ class Customer:
         self.boarding_time = None
         self.leave_time = None
 
+        self.temp_destination = None
+        self.transfer_count = 0
+
+    def select_destination(self, current_floor, direction, infeasible):
+        self.transfer_count += 1
+
+        # need tranfer
+
+        if str(self.destination) in infeasible:
+            infeasible = [int(floor) if not 'B' in floor else -int(floor[1:]) + 1 for floor in infeasible]
+            current_floor = int(current_floor) if not 'B' in current_floor else -int(current_floor[1:]) + 1
+            if direction == 1:
+                t = [floor for floor in infeasible if not floor < current_floor]
+            if direction == -1:
+                t = [floor for floor in infeasible if not floor > current_floor]
+            temp_destination_index = t[min(range(len(t)), key = lambda i: abs(t[i]-current_floor))] - direction
+            self.temp_destination = str(temp_destination_index) if temp_destination_index > 0  else 'B'+str(-(temp_destination_index-1))
+            return self.temp_destination
+        return self.destination 
 
 class Queue:
-    def __init__(self, env, floor, floorIndex, direction, sub_group_setting, EVENT:Event, queue_logger:Queue_logger=None):
+    def __init__(self, env, floor, floorIndex, direction, group_setting, EVENT:Event, queue_logger:Queue_logger=None):
         self.env = env
         self.floor = floor
         self.floorIndex = floorIndex
@@ -53,8 +72,8 @@ class Queue:
         self.arrival_event = self.env.event()
 
         # !!subgroup
-        self.panels = dict(zip(sub_group_setting, [False]*len(sub_group_setting)))
-        self.sub_group_setting = sub_group_setting
+        self.panels_state = dict(zip(group_setting, [False]*len(group_setting)))
+        self.group_setting = group_setting
 
         # start process
         self.inflow_proc = self.env.process(self.inflow())
@@ -65,22 +84,30 @@ class Queue:
 
     def inflow(self):
         while True:
-            customers = yield self.arrival_event
-            
+            customers = yield self.arrival_event or self.EVENT.ELEV_TRANSFER
             logging.info('[INFLOW] Outer Call {} Floor {} '.format(
                 self.floor, 'up' if self.direction == 1 else 'down'))
 
-            # disable call if already assigned
+            # fo each customer
             for customer in customers:
-                for sub_group_name in self.sub_group_setting.keys():
-                    if customer.destination not in self.sub_group_setting[sub_group_name]['infeasible']:
-                        if self.panels[sub_group_name] == False:
-                            self.panels[sub_group_name] == True
-                            mission = Mission(direction=self.direction, destination=self.floor)
-                            self.EVENT.CALL[sub_group_name].succeed(value=mission)
-                            
-                            # reactivate event
-                            self.EVENT.CALL[sub_group_name] = self.env.event()
+
+                # for each sub-group
+                for sub_group_name, sub_group_setting in self.group_setting.items():
+
+                    # for each elevator
+                    for infeasible in sub_group_setting['infeasibles']:
+
+                        # if served by current elevator
+                        if self.floor not in infeasible:
+
+                            # disable call if already assigned
+                            if self.panels_state[sub_group_name] == False:
+                                self.panels_state[sub_group_name] == True
+                                mission = Mission(direction=self.direction, destination=self.floor)
+                                self.EVENT.CALL[sub_group_name].succeed(value=mission)
+                                
+                                # reactivate event
+                                self.EVENT.CALL[sub_group_name] = self.env.event()
 
             # if(len(self.queue_array) == 0):
             #     mission = Mission(direction=self.direction,
@@ -104,8 +131,7 @@ class Queue:
             availible, elevIndex = yield self.EVENT.ELEV_ARRIVAL[self.direction][self.floor]
 
             # cancel panel
-            sub_group_name = elevIndex[0]
-            self.panels[sub_group_name] = False
+            self.panels_state[elevIndex[0]] = False
 
             riders = []
 
@@ -133,7 +159,7 @@ class Queue:
             self.EVENT.ELEV_LEAVE[elevIndex] = self.env.event()
 
 class Floor:
-    def __init__(self, env, floor, floorIndex, direction, IAT, distination_dist, sub_group_setting, cid_gen, EVENT:Event, queue_logger:Queue_logger=None):
+    def __init__(self, env, floor, floorIndex, direction, IAT, distination_dist, group_setting, cid_gen, EVENT:Event, queue_logger:Queue_logger=None):
         self.env = env
         self.floor = floor
         self.direction = direction
@@ -143,7 +169,7 @@ class Floor:
         self.distination_dist = distination_dist if len(distination_dist) == 1 else distination_dist/distination_dist.sum()
 
         # start process
-        self.queue = Queue(env, self.floor, floorIndex, self.direction, sub_group_setting, EVENT, queue_logger=queue_logger)
+        self.queue = Queue(env, self.floor, floorIndex, self.direction, group_setting, EVENT, queue_logger=queue_logger)
         self.source_proc = env.process(self.Source(env))
         
         # global
