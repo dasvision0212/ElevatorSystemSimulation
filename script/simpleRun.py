@@ -36,15 +36,14 @@ if(__name__ == "__main__"):
     distination_dist = distination_dist.drop(['B2'], axis=1).drop(['B2'], axis=0)  # !!!!!! not reusable
 
     # sub_group_setting
-    sub_group_setting = {
+    group_setting = {
         'a': {
-            'infeasible': ['6', '7', '8', '9', '10', '11', '12', '13', '14', '15'],
-            'elevNum': 2
-        },
-        'b': {
-            'infeasible': ['B4', 'B3', 'B2', 'B1', '2', '3', '4'],
-            'elevNum': 2
-            }
+            'infeasibles': [
+                ['6','7','8','9','10','11','12','13','14','15'],
+                ['B4', 'B3', 'B2', 'B1', '1', '2', '3', '4', '11', '12', '13', '14', '15'],
+                ['B4', 'B3', 'B2', 'B1', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+            ]
+        }
     }
     
     # Enviornment Variable
@@ -59,7 +58,7 @@ if(__name__ == "__main__"):
     stopList_logger = StopList_logger(status=True)
 
     # Simulation
-    runElevatorSimulation(env, IAT_D, distination_dist, floorList, sub_group_setting, randomSeed, untilTime,
+    runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, randomSeed, untilTime,
                           cid_gen=cid_gen,
                           customer_logger=customer_logger,
                           elev_logger=elev_logger,
