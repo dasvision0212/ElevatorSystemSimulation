@@ -10,27 +10,22 @@ from elev_sys.conf.NTUH_conf import ELEV_INFEASIBLE
 from elev_sys.conf.elevator_conf import ELEV_CONFIG
 from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.event import Event
-from elev_sys.simulation.logger import Queue_logger
+from elev_sys.simulation.logger import Queue_logger, Customer_logger
 
 
 def cid_generator():
-        '''Generate unique, global customer ID.'''
-        i = 1
+        '''
+        Generate unique, global customer ID.
+        [!] In order to maintain the feasibility of Customer_logger, cid must start from 0.
+        '''
+        
+        i = 0
         while True:
             yield i
             i += 1
 
 
 class Customer:
-
-    @staticmethod
-    def _cid_generator(self):
-        '''Generate unique, global customer ID.'''
-        i = 1
-        while True:
-            yield i
-            i += 1
-
     def __init__(self, cid_gen=None):
         if(cid_gen != None):
             self.cid = next(cid_gen)
@@ -38,16 +33,11 @@ class Customer:
             self.cid = next(self._cid_generator)
         self.source = None
         self.destination = None
-        self.start_time = None
-        self.boarding_time = None
         self.leave_time = None
 
         self.temp_destination = None
-        self.transfer_count = 0
 
     def select_destination(self, current_floor, direction, infeasible):
-        self.transfer_count += 1
-
         # need tranfer
 
         if str(self.destination) in infeasible:
@@ -63,7 +53,8 @@ class Customer:
         return self.destination 
 
 class Queue:
-    def __init__(self, env, floor, floorIndex, direction, group_setting, EVENT:Event, queue_logger:Queue_logger=None):
+    def __init__(self, env, floor, floorIndex, direction, group_setting, EVENT:Event, 
+                queue_logger:Queue_logger=None, customer_logger:Customer_logger=None):
         self.env = env
         self.floor = floor
         self.floorIndex = floorIndex
@@ -81,6 +72,7 @@ class Queue:
 
         self.EVENT = EVENT
         self.queue_logger = queue_logger
+        self.customer_logger = customer_logger
 
     def inflow(self):
         while True:
@@ -140,15 +132,16 @@ class Queue:
                 customer = self.queue_array[customerIndex]
 
                 if(customer.destination not in ELEV_INFEASIBLE[elevIndex]):
-                    customer.boarding_time = float(self.env.now)
+                    if(self.customer_logger != None):
+                        yield self.env.timeout(random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX))
+                        self.customer_logger.log_board(customer.cid, float(self.env.now))
+                    
                     riders.append(customer)
                     self.queue_array.pop(customerIndex)
                     availible -= 1
                 else:
                     customerIndex += 1
 
-            # time the customers take to on board
-            yield self.env.timeout(len(riders) * random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX))
             logging.info('[OUTFLOW] {} People Enters'.format(len(riders)))
             
             if(self.queue_logger != None):
@@ -159,7 +152,8 @@ class Queue:
             self.EVENT.ELEV_LEAVE[elevIndex] = self.env.event()
 
 class Floor:
-    def __init__(self, env, floor, floorIndex, direction, IAT, distination_dist, group_setting, cid_gen, EVENT:Event, queue_logger:Queue_logger=None):
+    def __init__(self, env, floor, floorIndex, direction, IAT, distination_dist, group_setting, cid_gen, EVENT:Event, 
+                 queue_logger:Queue_logger=None, customer_logger:Customer_logger=None):
         self.env = env
         self.floor = floor
         self.direction = direction
@@ -169,11 +163,13 @@ class Floor:
         self.distination_dist = distination_dist if len(distination_dist) == 1 else distination_dist/distination_dist.sum()
 
         # start process
-        self.queue = Queue(env, self.floor, floorIndex, self.direction, group_setting, EVENT, queue_logger=queue_logger)
+        self.queue = Queue(env, floor, floorIndex, direction, group_setting, EVENT, 
+                            queue_logger=queue_logger, customer_logger=customer_logger)
         self.source_proc = env.process(self.Source(env))
-        
+
         # global
         self.cid_gen = cid_gen
+        self.customer_logger = customer_logger
 
     def Source(self, env):
         while True:
@@ -189,9 +185,10 @@ class Floor:
             for i in range(random.randint(ELEV_CONFIG.ARRIVAL_MIN, ELEV_CONFIG.ARRIVAL_MAX)):
                 # 3. set customer destination based on given posibility
                 customer = Customer(self.cid_gen)
-                customer.source = self.floor
                 customer.destination = random.choice(self.distination_dist.index, p=self.distination_dist)
-                customer.start_time = float(self.env.now)
+
+                if(self.customer_logger != None):
+                    self.customer_logger.log_appear(customer.cid, self.floor, customer.destination, float(self.env.now))
 
                 customers.append(customer)
 

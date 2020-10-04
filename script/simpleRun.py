@@ -16,7 +16,7 @@ if(__name__ == "__main__"):
 
     # simulation related
     logging.basicConfig(level=logging.WARNING)
-    untilTime = 500
+    untilTime = 2500
 
     # env variable
     Ratio_byFloor = {"北棟病床": '../data/FloorRatio_NHB.csv',
@@ -52,13 +52,13 @@ if(__name__ == "__main__"):
     randomSeed = int(random.rand(1)*10000)
 
     # Define Logger
-    customer_logger = Customer_logger(status=True)
+    customer_logger = Customer_logger(untilTime, status=True)
     elev_logger = Elev_logger(status=True)
     queue_logger = Queue_logger(status=True)
     stopList_logger = StopList_logger(status=True)
 
     # Simulation
-    runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, randomSeed, untilTime,
+    statistics = runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, randomSeed, untilTime,
                           cid_gen=cid_gen,
                           customer_logger=customer_logger,
                           elev_logger=elev_logger,
@@ -75,6 +75,9 @@ if(__name__ == "__main__"):
     background = dict()
     background["buildingName"] = location
     background["floorList"] = floorList
-    background["sub_group_setting"] = sub_group_setting
+    background["sub_group_setting"] = group_setting
     with open(joinPath(log_folder, "background.json"), 'w', encoding="utf-8") as file:
         file.write(json.dumps(background))
+
+    # statistics records stop_num and move_floor_num
+    print(statistics)

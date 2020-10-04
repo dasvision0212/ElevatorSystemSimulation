@@ -1,3 +1,5 @@
+import pandas as pd
+
 from elev_sys.simulation.sub_group import SubGroup
 from elev_sys.simulation.logger import (Customer_logger, Elev_logger, StopList_logger)
 
@@ -12,3 +14,10 @@ class Elevator_group:
                                        customer_logger=customer_logger, 
                                        elev_logger=elev_logger, 
                                        stopList_logger=stopList_logger)
+
+    def get_statistics(self):
+        statistics = pd.DataFrame()
+        for sub_group in self.sub_group.values():
+            statistics = pd.concat([statistics, sub_group.get_statistics()], axis=0)
+
+        return statistics 

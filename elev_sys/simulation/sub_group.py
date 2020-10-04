@@ -1,5 +1,6 @@
 import logging
 import random
+import pandas as pd
 
 from elev_sys.conf.elevator_conf import ELEV_CONFIG
 from elev_sys.simulation.elevator import Elevator, displacement
@@ -72,10 +73,10 @@ class SubGroup:
                     elevator_score += 50000000
 
                 if(elevator_score < minDistance):
-                    bestElevator = elevator.elevIndex
+                    bestElevator = elevator.elev_name
                     minDistance = elevator_score
 
-                logging.warning(elevator.elevIndex)
+                logging.warning(elevator.elev_name)
                 logging.warning("dir: {}, curr: {}".format(elevator.direction, elevator.current_floor))
                 logging.warning("score: {}".format(elevator_score))
 
@@ -83,3 +84,15 @@ class SubGroup:
         logging.warning("---------------------------------------------")
 
         return bestElevator
+
+    def get_statistics(self):
+        statistics = list()
+        for elev_name, elevator in self.elevators.items():
+            statistics.append({
+                "sub_group" : self.sub_group_name, 
+                "elevator"  : elev_name,  
+                "stop_num"   : elevator.stopNum, 
+                "move_floor_num": elevator.moveFloorNum
+            })
+        
+        return pd.DataFrame(statistics)

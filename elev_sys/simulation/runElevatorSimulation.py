@@ -33,11 +33,13 @@ def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting
     
     # process
     floors_upward = [Floor(env, floorName, floorIndex, 1, IAT_D.getter('up', floorName), 
-                            distination_dist.loc[floorName][floorName.lstrip("0"):], group_setting, cid_gen, event, queue_logger=queue_logger) \
+                            distination_dist.loc[floorName][floorName.lstrip("0"):], group_setting, cid_gen, event
+                            , queue_logger=queue_logger, customer_logger=customer_logger) \
                                 for floorIndex, floorName in enumerate(floorList[:-1]) \
                                 if IAT_D.getter('up', floorName)  != None]
     floors_downward = [Floor(env, floorName, floorIndex, -1, IAT_D.getter('down', floorName), 
-                            distination_dist.loc[floorName][:floorName.lstrip("0")], group_setting, cid_gen, event, queue_logger=queue_logger) \
+                            distination_dist.loc[floorName][:floorName.lstrip("0")], group_setting, cid_gen, event, 
+                            queue_logger=queue_logger, customer_logger=customer_logger) \
                                 for floorIndex, floorName in enumerate(floorList[1:]) \
                                 if IAT_D.getter('up', floorName) != None]
     
@@ -47,3 +49,5 @@ def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting
                                 stopList_logger=stopList_logger)
 
     env.run(until=untilTime)
+
+    return elevator_group.get_statistics()
