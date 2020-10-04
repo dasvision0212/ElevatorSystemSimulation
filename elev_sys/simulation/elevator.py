@@ -347,9 +347,11 @@ class Elevator:
             if self.riders[i].temp_destination ==  self.current_floor:
                 customer = self.riders.pop(i)
                 transfer_customers.append(customer)
+                if(self.customer_logger != None):
+                    self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
+
                 leaveCount += 1
             elif self.riders[i].destination == self.current_floor:
-
                 customer = self.riders.pop(i)
                 if(self.customer_logger != None):
                     self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))

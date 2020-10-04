@@ -82,7 +82,6 @@ class Queue:
 
             # fo each customer
             for customer in customers:
-
                 # for each sub-group
                 for sub_group_name, sub_group_setting in self.group_setting.items():
 
@@ -141,7 +140,7 @@ class Queue:
                     availible -= 1
                 else:
                     customerIndex += 1
-
+            
             logging.info('[OUTFLOW] {} People Enters'.format(len(riders)))
             
             if(self.queue_logger != None):

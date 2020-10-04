@@ -142,7 +142,8 @@ class Customer_logger(Logger):
                 total_journey_time += get_off_time - row["boarding_time"][get_off_i]
 
             if(len(row["boarding_time"]) == len(row["get_off_time"])):
-                total_waiting_time += self.untilTime - row["get_off_time"][-1]
+                if(row["pass_by"][-1] != row["destination"]):
+                    total_waiting_time += self.untilTime - row["get_off_time"][-1]
             else:
                 total_journey_time += self.untilTime - row["boarding_time"][-1]
 
