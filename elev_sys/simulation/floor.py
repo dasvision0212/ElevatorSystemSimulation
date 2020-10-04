@@ -76,7 +76,7 @@ class Queue:
 
     def inflow(self):
         while True:
-            customers = yield self.arrival_event or self.EVENT.ELEV_TRANSFER
+            customers = yield self.arrival_event or self.EVENT.ELEV_TRANSFER[self.direction][self.floor]
             logging.info('[INFLOW] Outer Call {} Floor {} '.format(
                 self.floor, 'up' if self.direction == 1 else 'down'))
 
@@ -129,8 +129,7 @@ class Queue:
             customerIndex = 0
             while (availible > 0) and (len(self.queue_array) > 0):
                 customer = self.queue_array[customerIndex]
-
-                if(customer.destination not in ELEV_INFEASIBLE[elevIndex]):
+                if(customer.source not in self.group_setting[elevIndex[0]]["infeasibles"][int(elevIndex[1:])]):
                     if(self.customer_logger != None):
                         yield self.env.timeout(random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX))
                         self.customer_logger.log_board(customer.cid, float(self.env.now))

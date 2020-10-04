@@ -437,7 +437,7 @@ class Elevator:
             self.elev_name, [vars(i) for i in riders]))
 #         print('[SERVING] Customers Aboard: \n  ', riders)
         for customer in riders:
-            self.stop_list.pushInner(self, customer.select_destination(self.infeasible))
+            self.stop_list.pushInner(self, customer.select_destination(self.current_floor, self.direction, self.infeasible))
         self.riders = self.riders + riders
 
     @staticmethod
