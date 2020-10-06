@@ -76,6 +76,12 @@ if(__name__ == "__main__"):
     background["buildingName"] = location
     background["floorList"] = floorList
     background["sub_group_setting"] = group_setting
+
+    # 過渡期
+    group_name = list(group_setting.keys())[0]
+    background["elev_infeasible"] = {group_name+str(i):infeasible for i, infeasible in enumerate(group_setting[group_name]["infeasibles"])}
+    background["elevatorList"] = [group_name+str(i) for i in range(len(group_setting[group_name]["infeasibles"]))]
+    background["sub_group_setting"] = group_setting
     with open(joinPath(log_folder, "background.json"), 'w', encoding="utf-8") as file:
         file.write(json.dumps(background))
 
