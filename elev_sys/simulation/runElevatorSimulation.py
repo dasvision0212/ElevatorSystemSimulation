@@ -49,5 +49,8 @@ def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting
                                 stopList_logger=stopList_logger)
 
     env.run(until=untilTime)
-
+    print('Name',elevNameList)
+    total_movement_list = []
+    for name in elevNameList:
+        total_movement_list.append(elevator_group.sub_group['a'].elevators[name].total_movement)
     return elevator_group.get_statistics()
