@@ -139,6 +139,29 @@ class Queue:
 
             if(self.queue_logger != None):
                 self.queue_logger.log_inflow(len(self.queue_array), self.floorIndex, self.direction, float(self.env.now))
+    
+    def updatePanel():
+        # waiting for elevator leave
+        yield self.env.timeout(11)
+        for customer in self.queue_array:
+            # for each sub-group
+            for sub_group_name, sub_group_setting in self.group_setting.items():
+
+                # for each elevator
+                for infeasible in sub_group_setting['infeasibles']:
+
+                    # if served by current elevator
+                    if (self.floor not in infeasible) & (advance(self.floor,customer.destination) not in infeasible):
+                        customer_direction = compare_direction(floor_to_index(customer.destination), floor_to_index(self.floor))
+
+                        # disable call if already assigned
+                        if self.panels_state[sub_group_name] == False:
+                            self.panels_state[sub_group_name] == True
+                            mission = Mission(direction=self.direction, destination=self.floor)
+                            self.EVENT.CALL[sub_group_name].succeed(value=mission)
+                            
+                            # reactivate event
+                            self.EVENT.CALL[sub_group_name] = self.env.event()
 
     def outflow(self):
         while True:
@@ -182,6 +205,11 @@ class Queue:
             # customers on board
             self.EVENT.ELEV_LEAVE[elevIndex].succeed(value=riders)
             self.EVENT.ELEV_LEAVE[elevIndex] = self.env.event()
+        
+        self.env.process(self.updatePanel())
+
+            
+            
 
 class Floor:
     def __init__(self, env, floor, floorIndex, direction, IAT, distination_dist, group_setting, cid_gen, EVENT:Event, 
