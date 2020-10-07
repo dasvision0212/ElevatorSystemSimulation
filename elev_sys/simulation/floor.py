@@ -129,7 +129,13 @@ class Queue:
             customerIndex = 0
             while (availible > 0) and (len(self.queue_array) > 0):
                 customer = self.queue_array[customerIndex]
-                if(customer.source not in self.group_setting[elevIndex[0]]["infeasibles"][int(elevIndex[1:])]):
+
+                # [!] Warning: if the implementation of the temp_destination is changed, last stop may fail. 
+                last_stop = customer.source
+                if not(customer.temp_destination is None):
+                    last_stop = customer.temp_destination
+
+                if(last_stop not in self.group_setting[elevIndex[0]]["infeasibles"][int(elevIndex[1:])]):
                     if(self.customer_logger != None):
                         yield self.env.timeout(random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX))
                         self.customer_logger.log_board(customer.cid, float(self.env.now))
