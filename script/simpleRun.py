@@ -66,7 +66,7 @@ if(__name__ == "__main__"):
                           stopList_logger=stopList_logger)
 
     # logging
-    log_folder = r"../data/log"
+    log_folder = r"../data"
     elev_logger.to_csv(joinPath(log_folder, "elev_log.csv"))
     queue_logger.to_csv(joinPath(log_folder, "queue_log.csv"))
     stopList_logger.to_csv(joinPath(log_folder, "stopList_log.csv"))
