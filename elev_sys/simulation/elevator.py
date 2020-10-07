@@ -205,7 +205,7 @@ class Elevator:
         self.direction = 0
         self.assign_event = self.env.event()
         self.finish_event = self.env.event()
-
+        self.total_movement = 0
         # start process
         self.env.process(self.idle())
 
@@ -313,6 +313,7 @@ class Elevator:
                 # determine traveling time for 1 floor
                 t = self.travelingTime(destination, self.current_floor, source)
                 yield self.env.timeout(t)
+                self.total_movement += 1
 
                 # advance 1 floor
                 self.current_floor = self.forwards(self.current_floor, self.direction)
