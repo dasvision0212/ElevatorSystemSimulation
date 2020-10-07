@@ -33,7 +33,7 @@ class Animation:
         self.stopList_log = pd.read_csv(stopList_log_path)
         self.stopList_log["elevIndex"] = self.stopList_log["elevIndex"].astype(str)
 
-        self.customer_log = pd.read_csv(customer_log_path, usecols=["boarding_time", "waiting_time", "leave_time", "journey_time"])
+        # self.customer_log = pd.read_csv(customer_log_path, usecols=["boarding_time", "waiting_time", "leave_time", "journey_time"])
         # self.customer_log = self.customer_log.applymap(lambda x:datetime.timedelta(seconds=x))
 
         # the stuff about tkinter
@@ -80,8 +80,8 @@ class Animation:
             for i, elevIndex in enumerate(elevNameList)
         }
         
-        self.wt_displayer = WT_displayer(self.env, self.canvas, self.posConfig, deepcopy(self.customer_log))
-        self.jt_displayer = JT_displayer(self.env, self.canvas, self.posConfig, deepcopy(self.customer_log))
+        # self.wt_displayer = WT_displayer(self.env, self.canvas, self.posConfig, deepcopy(self.customer_log))
+        # self.jt_displayer = JT_displayer(self.env, self.canvas, self.posConfig, deepcopy(self.customer_log))
 
         # # layout line
         self.canvas.create_line(0, self.posConfig.wt_block.top-20, 

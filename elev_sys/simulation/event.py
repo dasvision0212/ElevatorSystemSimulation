@@ -21,4 +21,6 @@ class Event:
         self.CALL = {name :env.event() for name in sub_group_names}
         self.ELEV_ARRIVAL = { 1: {i: env.event() for i in floorList},
                              -1: {i: env.event() for i in floorList}}
+        self.ELEV_TRANSFER = { 1: {i: env.event() for i in floorList},
+                             -1: {i: env.event() for i in floorList}}
         self.ELEV_LEAVE = {i: env.event() for i in elevNameList}

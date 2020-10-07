@@ -31,19 +31,19 @@ app = dash.Dash()
 app.layout = html.Div([
     html.H2(children='Waiting time & Journey time'),
     html.Div([
-        html.Label('Building'),
+        html.Label('電梯組'),
     	dcc.Dropdown(
 	        id="location",
 	        options=[{'label': i, 'value': i} for i in locationList],
 	        value='研究大樓'
     	),
-        html.Label('Middle Floor'),
+        html.Label('電梯分隔樓層'),
     	dcc.Dropdown(
                 id='middle_floor',
                 options=[{'label':i, 'value':i} for i in middle_floorList],
                 value='7'
     	),
-        html.Label('elevator subgroup number'),
+        html.Label('小電梯組'),
     	dcc.Dropdown(
                 id='elevSup_NumPair',
                 options=[{'label':i, 'value':i} for i in elevSup_NumPairList],
