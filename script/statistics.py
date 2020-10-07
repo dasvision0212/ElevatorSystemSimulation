@@ -15,7 +15,6 @@ import logging
 
 if(__name__ == "__main__"):
     
-    ################ use updated structure simulation model -- subELevatorGroup ####################
 
     # config parameter
     buildingName = ["Research", "NHB", "SC", "SHB"]         # usable building
@@ -26,10 +25,11 @@ if(__name__ == "__main__"):
     logging.basicConfig(level=logging.CRITICAL)
 
     
-    for buildingI in range(len(location)): # every building
-        for subElevNum in range(2, len(ELEVATOR_GROUP[location[buildingI]])) : # subgroup elevator num pair
-            for eleSepFloor in BUILDING_FLOOR[location[buildingI]][1:len(BUILDING_FLOOR[location[buildingI]])]: # seperate floor using every floor
+    for buildingI in range(1): # every building
+        for subElevNum in [2]: #range(2, len(ELEVATOR_GROUP[location[buildingI]])) : # subgroup elevator num pair
+            for eleSepFloor in ["7"]: #BUILDING_FLOOR[location[buildingI]][1:len(BUILDING_FLOOR[location[buildingI]])]: # seperate floor using every floor
                 df = []
+                ele_df = []
                 for i in range(100): # times of simulation
                     # setting parameter
                     randomSeed = int(random.rand(1)*10000)
@@ -80,76 +80,68 @@ if(__name__ == "__main__"):
                             ,'TimeType':'journey_time'
                             ,'Time': result['journey_time'].mean()
                     })
+
+                    # elevator log
+                    print(type(elev_logger))
+
+                    ele_log_result = elev_logger.df
+                    ele_result_floor = ele_log_result.loc[ele_log_result["action"]==1]
+                    ele_result_stop = ele_log_result.loc[ele_log_result["action"]==0]
+
+
+                    floor_count = ele_result_floor.groupby('name')
+                    stop_count = ele_result_floor.groupby('name')
+
+                    for name, ele in floor_count:
+                        count = ele["action"].count()
+                        ele_df.append({
+                                'location': location[buildingI]
+                                ,'elevator_subgroup_number': [subElevNum,len(ELEVATOR_GROUP[location[buildingI]])-subElevNum]
+                                ,'policy_middle_floor':eleSepFloor
+                                ,'elevator name': name
+                                ,'count type': "count floor"
+                                ,'floor count':count
+                        })
+                    for name, ele in stop_count:
+                        count = ele["action"].count()
+                        ele_df.append({
+                                'location': location[buildingI]
+                                ,'elevator_subgroup_number': [subElevNum,len(ELEVATOR_GROUP[location[buildingI]])-subElevNum]
+                                ,'policy_middle_floor':eleSepFloor
+                                ,'elevator name': name
+                                ,'count type': "count stop"
+                                ,'stop': count
+                        })
+
+                    ele_log_result = pd.DataFrame(ele_log_result)
+                    ele_log_result.to_csv('../data/ele_logger.csv', mode = 'a', header = False)
+                    # new result
+
+                    # new_result = customer_logger.df
+                    # # waiting time & journey time
+                    # new_result = new_result.loc[new_result['pass_by'][-1]==str(new_result['destination'])]
+                    # df.append({
+                    #     'location': location[buildingI]
+                    #     ,'elevator_subgroup_number': [subElevNum,len(ELEVATOR_GROUP[location[buildingI]])-subElevNum]
+                    #     ,'policy_middle_floor':eleSepFloor
+                    #     ,'TimeType':'waiting_time'
+                    #     ,'Time': new_result['total_waiting_time'].mean()
+                    # })
+                    # df.append({
+                    #     'location': location[buildingI]
+                    #     ,'elevator_subgroup_number': [subElevNum,len(ELEVATOR_GROUP[location[buildingI]])-subElevNum]
+                    #     ,'policy_middle_floor':eleSepFloor
+                    #     ,'TimeType':'journey_time'
+                    #     ,'Time': new_result['total_journey_time'].mean()
+                    # })
+
+                    # end new result
+
+                ele_df = pd.DataFrame(ele_df)
                 df = pd.DataFrame(df)
                 df.to_csv('../data/simulation_multipleTimes.csv', mode = 'a', header = False)
+                ele_df.to_csv('../data/floor_count.csv', mode = 'a', header = False)
     statistic_df = pd.read_csv('../data/simulation_multipleTimes.csv',names=['location', 'elevator_subgroup_number', 'policy_middle_floor', 'TimeType', 'Time'])
     statistic_df.to_csv('../data/simulation_multipleTimes.csv')
     
-                # pd.set_option('display.max_colwidth', -1)
-                # print(result)
-                # print("column: ", result.column)
-    
-    ################ initial simulation model ####################
-
-    # logging.basicConfig(level=logging.WARNING)
-    # untilTime = 1000
-
-    # Dist_InterArrival = '../data/BestFitDistribution.csv'
-    # timeSection = 2
-    
-    # # Variable
-    # Ratio_byFloor = {"北棟病床": '../data/FloorRatio_NHB.csv',
-    #                  "研究大樓": '../data/FloorRatio_Research.csv',
-    #                  "南棟客梯": '../data/FloorRatio_SC.csv' , 
-    #                  "南棟病床": '../data/FloorRatio_SHB.csv'}
-
-    # location = ["北棟病床", "研究大樓", "南棟客梯", "南棟病床"]
-    # for location in location[:4]:
-    #     Statistic_df = []
-    #     elevNameList = ELEVATOR_GROUP[location]
-    #     floorList    = BUILDING_FLOOR[location]
-    #     for eleNum in range(1, len(elevNameList)):
-    #         for floorNum in [len(floorList)]: # !!! if you adjust the number of floor, you should simultaneously update IAT
-    #             df = []
-    #             for j in range(100):
-    #                 # Enviornment Variable
-    #                 env = simpy.Environment()
-    #                 cid_gen = cid_generator()
-    #                 randomSeed = int(random.rand(1)*10000)
-                    
-    #                 # Global
-    #                 customer_logger = Customer_logger(status=True)
-    #                 elev_logger = Elev_logger(status=True)
-    #                 queue_logger = Queue_logger(status=True)
-
-    #                 runElevatorSimulation(env, Dist_InterArrival, Ratio_byFloor[location], location, 2, 
-    #                                       floorList[:floorNum], elevNameList[:eleNum], randomSeed, floorNum, untilTime, 
-    #                                       cid_gen=cid_gen, 
-    #                                       customer_logger=customer_logger, elev_logger=elev_logger, queue_logger=queue_logger)
-
-    #                 result = customer_logger.df
-    #                 df.append({
-    #                     'location': location
-    #                     ,'floorNum': floorNum
-    #                     ,'version':3 
-    #                     ,'Elevator Amount': eleNum+1
-    #                     ,'TimeType':'waiting_time'
-    #                     ,'Time': result['waiting_time'].mean()})
-    #                 df.append({
-    #                     'location': location
-    #                     ,'floorNum': floorNum
-    #                     ,'version':3 
-    #                     ,'Elevator Amount': eleNum+1
-    #                     ,'TimeType':'journey_Time'
-    #                     ,'Time': result['journey_time'].mean()})
-                    
-
-    #                 # used for animation
-    #                 # elev_logger.to_csv(r"../data/elevator_log.csv")
-    #                 # queue_logger.to_csv(r"../data/queue_log.csv")
-
-    #             df = pd.DataFrame(df)
-    #             df.to_csv('../data/tryData.csv', mode = 'a', header = False, index= False)
-    #     print('finish', location)
-
-
+           

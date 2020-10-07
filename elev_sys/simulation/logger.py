@@ -66,6 +66,10 @@ class Elev_logger(Logger):
             'direction'    : direction,
             'time'         : time
         })
+    @property
+    def df(self):
+        super().df
+        return self._df
 
 
 class Customer_logger(Logger):
