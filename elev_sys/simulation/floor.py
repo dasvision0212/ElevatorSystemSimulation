@@ -11,6 +11,22 @@ from elev_sys.conf.elevator_conf import ELEV_CONFIG
 from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.event import Event
 from elev_sys.simulation.logger import Queue_logger, Customer_logger
+def floor_to_index(floor):
+    return int(floor) if not 'B' in floor else -int(floor[1:]) + 1
+def index_to_floor(index):
+    return str(index) if index > 0  else 'B'+str(-(index-1))
+def compare_direction(destination, current_floor):
+    if destination > current_floor:
+        return 1
+    elif destination < current_floor:
+        return -1
+    else:
+        return 0
+def advance(currrent_floor, destination):
+    currrent_floor_index = floor_to_index(currrent_floor)
+    destination_index = floor_to_index(destination)
+    direction = compare_direction(destination_index, currrent_floor_index)
+    return index_to_floor(currrent_floor_index + direction)
 
 
 def cid_generator():
@@ -44,10 +60,16 @@ class Customer:
             infeasible = [int(floor) if not 'B' in floor else -int(floor[1:]) + 1 for floor in infeasible]
             current_floor = int(current_floor) if not 'B' in current_floor else -int(current_floor[1:]) + 1
             if direction == 1:
-                t = [floor for floor in infeasible if not floor < current_floor]
+                t = [floor for floor in infeasible if not floor <= current_floor]
             if direction == -1:
-                t = [floor for floor in infeasible if not floor > current_floor]
+                t = [floor for floor in infeasible if not floor >= current_floor]
+            # print('destination:',self.destination)
+            # print('current_floor',current_floor)
+            # print('direction', direction)
+            # print('infeasible:',infeasible)
+            # print(t)
             temp_destination_index = t[min(range(len(t)), key = lambda i: abs(t[i]-current_floor))] - direction
+            # print(temp_destination_index)
             self.temp_destination = str(temp_destination_index) if temp_destination_index > 0  else 'B'+str(-(temp_destination_index-1))
             return self.temp_destination
         return self.destination 
@@ -76,7 +98,8 @@ class Queue:
 
     def inflow(self):
         while True:
-            customers = yield self.arrival_event or self.EVENT.ELEV_TRANSFER[self.direction][self.floor]
+            customers = yield self.arrival_event | self.EVENT.ELEV_TRANSFER[self.direction][self.floor]
+            customers = list(customers.values())[0]
             logging.info('[INFLOW] Outer Call {} Floor {} '.format(
                 self.floor, 'up' if self.direction == 1 else 'down'))
 
@@ -89,7 +112,8 @@ class Queue:
                     for infeasible in sub_group_setting['infeasibles']:
 
                         # if served by current elevator
-                        if self.floor not in infeasible:
+                        if (self.floor not in infeasible) & (advance(self.floor,customer.destination) not in infeasible):
+                            customer_direction = compare_direction(floor_to_index(customer.destination), floor_to_index(self.floor))
 
                             # disable call if already assigned
                             if self.panels_state[sub_group_name] == False:
@@ -125,18 +149,22 @@ class Queue:
             self.panels_state[elevIndex[0]] = False
 
             riders = []
-
             customerIndex = 0
-            while (availible > 0) and (len(self.queue_array) > 0):
+            while (availible > 0) and (len(self.queue_array) > 0) and (customerIndex != len(self.queue_array)):
                 customer = self.queue_array[customerIndex]
 
                 # [!] Warning: if the implementation of the temp_destination is changed, last stop may fail. 
-                last_stop = customer.source
-                if not(customer.temp_destination is None):
+                
+                if customer.temp_destination is None:
+                    last_stop = customer.source
+                else:
                     last_stop = customer.temp_destination
+                
 
-                if(last_stop not in self.group_setting[elevIndex[0]]["infeasibles"][int(elevIndex[1:])]):
-                    if(self.customer_logger != None):
+                # elevator's infeasible list
+                infeasible = self.group_setting[elevIndex[0]]["infeasibles"][int(elevIndex[1:])]
+                if (self.floor not in infeasible) & (advance(self.floor,customer.destination) not in infeasible):
+                    if self.customer_logger != None:
                         yield self.env.timeout(random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX))
                         self.customer_logger.log_board(customer.cid, float(self.env.now))
                     
