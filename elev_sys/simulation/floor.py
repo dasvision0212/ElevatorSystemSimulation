@@ -167,7 +167,6 @@ class Queue:
         while True:
             # elevator arrives
             availible, elevIndex = yield self.EVENT.ELEV_ARRIVAL[self.direction][self.floor]
-
             # cancel panel
             self.panels_state[elevIndex[0]] = False
 

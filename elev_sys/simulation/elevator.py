@@ -3,7 +3,6 @@ import random
 from copy import deepcopy
 import logging
 
-from elev_sys.conf.NTUH_conf import ELEV_INFEASIBLE
 from elev_sys.conf.elevator_conf import ELEV_CONFIG
 from elev_sys.conf.log_conf import ELEVLOG_CONFIG
 from elev_sys.simulation.simple_data_structure import Mission
@@ -313,7 +312,6 @@ class Elevator:
                 # determine traveling time for 1 floor
                 t = self.travelingTime(destination, self.current_floor, source)
                 yield self.env.timeout(t)
-                self.total_movement += 1
 
                 # advance 1 floor
                 self.current_floor = self.forwards(self.current_floor, self.direction)
