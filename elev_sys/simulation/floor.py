@@ -1,11 +1,10 @@
 import simpy
-import numpy.random as random
+import numpy as np
 import pandas as pd
 import scipy.stats as st
 from collections import namedtuple
 from copy import deepcopy
 import logging
-
 from elev_sys.conf.NTUH_conf import ELEV_INFEASIBLE
 from elev_sys.conf.elevator_conf import ELEV_CONFIG
 from elev_sys.simulation.simple_data_structure import Mission
@@ -100,6 +99,7 @@ class Queue:
         while True:
             customers = yield self.arrival_event | self.EVENT.ELEV_TRANSFER[self.direction][self.floor]
             customers = list(customers.values())[0]
+
             logging.info('[INFLOW] Outer Call {} Floor {} '.format(
                 self.floor, 'up' if self.direction == 1 else 'down'))
 
@@ -188,7 +188,7 @@ class Queue:
                 infeasible = self.group_setting[elevIndex[0]]["infeasibles"][int(elevIndex[1:])]
                 if (self.floor not in infeasible) & (advance(self.floor,customer.destination) not in infeasible):
                     if self.customer_logger != None:
-                        yield self.env.timeout(random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX))
+                        yield self.env.timeout(np.random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX))
                         self.customer_logger.log_board(customer.cid, float(self.env.now))
                     
                     riders.append(customer)
@@ -210,7 +210,6 @@ class Queue:
 
             
             
-
 class Floor:
     def __init__(self, env, floor, floorIndex, direction, IAT, distination_dist, group_setting, cid_gen, EVENT:Event, 
                  queue_logger:Queue_logger=None, customer_logger:Customer_logger=None):
@@ -240,12 +239,13 @@ class Floor:
                     *self.IAT['params'][:-2], loc=self.IAT['params'][-2], scale=self.IAT['params'][-1], size=1)
             yield self.env.timeout(t)
 
+
             # 2. set number of people of arrival group
             customers = []
-            for i in range(random.randint(ELEV_CONFIG.ARRIVAL_MIN, ELEV_CONFIG.ARRIVAL_MAX)):
+            for i in range(np.random.randint(ELEV_CONFIG.ARRIVAL_MIN, ELEV_CONFIG.ARRIVAL_MAX)):
                 # 3. set customer destination based on given posibility
                 customer = Customer(self.cid_gen)
-                customer.destination = random.choice(self.distination_dist.index, p=self.distination_dist)
+                customer.destination = np.random.choice(self.distination_dist.index, p=self.distination_dist)
 
                 if(self.customer_logger != None):
                     self.customer_logger.log_appear(customer.cid, self.floor, customer.destination, float(self.env.now))

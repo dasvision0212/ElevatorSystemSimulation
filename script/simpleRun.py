@@ -7,7 +7,6 @@ from elev_sys.conf.NTUH_conf import ELEVATOR_GROUP, BUILDING_FLOOR, ELEV_INFEASI
 from elev_sys.simulation.IAT_Distribution import IAT_Distribution
 from elev_sys import *
 import simpy
-import numpy.random as random
 import pandas as pd
 import json
 
@@ -49,7 +48,7 @@ if(__name__ == "__main__"):
     # Enviornment Variable
     env = simpy.Environment()
     cid_gen = cid_generator()
-    randomSeed = int(random.rand(1)*10000)
+    randomSeed = 1234
 
     # Define Logger
     customer_logger = Customer_logger(untilTime, status=True)
@@ -64,7 +63,7 @@ if(__name__ == "__main__"):
                           elev_logger=elev_logger,
                           queue_logger=queue_logger,
                           stopList_logger=stopList_logger)
-
+    print(statistics)
     # logging
     log_folder = r"../data"
     elev_logger.to_csv(joinPath(log_folder, "elev_log.csv"))

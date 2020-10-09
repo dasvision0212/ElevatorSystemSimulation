@@ -205,7 +205,6 @@ class Elevator:
         self.direction = 0
         self.assign_event = self.env.event()
         self.finish_event = self.env.event()
-        self.total_movement = 0
         # start process
         self.env.process(self.idle())
 
@@ -215,6 +214,7 @@ class Elevator:
 
         # statistic
         self.stopNum   = 0 # the number that the elevator stop at any floor
+        self.wasteStopNum = 0
         self.moveFloorNum = 0
 
     def idle(self):
@@ -334,6 +334,8 @@ class Elevator:
                 self.elev_name, self.stop_list))
 
     def serving(self):
+        isServed = False
+
         # deal with statistic
         self.stopNum += 1
 
@@ -345,21 +347,23 @@ class Elevator:
         leaveCount = 0
         transfer_customers= []
         for i in range(len(self.riders)-1, -1, -1):
-            if self.riders[i].temp_destination ==  self.current_floor:
-                customer = self.riders.pop(i)
+            customer = self.riders.pop(i)
+            if customer.temp_destination ==  self.current_floor:
                 transfer_customers.append(customer)
                 if(self.customer_logger != None):
                     self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
 
-                leaveCount += 1
-            elif self.riders[i].destination == self.current_floor:
-                customer = self.riders.pop(i)
+            elif customer.destination == self.current_floor:
+                # do nothing
                 if(self.customer_logger != None):
                     self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
 
-                leaveCount += 1
+            leaveCount += 1
+        if leaveCount > 0:
+            isServed = True
 
         yield self.env.timeout(leaveCount*1)
+
         logging.info('[SERVING] Elev {}, {} Customers Leave'.format(
             self.elev_name, leaveCount))
 
@@ -374,20 +378,21 @@ class Elevator:
             # elevator arrive
             self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor].succeed(value=(self.capacity-len(self.riders), self.elev_name))
             self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor] = self.env.event()
-
+            
             # customers on board
             riders = yield self.EVENT.ELEV_LEAVE[self.elev_name]
+            
+            if riders:
+                isServed = True
+
             logging.info('[SERVING] Elev {}, Customers Aboard: \n {}'.format(
                 self.elev_name, [vars(i) for i in riders]))
 
             # add inner calls
             for customer in riders:
-                # print(self.current_floor, customer.destination)
-                # print('infeasible:', self.infeasible)
                 destination = customer.select_destination(self.current_floor, self.direction,  self.infeasible)
-                # print(customer.destination,destination)
-
                 self.stop_list.pushInner(self, destination)
+
             self.riders = self.riders + riders
 
             if(self.elev_logger != None):
@@ -406,6 +411,8 @@ class Elevator:
         else:
             logging.debug('[SERVING] Elev {}, currFloor {}, nextTarget {}'.format(
                 self.elev_name, self.current_floor, nextTarget))
+
+
             if displacement(self.current_floor, nextTarget) > 0:
                 self.direction = 1
             elif displacement(self.current_floor, nextTarget) < 0:
@@ -416,30 +423,33 @@ class Elevator:
                 self.stop_list.pop(self)
 
                 # customers on board
-                self.boarding()
+                self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor].succeed(value=(self.capacity-len(self.riders), self.elev_name))
+                self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor] = self.env.event()
+
+                # new customers
+                riders = yield self.EVENT.ELEV_LEAVE[self.elev_name]
+
+                if riders:
+                    isServed = True
+
+                logging.info('[SERVING] Elev {}, Customers Aboard: \n {} '.format(
+                    self.elev_name, [vars(i) for i in riders]))
+
+                for customer in riders:
+                    self.stop_list.pushInner(self, customer.select_destination(self.current_floor, self.direction, self.infeasible))
+                
+                self.riders = self.riders + riders
 
                 if(self.elev_logger != None):
                     self.elev_logger.log_serve(
                         self.elev_name, len(self.riders), self.direction, self.current_floor, float(self.env.now))
 
+                if not isServed:
+                    self.wasteStopNum += 1
+
     def travelingTime(self, destination, current, source):
         # acceleration should be considered
-        return 10
-
-    def boarding(self):
-        # boarding
-        self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor].succeed(value=(self.capacity-len(self.riders), self.elev_name))
-        self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor] = self.env.event()
-
-
-        # new customers
-        riders = yield self.EVENT.ELEV_LEAVE[self.elev_name]
-        logging.info('[SERVING] Elev {}, Customers Aboard: \n {} '.format(
-            self.elev_name, [vars(i) for i in riders]))
-#         print('[SERVING] Customers Aboard: \n  ', riders)
-        for customer in riders:
-            self.stop_list.pushInner(self, customer.select_destination(self.current_floor, self.direction, self.infeasible))
-        self.riders = self.riders + riders
+        return ELEV_CONFIG.ELEV_VELOCITY
 
     @staticmethod
     def mission_priority(mission):

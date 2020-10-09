@@ -1,5 +1,6 @@
 import simpy
 import random
+import numpy as np
 import pandas as pd
 import sys
 sys.path.append('../')
@@ -13,14 +14,12 @@ from elev_sys.conf.NTUH_conf import ELEVATOR_GROUP
 import logging
 
 def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, 
-                          randomSeed, untilTime, cid_gen=None, 
+                          randomSeed, untilTime=14400, cid_gen=None, 
                           customer_logger:Customer_logger=None, 
                           elev_logger:Elev_logger=None, 
                           queue_logger:Queue_logger=None, 
                           stopList_logger:StopList_logger=None):
-
-    random.seed(randomSeed)
-
+    np.random.seed(seed = randomSeed)
     # get the list of elevName
     sub_group_names = group_setting.keys()
     elevNameList = []
@@ -49,8 +48,4 @@ def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting
                                 stopList_logger=stopList_logger)
 
     env.run(until=untilTime)
-    print('Name',elevNameList)
-    total_movement_list = []
-    for name in elevNameList:
-        total_movement_list.append(elevator_group.sub_group['a'].elevators[name].total_movement)
     return elevator_group.get_statistics()

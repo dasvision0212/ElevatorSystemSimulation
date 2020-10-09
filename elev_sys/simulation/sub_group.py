@@ -1,5 +1,4 @@
 import logging
-import random
 import pandas as pd
 
 from elev_sys.conf.elevator_conf import ELEV_CONFIG
@@ -34,7 +33,6 @@ class SubGroup:
         while True:
             mission = yield self.EVENT.CALL[self.sub_group_name]
 
-            # candidate = random.choices(self.elevNameList, weights=[1/len(self.elevNameList)] * len(self.elevNameList))[0]
             candidate = self.bestCandidate(mission)
             self.elevators[candidate].assign_event.succeed(value=mission)
 
