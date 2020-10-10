@@ -14,7 +14,7 @@ from elev_sys.conf.NTUH_conf import ELEVATOR_GROUP
 import logging
 
 def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, 
-                          randomSeed, untilTime=14400, cid_gen=None, 
+                          randomSeed, untilTime=4400, cid_gen=None, 
                           customer_logger:Customer_logger=None, 
                           elev_logger:Elev_logger=None, 
                           queue_logger:Queue_logger=None, 

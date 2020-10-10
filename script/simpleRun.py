@@ -38,9 +38,9 @@ if(__name__ == "__main__"):
     group_setting = {
         'a': {
             'infeasibles': [
-                ['6','7','8','9','10','11','12','13','14','15'],
-                ['B4', 'B3', 'B2', 'B1', '1', '2', '3', '4', '11', '12', '13', '14', '15'],
-                ['B4', 'B3', 'B2', 'B1', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+                [ '2', '3', '4','5','6','7','8','9','10','11','12','13','14','15'],
+                ['B4', 'B3', 'B2', 'B1','6','7','8','9','10', '11', '12', '13', '14', '15'],
+                ['B4', 'B3', 'B2', 'B1', '1', '2', '3', '4']
             ]
         }
     }
@@ -58,11 +58,7 @@ if(__name__ == "__main__"):
 
     # Simulation
     statistics = runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, randomSeed, untilTime,
-                          cid_gen=cid_gen,
-                          customer_logger=customer_logger,
-                          elev_logger=elev_logger,
-                          queue_logger=queue_logger,
-                          stopList_logger=stopList_logger)
+                          cid_gen=cid_gen)
 
 
     # logging

@@ -103,34 +103,7 @@ class Queue:
             logging.info('[INFLOW] Outer Call {} Floor {} '.format(
                 self.floor, 'up' if self.direction == 1 else 'down'))
 
-            # fo each customer
-            for customer in customers:
-                # for each sub-group
-                for sub_group_name, sub_group_setting in self.group_setting.items():
-
-                    # for each elevator
-                    for infeasible in sub_group_setting['infeasibles']:
-
-                        # if served by current elevator
-                        if (self.floor not in infeasible) & (advance(self.floor,customer.destination) not in infeasible):
-                            customer_direction = compare_direction(floor_to_index(customer.destination), floor_to_index(self.floor))
-
-                            # disable call if already assigned
-                            if self.panels_state[sub_group_name] == False:
-                                self.panels_state[sub_group_name] == True
-                                mission = Mission(direction=self.direction, destination=self.floor)
-                                self.EVENT.CALL[sub_group_name].succeed(value=mission)
-                                
-                                # reactivate event
-                                self.EVENT.CALL[sub_group_name] = self.env.event()
-
-            # if(len(self.queue_array) == 0):
-            #     mission = Mission(direction=self.direction,
-            #                       destination=self.floor)
-            #     self.EVENT.CALL.succeed(value=mission)
-
-            #     # reactivate event
-            #     self.EVENT.CALL = self.env.event()
+            self.pushButton(customers)
 
             # add customers to waiting queue
             self.queue_array = self.queue_array + customers
@@ -140,10 +113,9 @@ class Queue:
             if(not self.queue_logger is None):
                 self.queue_logger.log_inflow(len(self.queue_array), self.floorIndex, self.direction, float(self.env.now))
     
-    def updatePanel():
-        # waiting for elevator leave
-        yield self.env.timeout(11)
-        for customer in self.queue_array:
+    def pushButton(self, customers):
+        # foR each customer
+        for customer in customers:
             # for each sub-group
             for sub_group_name, sub_group_setting in self.group_setting.items():
 
@@ -156,17 +128,25 @@ class Queue:
 
                         # disable call if already assigned
                         if self.panels_state[sub_group_name] == False:
-                            self.panels_state[sub_group_name] == True
+                            self.panels_state[sub_group_name] = True
                             mission = Mission(direction=self.direction, destination=self.floor)
                             self.EVENT.CALL[sub_group_name].succeed(value=mission)
                             
                             # reactivate event
                             self.EVENT.CALL[sub_group_name] = self.env.event()
 
+    def updatePanel(self):
+        # waiting for elevator leave
+        yield self.env.timeout(ELEV_CONFIG.ELEV_VELOCITY+1)
+        self.pushButton(self.queue_array)
+
     def outflow(self):
         while True:
             # elevator arrives
             availible, elevIndex = yield self.EVENT.ELEV_ARRIVAL[self.direction][self.floor]
+            # print(availible,'elevator',elevIndex,'arrives')
+            # print(self.env.now,self.floor, 'direction:',self.direction,'num:',len(self.queue_array) )
+
             # cancel panel
             self.panels_state[elevIndex[0]] = False
 
@@ -205,8 +185,10 @@ class Queue:
             # customers on board
             self.EVENT.ELEV_LEAVE[elevIndex].succeed(value=riders)
             self.EVENT.ELEV_LEAVE[elevIndex] = self.env.event()
-        
-        self.env.process(self.updatePanel())
+            # print(self.env.now,self.floor, 'direction:',self.direction,'num:',len(self.queue_array) )
+            # print(self.panels_state)
+
+            self.env.process(self.updatePanel())
 
             
             

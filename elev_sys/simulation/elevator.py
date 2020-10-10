@@ -199,7 +199,8 @@ class Elevator:
         self.infeasible = infeasible
 
         # initial states
-        self.current_floor = '1'
+        self.current_floor = [floor for floor in floorList if floor not in infeasible][0]
+        
         self.direction = 0
         self.assign_event = self.env.event()
         self.finish_event = self.env.event()
@@ -403,14 +404,13 @@ class Elevator:
         logging.info('[SERVING] Elev {}, NEXT TARGET {}'.format(
             self.elev_name, nextTarget))
 
-        if not nextTarget is None:
+        if nextTarget == None:
             logging.debug('[SERVING] Elev {}, nextTarget is None, {}'.format(
                 self.elev_name, nextTarget))
             return
         else:
             logging.debug('[SERVING] Elev {}, currFloor {}, nextTarget {}'.format(
                 self.elev_name, self.current_floor, nextTarget))
-
 
             if displacement(self.current_floor, nextTarget) > 0:
                 self.direction = 1
@@ -422,6 +422,7 @@ class Elevator:
                 self.stop_list.pop(self)
 
                 # customers on board
+                
                 self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor].succeed(value=(self.capacity-len(self.riders), self.elev_name))
                 self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor] = self.env.event()
 
