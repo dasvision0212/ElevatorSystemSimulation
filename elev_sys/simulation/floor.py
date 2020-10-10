@@ -62,13 +62,9 @@ class Customer:
                 t = [floor for floor in infeasible if not floor <= current_floor]
             if direction == -1:
                 t = [floor for floor in infeasible if not floor >= current_floor]
-            # print('destination:',self.destination)
-            # print('current_floor',current_floor)
-            # print('direction', direction)
-            # print('infeasible:',infeasible)
-            # print(t)
+ 
             temp_destination_index = t[min(range(len(t)), key = lambda i: abs(t[i]-current_floor))] - direction
-            # print(temp_destination_index)
+
             self.temp_destination = str(temp_destination_index) if temp_destination_index > 0  else 'B'+str(-(temp_destination_index-1))
             return self.temp_destination
         return self.destination 
@@ -102,6 +98,10 @@ class Queue:
     #         while True:
     #             yield self.env.timeout(10)
     #             print(self.env.now,'Floor',self.floor, 'direction',self.direction, 'num:', len(self.queue_array))
+                
+                # print(self.panels_state)
+        
+
 
     def inflow(self):
         while True:
@@ -131,8 +131,7 @@ class Queue:
                 for infeasible in sub_group_setting['infeasibles']:
                     
                     target = customer.select_destination(self.floor, self.direction, infeasible)
-                    # if not self.floor in infeasible:
-                    #     print(self.env.now,'current:',self.floor,'destination:',customer.destination,'temp:', target)
+
                     # if served by current elevator
                     if (self.floor not in infeasible) & (advance(self.floor, target) not in infeasible):
 
@@ -153,17 +152,18 @@ class Queue:
         while True:
             # elevator arrives
             availible, elevIndex = yield self.EVENT.ELEV_ARRIVAL[self.direction][self.floor]
-            # print('elevator',elevIndex,'arrives', 'space:',availible)
-            # print(self.env.now,self.floor, 'direction:',self.direction,'num:',len(self.queue_array) )
 
             # cancel panel
+            if (self.floor == '5') & (self.direction == -1):
+                print(elevIndex,availible, len(self.queue_array) )
+
             self.panels_state[elevIndex[0]] = False
 
             riders = []
             customerIndex = 0
             while (availible > 0) and (len(self.queue_array) > 0) and (customerIndex != len(self.queue_array)):
                 customer = self.queue_array[customerIndex]
-
+                # print(customerIndex)
                 # [!] Warning: if the implementation of the temp_destination is changed, last stop may fail. 
                 
                 if customer.temp_destination is None:
@@ -173,8 +173,11 @@ class Queue:
                 
 
                 # elevator's infeasible list
+                
                 infeasible = self.group_setting[elevIndex[0]]["infeasibles"][int(elevIndex[1:])]
-                if (self.floor not in infeasible) & (advance(self.floor,customer.destination) not in infeasible):
+
+                
+                if (advance(self.floor, customer.destination) not in infeasible):
                     if(not self.customer_logger is None):
                         yield self.env.timeout(np.random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX))
                         if(not self.customer_logger is None):
@@ -194,8 +197,6 @@ class Queue:
             # customers on board
             self.EVENT.ELEV_LEAVE[elevIndex].succeed(value=riders)
             self.EVENT.ELEV_LEAVE[elevIndex] = self.env.event()
-            # print(self.env.now,self.floor, 'direction:',self.direction,'num:',len(self.queue_array) )
-            # print(self.panels_state)
 
             self.env.process(self.updatePanel())
 

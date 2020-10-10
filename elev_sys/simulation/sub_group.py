@@ -61,8 +61,8 @@ class SubGroup:
         direction, source = mission
 
         if(isinstance(ELEV_CONFIG.VERSION, int)):
-            DIFFERENT_DIR_BASE = 1000
-            SAME_DIR_BACK_BASE = 2000
+            DIFFERENT_DIR_BASE = 100
+            SAME_DIR_BACK_BASE = 200
 
             minDistance = 50000000
             logging.warning("Mission: dir {}, des {}".format(direction, source))
@@ -84,6 +84,7 @@ class SubGroup:
                     
                 if source in elevator.infeasible:
                     elevator_score += 50000000
+                
                 if advance(source, direction) in elevator.infeasible:
                     elevator_score += 50000000
 
@@ -98,8 +99,6 @@ class SubGroup:
         logging.warning("best: {}".format(bestElevator))
         logging.warning("---------------------------------------------")
 
-        # if source == '5':
-        #     print(self.env.now,'assign',bestElevator)
         return bestElevator
 
     def get_statistics(self):
