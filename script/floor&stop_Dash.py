@@ -14,7 +14,7 @@ import sys
 
 ###########  import data  #############
 
-data = pd.read_csv('../data/simulation_multipleTimes.csv')
+data = pd.read_csv('../data/floor_count.csv',columns = ['location','elevator_subgroup_number','policy_middle_floor','elevator_name','count_type','count'])
 
 locationList = data.location.unique()
 elevSup_NumPairList = data.elevator_subgroup_number.unique()
@@ -31,23 +31,17 @@ app.layout = html.Div([
     html.H2(children='stop count & floor count'),
     html.Div([
         html.Label('電梯組'),
-    	dcc.Dropdown(
-	        id="location",
-	        options=[{'label': i, 'value': i} for i in locationList],
-	        value='研究大樓'
-    	),
+        dcc.Dropdown(
+            id="location",
+            options=[{'label': i, 'value': i} for i in locationList],
+            value='研究大樓'
+        ),
         html.Label('電梯分隔樓層'),
-    	dcc.Dropdown(
+        dcc.Dropdown(
                 id='middle_floor',
                 options=[{'label':i, 'value':i} for i in middle_floorList],
                 value='7'
-    	),
-        html.Label('小電梯組'),
-    	dcc.Dropdown(
-                id='elevSup_NumPair',
-                options=[{'label':i, 'value':i} for i in elevSup_NumPairList],
-                value='[2, 1]'
-    	)
+        )
     ],style={'width': '15%', 'display': 'inline-block'}),
     dcc.Graph(
         id="GraphMeasurement"
@@ -64,19 +58,18 @@ app.layout = html.Div([
 @app.callback(
     Output('GraphMeasurement','figure'),
     [Input('location','value'),
-    Input('middle_floor','value'),
-    Input('elevSup_NumPair','value')
+    Input('middle_floor','value')
     ]
 )
 
 
 
-def update_graph(location, middle_floor,elevSup_NumPair):
-    df = data[(data["location"] == location) & (data["policy_middle_floor"] == middle_floor) & (data["elevator_subgroup_number"] == elevSup_NumPair) ]
+def update_graph(location, middle_floor):
+    df = data[(data["location"] == location) & (data["policy_middle_floor"] == middle_floor) ]
     if len(df) == 0:
         pass
     else:
-        fig = px.histogram(df, x= "Time", title=location, facet_col="TimeType", color="TimeType")
+        fig = px.histogram(df, x= "floor_count", title=location, facet_col="policy_middle_floor", color="policy_middle_floor")
     fig.update_layout(title_text=location)
 
     return fig
@@ -85,7 +78,6 @@ def update_graph(location, middle_floor,elevSup_NumPair):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
-
 
 
 

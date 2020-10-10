@@ -4,13 +4,15 @@ from elev_sys.animation.env import Env
 
 class Elevator:
     default_floor = 1
-    def __init__(self, env:Env, canvas, posConfig, name, index, log, floorList):
+    def __init__(self, env:Env, canvas, posConfig, name, index, log, floorList, start_floor):
         self.posConfig = posConfig
         self.log = log
         self.env = env
 
         base_floor = int(floorList[0]) if not 'B' in floorList[0] else -int(floorList[0][1:]) + 1
-        self.floorIndex = Elevator.default_floor-base_floor # 1st floort is not definitely on index 0, e.g. ["B1", "1"]
+        start_floor = int(start_floor) if not 'B' in start_floor else -int(start_floor[1:]) + 1
+        
+        self.floorIndex = start_floor - base_floor # 1st floort is not definitely on index 0, e.g. ["B1", "1"]
         self.name = name
         
         self.coord1 = [self.posConfig.building_left + self.posConfig.building_wall + \
