@@ -216,6 +216,16 @@ class Elevator:
         self.wasteStopNum = 0
         self.moveFloorNum = 0
 
+    #     self.env.process(self.checkpanel())
+    # def checkpanel(self):
+    #     if (self.elev_name == 'a1'):
+    #         while True:
+    #             yield self.env.timeout(10)
+    #             print(self.env.now,self.elev_name,'up',self.stop_list._list[1][8])
+                # print(self.elev_name,'down',self.stop_list._list[-1][8])
+            # print(self.env.now,self.elev_name,'space:',len(self.riders),'pass by floor:',self.current_floor )
+
+
     def idle(self):
         logging.info('[IDLE] Elev {} Activated'.format(self.elev_name))
 
@@ -279,8 +289,8 @@ class Elevator:
 
                     before = nextTarget
 
-                    self.stop_list.pushOuter(
-                        self, mission.direction, mission.destination)
+                    self.stop_list.pushOuter(self, mission.direction, mission.destination)
+
                     logging.debug('[ONMISSION] Elev {}, STOP LIST {}'.format(
                         self.elev_name, self.stop_list))
 
@@ -295,7 +305,9 @@ class Elevator:
 
             logging.info('[ONMISSION] Elev {}, Arrive At {} Floor'.format(
                 self.elev_name, self.current_floor))
+
             yield self.env.process(self.serving())
+
             logging.info('[Afer Serving] Elev {}, rider {}'.format(
                 self.elev_name, [(vars(i)) for i in self.riders]))
 
@@ -380,7 +392,7 @@ class Elevator:
             
             # customers on board
             riders = yield self.EVENT.ELEV_LEAVE[self.elev_name]
-            # print(self.elev_name,'space:',len(self.riders),'customers:',len(riders))
+
             if riders:
                 isServed = True
 

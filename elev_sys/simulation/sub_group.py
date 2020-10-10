@@ -48,7 +48,7 @@ class SubGroup:
             mission = yield self.EVENT.CALL[self.sub_group_name]
 
             candidate = self.bestCandidate(mission)
-            # print('assign',candidate,self.env.now)
+            
             self.elevators[candidate].assign_event.succeed(value=mission)
 
             yield self.elevators[candidate].finish_event
@@ -98,6 +98,8 @@ class SubGroup:
         logging.warning("best: {}".format(bestElevator))
         logging.warning("---------------------------------------------")
 
+        # if source == '5':
+        #     print(self.env.now,'assign',bestElevator)
         return bestElevator
 
     def get_statistics(self):

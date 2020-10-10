@@ -94,6 +94,14 @@ class Queue:
         self.EVENT = EVENT
         self.queue_logger = queue_logger
         self.customer_logger = customer_logger
+    
+    #     self.env.process(self.checkpanel())
+    # def checkpanel(self):
+    
+    #     if (self.floor == '5') & (self.direction == -1):
+    #         while True:
+    #             yield self.env.timeout(10)
+    #             print(self.env.now,'Floor',self.floor, 'direction',self.direction, 'num:', len(self.queue_array))
 
     def inflow(self):
         while True:
@@ -121,17 +129,18 @@ class Queue:
 
                 # for each elevator
                 for infeasible in sub_group_setting['infeasibles']:
-
+                    
+                    target = customer.select_destination(self.floor, self.direction, infeasible)
+                    # if not self.floor in infeasible:
+                    #     print(self.env.now,'current:',self.floor,'destination:',customer.destination,'temp:', target)
                     # if served by current elevator
-                    if (self.floor not in infeasible) & (advance(self.floor,customer.destination) not in infeasible):
-                        customer_direction = compare_direction(floor_to_index(customer.destination), floor_to_index(self.floor))
+                    if (self.floor not in infeasible) & (advance(self.floor, target) not in infeasible):
 
                         # disable call if already assigned
                         if self.panels_state[sub_group_name] == False:
                             self.panels_state[sub_group_name] = True
                             mission = Mission(direction=self.direction, destination=self.floor)
 
-                            # print('floor',self.floor, 'direction',self.direction, 'num', len(self.queue_array), self.env.now)
                             self.EVENT.CALL[sub_group_name].succeed(value=mission)
                             self.EVENT.CALL[sub_group_name] = self.env.event()
 
