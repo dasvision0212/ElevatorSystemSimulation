@@ -70,7 +70,7 @@ class Animation:
         
         # widget
         self.building = Building(self.env, self.canvas, self.posConfig, self.building_name, 
-                                 self.elev_log, self.queue_log,elevNameList, floorList)
+                                 self.elev_log, self.queue_log, elevNameList, floorList, elev_infeasible)
         
         self.timer = Timer(self.env, self.canvas, self.posConfig)
         
