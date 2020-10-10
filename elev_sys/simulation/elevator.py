@@ -217,13 +217,13 @@ class Elevator:
         self.wasteStopNum = 0
         self.moveFloorNum = 0
 
-        self.env.process(self.checkpanel())
-    def checkpanel(self):
-        if (self.elev_name == 'a1'):
-            while True:
-                yield self.env.timeout(10)
-                if self.env.now > 3000:
-                    print(self.elev_name,self.direction, self.current_floor,'down',self.stop_list._list[-1][9:])
+    #     self.env.process(self.checkpanel())
+    # def checkpanel(self):
+    #     if (self.elev_name == 'a1'):
+    #         while True:
+    #             yield self.env.timeout(10)
+    #             if self.env.now > 3000:
+    #                 print(self.elev_name,self.direction, self.current_floor,'down',self.stop_list._list[-1][9:])
 
 
     def idle(self):

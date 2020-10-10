@@ -91,15 +91,15 @@ class Queue:
         self.queue_logger = queue_logger
         self.customer_logger = customer_logger
     
-        self.env.process(self.checkpanel())
-    def checkpanel(self):
+    #     self.env.process(self.checkpanel())
+    # def checkpanel(self):
     
-        if (self.floor == '5') & (self.direction == -1):
-            while True:
-                yield self.env.timeout(10)
-                print(self.env.now,'Floor',self.floor, 'direction',self.direction, 'num:', len(self.queue_array))
-                # if self.env.now > 3000:
-                #     print(self.panels_state)
+    #     if (self.floor == '5') & (self.direction == -1):
+    #         while True:
+    #             yield self.env.timeout(10)
+    #             print(self.env.now,'Floor',self.floor, 'direction',self.direction, 'num:', len(self.queue_array))
+                
+                # print(self.panels_state)
         
 
 
