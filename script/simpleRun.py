@@ -58,7 +58,11 @@ if(__name__ == "__main__"):
 
     # Simulation
     statistics = runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, randomSeed, untilTime,
-                          cid_gen=cid_gen)
+                          cid_gen=cid_gen,
+                          customer_logger=customer_logger,
+                          elev_logger=elev_logger,
+                          queue_logger=queue_logger,
+                          stopList_logger=stopList_logger)
 
 
     # logging
