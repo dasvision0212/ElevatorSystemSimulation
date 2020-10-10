@@ -47,5 +47,5 @@ def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting
                                 elev_logger=elev_logger, 
                                 stopList_logger=stopList_logger)
 
-    env.run(until=4000)
+    env.run(until=untilTime)
     return elevator_group.get_statistics()
