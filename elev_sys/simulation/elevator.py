@@ -200,7 +200,8 @@ class Elevator:
 
         # initial states
         self.current_floor = [floor for floor in floorList if floor not in infeasible][0]
-        
+        self.available = [floor for floor in floorList if floor not in infeasible]
+
         self.direction = 0
         self.assign_event = self.env.event()
         self.finish_event = self.env.event()
@@ -216,14 +217,13 @@ class Elevator:
         self.wasteStopNum = 0
         self.moveFloorNum = 0
 
-    #     self.env.process(self.checkpanel())
-    # def checkpanel(self):
-    #     if (self.elev_name == 'a1'):
-    #         while True:
-    #             yield self.env.timeout(10)
-    #             print(self.env.now,self.elev_name,'up',self.stop_list._list[1][8])
-                # print(self.elev_name,'down',self.stop_list._list[-1][8])
-            # print(self.env.now,self.elev_name,'space:',len(self.riders),'pass by floor:',self.current_floor )
+        self.env.process(self.checkpanel())
+    def checkpanel(self):
+        if (self.elev_name == 'a1'):
+            while True:
+                yield self.env.timeout(10)
+                if self.env.now > 3000:
+                    print(self.elev_name,self.direction, self.current_floor,'down',self.stop_list._list[-1][9:])
 
 
     def idle(self):
@@ -378,13 +378,16 @@ class Elevator:
         logging.info('[SERVING] Elev {}, {} Customers Leave'.format(
             self.elev_name, leaveCount))
 
+
+        # if (self.elev_name == 'a1'):
+        #     print(self.elev_name,self.direction, self.current_floor,'down',self.stop_list._list[-1][9:])
         if transfer_customers:
             self.EVENT.ELEV_TRANSFER[self.direction][self.current_floor].succeed(value=transfer_customers)
             self.EVENT.ELEV_TRANSFER[self.direction][self.current_floor] = self.env.event()
 
         # The common situation, not on the peak
-        if not((self.current_floor == self.floorList[-1] and self.direction == 1) or
-               (self.current_floor == self.floorList[0] and self.direction == -1)):
+        if not((self.current_floor == self.available[-1] and self.direction == 1) or
+               (self.current_floor == self.available[0] and self.direction == -1)):
 
             # elevator arrive
             self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor].succeed(value=(self.capacity-len(self.riders), self.elev_name))
