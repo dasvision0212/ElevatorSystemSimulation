@@ -380,7 +380,7 @@ class Elevator:
             
             # customers on board
             riders = yield self.EVENT.ELEV_LEAVE[self.elev_name]
-            
+            # print(self.elev_name,'space:',len(self.riders),'customers:',len(riders))
             if riders:
                 isServed = True
 

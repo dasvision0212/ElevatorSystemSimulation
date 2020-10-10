@@ -6,6 +6,20 @@ from elev_sys.simulation.elevator import Elevator, displacement
 from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.logger import (Customer_logger, Elev_logger, StopList_logger)
 
+def floor_to_index(floor):
+    return int(floor) if not 'B' in floor else -int(floor[1:]) + 1
+def index_to_floor(index):
+    return str(index) if index > 0  else 'B'+str(-(index-1))
+def compare_direction(destination, current_floor):
+    if destination > current_floor:
+        return 1
+    elif destination < current_floor:
+        return -1
+    else:
+        return 0
+def advance(currrent_floor, direction):
+    currrent_floor_index = floor_to_index(currrent_floor)
+    return index_to_floor(currrent_floor_index + direction)
 
 class SubGroup:
     def __init__(self, env, floorList,  sub_group_name, sub_group_setting, EVENT, 
@@ -34,6 +48,7 @@ class SubGroup:
             mission = yield self.EVENT.CALL[self.sub_group_name]
 
             candidate = self.bestCandidate(mission)
+            # print('assign',candidate,self.env.now)
             self.elevators[candidate].assign_event.succeed(value=mission)
 
             yield self.elevators[candidate].finish_event
@@ -68,6 +83,8 @@ class SubGroup:
                     elevator_score  = SAME_DIR_BACK_BASE + displacement(elevator.current_floor, source) * -elevator.direction
                     
                 if source in elevator.infeasible:
+                    elevator_score += 50000000
+                if advance(source, direction) in elevator.infeasible:
                     elevator_score += 50000000
 
                 if(elevator_score < minDistance):

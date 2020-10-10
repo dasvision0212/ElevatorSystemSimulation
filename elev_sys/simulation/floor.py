@@ -130,9 +130,9 @@ class Queue:
                         if self.panels_state[sub_group_name] == False:
                             self.panels_state[sub_group_name] = True
                             mission = Mission(direction=self.direction, destination=self.floor)
+
+                            # print('floor',self.floor, 'direction',self.direction, 'num', len(self.queue_array), self.env.now)
                             self.EVENT.CALL[sub_group_name].succeed(value=mission)
-                            
-                            # reactivate event
                             self.EVENT.CALL[sub_group_name] = self.env.event()
 
     def updatePanel(self):
@@ -144,7 +144,7 @@ class Queue:
         while True:
             # elevator arrives
             availible, elevIndex = yield self.EVENT.ELEV_ARRIVAL[self.direction][self.floor]
-            # print(availible,'elevator',elevIndex,'arrives')
+            # print('elevator',elevIndex,'arrives', 'space:',availible)
             # print(self.env.now,self.floor, 'direction:',self.direction,'num:',len(self.queue_array) )
 
             # cancel panel
