@@ -1,5 +1,6 @@
 import simpy
 import random
+import numpy as np
 from copy import deepcopy
 import logging
 
@@ -374,7 +375,8 @@ class Elevator:
         if leaveCount > 0:
             isServed = True
 
-        yield self.env.timeout(leaveCount*1) # !!!
+        walking_time = [np.random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX) for i in range(leaveCount)]
+        yield self.env.timeout(sum(walking_time))
 
         logging.info('[SERVING] Elev {}, {} Customers Leave'.format(
             self.elev_name, leaveCount))

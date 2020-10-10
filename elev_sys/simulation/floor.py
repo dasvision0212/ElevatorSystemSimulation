@@ -161,24 +161,12 @@ class Queue:
             # cancel panel
             self.panels_state[elevIndex[0]] = False
 
-            # if (self.floor == '5') & (self.direction == -1):
-            #     print(elevIndex,'avail:',availible, 'customers:',len(self.queue_array) )
-
             riders = []
             customerIndex = 0
             while (availible > 0) and (len(self.queue_array) > 0) and (customerIndex != len(self.queue_array)):
                 customer = self.queue_array[customerIndex]
-                # print(customerIndex)
-                # [!] Warning: if the implementation of the temp_destination is changed, last stop may fail. 
                 
-                if customer.temp_destination is None:
-                    last_stop = customer.source
-                else:
-                    last_stop = customer.temp_destination
-                
-
                 # elevator's infeasible list
-                
                 infeasible = self.group_setting[elevIndex[0]]["infeasibles"][int(elevIndex[1:])]
 
                 
@@ -202,8 +190,8 @@ class Queue:
             # customers on board
             self.EVENT.ELEV_LEAVE[elevIndex].succeed(value=riders)
             self.EVENT.ELEV_LEAVE[elevIndex] = self.env.event()
-            # if (self.floor == '5') & (self.direction == -1):
-            #     print(elevIndex,availible, len(self.queue_array) )
+
+
             self.env.process(self.updatePanel())
 
             
