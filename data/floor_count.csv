@@ -1,600 +1,1801 @@
-0,研究大樓,"[2, 1]",7,a0,count floor,85.0,
-1,研究大樓,"[2, 1]",7,a1,count floor,74.0,
-2,研究大樓,"[2, 1]",7,b0,count floor,82.0,
-3,研究大樓,"[2, 1]",7,a0,count stop,,85.0
-4,研究大樓,"[2, 1]",7,a1,count stop,,74.0
-5,研究大樓,"[2, 1]",7,b0,count stop,,82.0
-6,研究大樓,"[2, 1]",7,a0,count floor,78.0,
-7,研究大樓,"[2, 1]",7,a1,count floor,59.0,
-8,研究大樓,"[2, 1]",7,b0,count floor,82.0,
-9,研究大樓,"[2, 1]",7,a0,count stop,,78.0
-10,研究大樓,"[2, 1]",7,a1,count stop,,59.0
-11,研究大樓,"[2, 1]",7,b0,count stop,,82.0
-12,研究大樓,"[2, 1]",7,a0,count floor,75.0,
-13,研究大樓,"[2, 1]",7,a1,count floor,59.0,
-14,研究大樓,"[2, 1]",7,b0,count floor,82.0,
-15,研究大樓,"[2, 1]",7,a0,count stop,,75.0
-16,研究大樓,"[2, 1]",7,a1,count stop,,59.0
-17,研究大樓,"[2, 1]",7,b0,count stop,,82.0
-18,研究大樓,"[2, 1]",7,a0,count floor,61.0,
-19,研究大樓,"[2, 1]",7,a1,count floor,76.0,
-20,研究大樓,"[2, 1]",7,b0,count floor,77.0,
-21,研究大樓,"[2, 1]",7,a0,count stop,,61.0
-22,研究大樓,"[2, 1]",7,a1,count stop,,76.0
-23,研究大樓,"[2, 1]",7,b0,count stop,,77.0
-24,研究大樓,"[2, 1]",7,a0,count floor,80.0,
-25,研究大樓,"[2, 1]",7,a1,count floor,63.0,
-26,研究大樓,"[2, 1]",7,b0,count floor,87.0,
-27,研究大樓,"[2, 1]",7,a0,count stop,,80.0
-28,研究大樓,"[2, 1]",7,a1,count stop,,63.0
-29,研究大樓,"[2, 1]",7,b0,count stop,,87.0
-30,研究大樓,"[2, 1]",7,a0,count floor,83.0,
-31,研究大樓,"[2, 1]",7,a1,count floor,76.0,
-32,研究大樓,"[2, 1]",7,b0,count floor,89.0,
-33,研究大樓,"[2, 1]",7,a0,count stop,,83.0
-34,研究大樓,"[2, 1]",7,a1,count stop,,76.0
-35,研究大樓,"[2, 1]",7,b0,count stop,,89.0
-36,研究大樓,"[2, 1]",7,a0,count floor,71.0,
-37,研究大樓,"[2, 1]",7,a1,count floor,73.0,
-38,研究大樓,"[2, 1]",7,b0,count floor,85.0,
-39,研究大樓,"[2, 1]",7,a0,count stop,,71.0
-40,研究大樓,"[2, 1]",7,a1,count stop,,73.0
-41,研究大樓,"[2, 1]",7,b0,count stop,,85.0
-42,研究大樓,"[2, 1]",7,a0,count floor,83.0,
-43,研究大樓,"[2, 1]",7,a1,count floor,60.0,
-44,研究大樓,"[2, 1]",7,b0,count floor,85.0,
-45,研究大樓,"[2, 1]",7,a0,count stop,,83.0
-46,研究大樓,"[2, 1]",7,a1,count stop,,60.0
-47,研究大樓,"[2, 1]",7,b0,count stop,,85.0
-48,研究大樓,"[2, 1]",7,a0,count floor,67.0,
-49,研究大樓,"[2, 1]",7,a1,count floor,51.0,
-50,研究大樓,"[2, 1]",7,b0,count floor,76.0,
-51,研究大樓,"[2, 1]",7,a0,count stop,,67.0
-52,研究大樓,"[2, 1]",7,a1,count stop,,51.0
-53,研究大樓,"[2, 1]",7,b0,count stop,,76.0
-54,研究大樓,"[2, 1]",7,a0,count floor,72.0,
-55,研究大樓,"[2, 1]",7,a1,count floor,75.0,
-56,研究大樓,"[2, 1]",7,b0,count floor,88.0,
-57,研究大樓,"[2, 1]",7,a0,count stop,,72.0
-58,研究大樓,"[2, 1]",7,a1,count stop,,75.0
-59,研究大樓,"[2, 1]",7,b0,count stop,,88.0
-60,研究大樓,"[2, 1]",7,a0,count floor,78.0,
-61,研究大樓,"[2, 1]",7,a1,count floor,61.0,
-62,研究大樓,"[2, 1]",7,b0,count floor,88.0,
-63,研究大樓,"[2, 1]",7,a0,count stop,,78.0
-64,研究大樓,"[2, 1]",7,a1,count stop,,61.0
-65,研究大樓,"[2, 1]",7,b0,count stop,,88.0
-66,研究大樓,"[2, 1]",7,a0,count floor,61.0,
-67,研究大樓,"[2, 1]",7,a1,count floor,53.0,
-68,研究大樓,"[2, 1]",7,b0,count floor,85.0,
-69,研究大樓,"[2, 1]",7,a0,count stop,,61.0
-70,研究大樓,"[2, 1]",7,a1,count stop,,53.0
-71,研究大樓,"[2, 1]",7,b0,count stop,,85.0
-72,研究大樓,"[2, 1]",7,a0,count floor,67.0,
-73,研究大樓,"[2, 1]",7,a1,count floor,87.0,
-74,研究大樓,"[2, 1]",7,b0,count floor,80.0,
-75,研究大樓,"[2, 1]",7,a0,count stop,,67.0
-76,研究大樓,"[2, 1]",7,a1,count stop,,87.0
-77,研究大樓,"[2, 1]",7,b0,count stop,,80.0
-78,研究大樓,"[2, 1]",7,a0,count floor,49.0,
-79,研究大樓,"[2, 1]",7,a1,count floor,72.0,
-80,研究大樓,"[2, 1]",7,b0,count floor,74.0,
-81,研究大樓,"[2, 1]",7,a0,count stop,,49.0
-82,研究大樓,"[2, 1]",7,a1,count stop,,72.0
-83,研究大樓,"[2, 1]",7,b0,count stop,,74.0
-84,研究大樓,"[2, 1]",7,a0,count floor,74.0,
-85,研究大樓,"[2, 1]",7,a1,count floor,78.0,
-86,研究大樓,"[2, 1]",7,b0,count floor,85.0,
-87,研究大樓,"[2, 1]",7,a0,count stop,,74.0
-88,研究大樓,"[2, 1]",7,a1,count stop,,78.0
-89,研究大樓,"[2, 1]",7,b0,count stop,,85.0
-90,研究大樓,"[2, 1]",7,a0,count floor,64.0,
-91,研究大樓,"[2, 1]",7,a1,count floor,74.0,
-92,研究大樓,"[2, 1]",7,b0,count floor,84.0,
-93,研究大樓,"[2, 1]",7,a0,count stop,,64.0
-94,研究大樓,"[2, 1]",7,a1,count stop,,74.0
-95,研究大樓,"[2, 1]",7,b0,count stop,,84.0
-96,研究大樓,"[2, 1]",7,a0,count floor,55.0,
-97,研究大樓,"[2, 1]",7,a1,count floor,65.0,
-98,研究大樓,"[2, 1]",7,b0,count floor,89.0,
-99,研究大樓,"[2, 1]",7,a0,count stop,,55.0
-100,研究大樓,"[2, 1]",7,a1,count stop,,65.0
-101,研究大樓,"[2, 1]",7,b0,count stop,,89.0
-102,研究大樓,"[2, 1]",7,a0,count floor,92.0,
-103,研究大樓,"[2, 1]",7,a1,count floor,86.0,
-104,研究大樓,"[2, 1]",7,b0,count floor,81.0,
-105,研究大樓,"[2, 1]",7,a0,count stop,,92.0
-106,研究大樓,"[2, 1]",7,a1,count stop,,86.0
-107,研究大樓,"[2, 1]",7,b0,count stop,,81.0
-108,研究大樓,"[2, 1]",7,a0,count floor,81.0,
-109,研究大樓,"[2, 1]",7,a1,count floor,60.0,
-110,研究大樓,"[2, 1]",7,b0,count floor,31.0,
-111,研究大樓,"[2, 1]",7,a0,count stop,,81.0
-112,研究大樓,"[2, 1]",7,a1,count stop,,60.0
-113,研究大樓,"[2, 1]",7,b0,count stop,,31.0
-114,研究大樓,"[2, 1]",7,a0,count floor,83.0,
-115,研究大樓,"[2, 1]",7,a1,count floor,74.0,
-116,研究大樓,"[2, 1]",7,b0,count floor,91.0,
-117,研究大樓,"[2, 1]",7,a0,count stop,,83.0
-118,研究大樓,"[2, 1]",7,a1,count stop,,74.0
-119,研究大樓,"[2, 1]",7,b0,count stop,,91.0
-120,研究大樓,"[2, 1]",7,a0,count floor,78.0,
-121,研究大樓,"[2, 1]",7,a1,count floor,75.0,
-122,研究大樓,"[2, 1]",7,b0,count floor,81.0,
-123,研究大樓,"[2, 1]",7,a0,count stop,,78.0
-124,研究大樓,"[2, 1]",7,a1,count stop,,75.0
-125,研究大樓,"[2, 1]",7,b0,count stop,,81.0
-126,研究大樓,"[2, 1]",7,a0,count floor,73.0,
-127,研究大樓,"[2, 1]",7,a1,count floor,64.0,
-128,研究大樓,"[2, 1]",7,b0,count floor,77.0,
-129,研究大樓,"[2, 1]",7,a0,count stop,,73.0
-130,研究大樓,"[2, 1]",7,a1,count stop,,64.0
-131,研究大樓,"[2, 1]",7,b0,count stop,,77.0
-132,研究大樓,"[2, 1]",7,a0,count floor,66.0,
-133,研究大樓,"[2, 1]",7,a1,count floor,62.0,
-134,研究大樓,"[2, 1]",7,b0,count floor,77.0,
-135,研究大樓,"[2, 1]",7,a0,count stop,,66.0
-136,研究大樓,"[2, 1]",7,a1,count stop,,62.0
-137,研究大樓,"[2, 1]",7,b0,count stop,,77.0
-138,研究大樓,"[2, 1]",7,a0,count floor,83.0,
-139,研究大樓,"[2, 1]",7,a1,count floor,62.0,
-140,研究大樓,"[2, 1]",7,b0,count floor,90.0,
-141,研究大樓,"[2, 1]",7,a0,count stop,,83.0
-142,研究大樓,"[2, 1]",7,a1,count stop,,62.0
-143,研究大樓,"[2, 1]",7,b0,count stop,,90.0
-144,研究大樓,"[2, 1]",7,a0,count floor,56.0,
-145,研究大樓,"[2, 1]",7,a1,count floor,58.0,
-146,研究大樓,"[2, 1]",7,b0,count floor,40.0,
-147,研究大樓,"[2, 1]",7,a0,count stop,,56.0
-148,研究大樓,"[2, 1]",7,a1,count stop,,58.0
-149,研究大樓,"[2, 1]",7,b0,count stop,,40.0
-150,研究大樓,"[2, 1]",7,a0,count floor,71.0,
-151,研究大樓,"[2, 1]",7,a1,count floor,79.0,
-152,研究大樓,"[2, 1]",7,b0,count floor,84.0,
-153,研究大樓,"[2, 1]",7,a0,count stop,,71.0
-154,研究大樓,"[2, 1]",7,a1,count stop,,79.0
-155,研究大樓,"[2, 1]",7,b0,count stop,,84.0
-156,研究大樓,"[2, 1]",7,a0,count floor,73.0,
-157,研究大樓,"[2, 1]",7,a1,count floor,67.0,
-158,研究大樓,"[2, 1]",7,b0,count floor,87.0,
-159,研究大樓,"[2, 1]",7,a0,count stop,,73.0
-160,研究大樓,"[2, 1]",7,a1,count stop,,67.0
-161,研究大樓,"[2, 1]",7,b0,count stop,,87.0
-162,研究大樓,"[2, 1]",7,a0,count floor,48.0,
-163,研究大樓,"[2, 1]",7,a1,count floor,59.0,
-164,研究大樓,"[2, 1]",7,b0,count floor,68.0,
-165,研究大樓,"[2, 1]",7,a0,count stop,,48.0
-166,研究大樓,"[2, 1]",7,a1,count stop,,59.0
-167,研究大樓,"[2, 1]",7,b0,count stop,,68.0
-168,研究大樓,"[2, 1]",7,a0,count floor,55.0,
-169,研究大樓,"[2, 1]",7,a1,count floor,67.0,
-170,研究大樓,"[2, 1]",7,b0,count floor,85.0,
-171,研究大樓,"[2, 1]",7,a0,count stop,,55.0
-172,研究大樓,"[2, 1]",7,a1,count stop,,67.0
-173,研究大樓,"[2, 1]",7,b0,count stop,,85.0
-174,研究大樓,"[2, 1]",7,a0,count floor,69.0,
-175,研究大樓,"[2, 1]",7,a1,count floor,68.0,
-176,研究大樓,"[2, 1]",7,b0,count floor,85.0,
-177,研究大樓,"[2, 1]",7,a0,count stop,,69.0
-178,研究大樓,"[2, 1]",7,a1,count stop,,68.0
-179,研究大樓,"[2, 1]",7,b0,count stop,,85.0
-180,研究大樓,"[2, 1]",7,a0,count floor,68.0,
-181,研究大樓,"[2, 1]",7,a1,count floor,73.0,
-182,研究大樓,"[2, 1]",7,b0,count floor,84.0,
-183,研究大樓,"[2, 1]",7,a0,count stop,,68.0
-184,研究大樓,"[2, 1]",7,a1,count stop,,73.0
-185,研究大樓,"[2, 1]",7,b0,count stop,,84.0
-186,研究大樓,"[2, 1]",7,a0,count floor,71.0,
-187,研究大樓,"[2, 1]",7,a1,count floor,76.0,
-188,研究大樓,"[2, 1]",7,b0,count floor,85.0,
-189,研究大樓,"[2, 1]",7,a0,count stop,,71.0
-190,研究大樓,"[2, 1]",7,a1,count stop,,76.0
-191,研究大樓,"[2, 1]",7,b0,count stop,,85.0
-192,研究大樓,"[2, 1]",7,a0,count floor,77.0,
-193,研究大樓,"[2, 1]",7,a1,count floor,72.0,
-194,研究大樓,"[2, 1]",7,b0,count floor,81.0,
-195,研究大樓,"[2, 1]",7,a0,count stop,,77.0
-196,研究大樓,"[2, 1]",7,a1,count stop,,72.0
-197,研究大樓,"[2, 1]",7,b0,count stop,,81.0
-198,研究大樓,"[2, 1]",7,a0,count floor,88.0,
-199,研究大樓,"[2, 1]",7,a1,count floor,69.0,
-200,研究大樓,"[2, 1]",7,b0,count floor,85.0,
-201,研究大樓,"[2, 1]",7,a0,count stop,,88.0
-202,研究大樓,"[2, 1]",7,a1,count stop,,69.0
-203,研究大樓,"[2, 1]",7,b0,count stop,,85.0
-204,研究大樓,"[2, 1]",7,a0,count floor,68.0,
-205,研究大樓,"[2, 1]",7,a1,count floor,61.0,
-206,研究大樓,"[2, 1]",7,b0,count floor,83.0,
-207,研究大樓,"[2, 1]",7,a0,count stop,,68.0
-208,研究大樓,"[2, 1]",7,a1,count stop,,61.0
-209,研究大樓,"[2, 1]",7,b0,count stop,,83.0
-210,研究大樓,"[2, 1]",7,a0,count floor,55.0,
-211,研究大樓,"[2, 1]",7,a1,count floor,75.0,
-212,研究大樓,"[2, 1]",7,b0,count floor,92.0,
-213,研究大樓,"[2, 1]",7,a0,count stop,,55.0
-214,研究大樓,"[2, 1]",7,a1,count stop,,75.0
-215,研究大樓,"[2, 1]",7,b0,count stop,,92.0
-216,研究大樓,"[2, 1]",7,a0,count floor,67.0,
-217,研究大樓,"[2, 1]",7,a1,count floor,63.0,
-218,研究大樓,"[2, 1]",7,b0,count floor,87.0,
-219,研究大樓,"[2, 1]",7,a0,count stop,,67.0
-220,研究大樓,"[2, 1]",7,a1,count stop,,63.0
-221,研究大樓,"[2, 1]",7,b0,count stop,,87.0
-222,研究大樓,"[2, 1]",7,a0,count floor,63.0,
-223,研究大樓,"[2, 1]",7,a1,count floor,74.0,
-224,研究大樓,"[2, 1]",7,b0,count floor,78.0,
-225,研究大樓,"[2, 1]",7,a0,count stop,,63.0
-226,研究大樓,"[2, 1]",7,a1,count stop,,74.0
-227,研究大樓,"[2, 1]",7,b0,count stop,,78.0
-228,研究大樓,"[2, 1]",7,a0,count floor,80.0,
-229,研究大樓,"[2, 1]",7,a1,count floor,81.0,
-230,研究大樓,"[2, 1]",7,b0,count floor,90.0,
-231,研究大樓,"[2, 1]",7,a0,count stop,,80.0
-232,研究大樓,"[2, 1]",7,a1,count stop,,81.0
-233,研究大樓,"[2, 1]",7,b0,count stop,,90.0
-234,研究大樓,"[2, 1]",7,a0,count floor,61.0,
-235,研究大樓,"[2, 1]",7,a1,count floor,51.0,
-236,研究大樓,"[2, 1]",7,b0,count floor,79.0,
-237,研究大樓,"[2, 1]",7,a0,count stop,,61.0
-238,研究大樓,"[2, 1]",7,a1,count stop,,51.0
-239,研究大樓,"[2, 1]",7,b0,count stop,,79.0
-240,研究大樓,"[2, 1]",7,a0,count floor,75.0,
-241,研究大樓,"[2, 1]",7,a1,count floor,64.0,
-242,研究大樓,"[2, 1]",7,b0,count floor,86.0,
-243,研究大樓,"[2, 1]",7,a0,count stop,,75.0
-244,研究大樓,"[2, 1]",7,a1,count stop,,64.0
-245,研究大樓,"[2, 1]",7,b0,count stop,,86.0
-246,研究大樓,"[2, 1]",7,a0,count floor,60.0,
-247,研究大樓,"[2, 1]",7,a1,count floor,66.0,
-248,研究大樓,"[2, 1]",7,b0,count floor,88.0,
-249,研究大樓,"[2, 1]",7,a0,count stop,,60.0
-250,研究大樓,"[2, 1]",7,a1,count stop,,66.0
-251,研究大樓,"[2, 1]",7,b0,count stop,,88.0
-252,研究大樓,"[2, 1]",7,a0,count floor,53.0,
-253,研究大樓,"[2, 1]",7,a1,count floor,65.0,
-254,研究大樓,"[2, 1]",7,b0,count floor,80.0,
-255,研究大樓,"[2, 1]",7,a0,count stop,,53.0
-256,研究大樓,"[2, 1]",7,a1,count stop,,65.0
-257,研究大樓,"[2, 1]",7,b0,count stop,,80.0
-258,研究大樓,"[2, 1]",7,a0,count floor,82.0,
-259,研究大樓,"[2, 1]",7,a1,count floor,78.0,
-260,研究大樓,"[2, 1]",7,b0,count floor,77.0,
-261,研究大樓,"[2, 1]",7,a0,count stop,,82.0
-262,研究大樓,"[2, 1]",7,a1,count stop,,78.0
-263,研究大樓,"[2, 1]",7,b0,count stop,,77.0
-264,研究大樓,"[2, 1]",7,a0,count floor,81.0,
-265,研究大樓,"[2, 1]",7,a1,count floor,87.0,
-266,研究大樓,"[2, 1]",7,b0,count floor,89.0,
-267,研究大樓,"[2, 1]",7,a0,count stop,,81.0
-268,研究大樓,"[2, 1]",7,a1,count stop,,87.0
-269,研究大樓,"[2, 1]",7,b0,count stop,,89.0
-270,研究大樓,"[2, 1]",7,a0,count floor,72.0,
-271,研究大樓,"[2, 1]",7,a1,count floor,47.0,
-272,研究大樓,"[2, 1]",7,b0,count floor,84.0,
-273,研究大樓,"[2, 1]",7,a0,count stop,,72.0
-274,研究大樓,"[2, 1]",7,a1,count stop,,47.0
-275,研究大樓,"[2, 1]",7,b0,count stop,,84.0
-276,研究大樓,"[2, 1]",7,a0,count floor,62.0,
-277,研究大樓,"[2, 1]",7,a1,count floor,59.0,
-278,研究大樓,"[2, 1]",7,b0,count floor,81.0,
-279,研究大樓,"[2, 1]",7,a0,count stop,,62.0
-280,研究大樓,"[2, 1]",7,a1,count stop,,59.0
-281,研究大樓,"[2, 1]",7,b0,count stop,,81.0
-282,研究大樓,"[2, 1]",7,a0,count floor,61.0,
-283,研究大樓,"[2, 1]",7,a1,count floor,72.0,
-284,研究大樓,"[2, 1]",7,b0,count floor,86.0,
-285,研究大樓,"[2, 1]",7,a0,count stop,,61.0
-286,研究大樓,"[2, 1]",7,a1,count stop,,72.0
-287,研究大樓,"[2, 1]",7,b0,count stop,,86.0
-288,研究大樓,"[2, 1]",7,a0,count floor,67.0,
-289,研究大樓,"[2, 1]",7,a1,count floor,46.0,
-290,研究大樓,"[2, 1]",7,b0,count floor,26.0,
-291,研究大樓,"[2, 1]",7,a0,count stop,,67.0
-292,研究大樓,"[2, 1]",7,a1,count stop,,46.0
-293,研究大樓,"[2, 1]",7,b0,count stop,,26.0
-294,研究大樓,"[2, 1]",7,a0,count floor,68.0,
-295,研究大樓,"[2, 1]",7,a1,count floor,52.0,
-296,研究大樓,"[2, 1]",7,b0,count floor,82.0,
-297,研究大樓,"[2, 1]",7,a0,count stop,,68.0
-298,研究大樓,"[2, 1]",7,a1,count stop,,52.0
-299,研究大樓,"[2, 1]",7,b0,count stop,,82.0
-300,研究大樓,"[2, 1]",7,a0,count floor,79.0,
-301,研究大樓,"[2, 1]",7,a1,count floor,67.0,
-302,研究大樓,"[2, 1]",7,b0,count floor,82.0,
-303,研究大樓,"[2, 1]",7,a0,count stop,,79.0
-304,研究大樓,"[2, 1]",7,a1,count stop,,67.0
-305,研究大樓,"[2, 1]",7,b0,count stop,,82.0
-306,研究大樓,"[2, 1]",7,a0,count floor,71.0,
-307,研究大樓,"[2, 1]",7,a1,count floor,83.0,
-308,研究大樓,"[2, 1]",7,b0,count floor,88.0,
-309,研究大樓,"[2, 1]",7,a0,count stop,,71.0
-310,研究大樓,"[2, 1]",7,a1,count stop,,83.0
-311,研究大樓,"[2, 1]",7,b0,count stop,,88.0
-312,研究大樓,"[2, 1]",7,a0,count floor,54.0,
-313,研究大樓,"[2, 1]",7,a1,count floor,76.0,
-314,研究大樓,"[2, 1]",7,b0,count floor,87.0,
-315,研究大樓,"[2, 1]",7,a0,count stop,,54.0
-316,研究大樓,"[2, 1]",7,a1,count stop,,76.0
-317,研究大樓,"[2, 1]",7,b0,count stop,,87.0
-318,研究大樓,"[2, 1]",7,a0,count floor,72.0,
-319,研究大樓,"[2, 1]",7,a1,count floor,69.0,
-320,研究大樓,"[2, 1]",7,b0,count floor,89.0,
-321,研究大樓,"[2, 1]",7,a0,count stop,,72.0
-322,研究大樓,"[2, 1]",7,a1,count stop,,69.0
-323,研究大樓,"[2, 1]",7,b0,count stop,,89.0
-324,研究大樓,"[2, 1]",7,a0,count floor,72.0,
-325,研究大樓,"[2, 1]",7,a1,count floor,78.0,
-326,研究大樓,"[2, 1]",7,b0,count floor,79.0,
-327,研究大樓,"[2, 1]",7,a0,count stop,,72.0
-328,研究大樓,"[2, 1]",7,a1,count stop,,78.0
-329,研究大樓,"[2, 1]",7,b0,count stop,,79.0
-330,研究大樓,"[2, 1]",7,a0,count floor,78.0,
-331,研究大樓,"[2, 1]",7,a1,count floor,85.0,
-332,研究大樓,"[2, 1]",7,b0,count floor,90.0,
-333,研究大樓,"[2, 1]",7,a0,count stop,,78.0
-334,研究大樓,"[2, 1]",7,a1,count stop,,85.0
-335,研究大樓,"[2, 1]",7,b0,count stop,,90.0
-336,研究大樓,"[2, 1]",7,a0,count floor,83.0,
-337,研究大樓,"[2, 1]",7,a1,count floor,74.0,
-338,研究大樓,"[2, 1]",7,b0,count floor,83.0,
-339,研究大樓,"[2, 1]",7,a0,count stop,,83.0
-340,研究大樓,"[2, 1]",7,a1,count stop,,74.0
-341,研究大樓,"[2, 1]",7,b0,count stop,,83.0
-342,研究大樓,"[2, 1]",7,a0,count floor,65.0,
-343,研究大樓,"[2, 1]",7,a1,count floor,63.0,
-344,研究大樓,"[2, 1]",7,b0,count floor,65.0,
-345,研究大樓,"[2, 1]",7,a0,count stop,,65.0
-346,研究大樓,"[2, 1]",7,a1,count stop,,63.0
-347,研究大樓,"[2, 1]",7,b0,count stop,,65.0
-348,研究大樓,"[2, 1]",7,a0,count floor,84.0,
-349,研究大樓,"[2, 1]",7,a1,count floor,64.0,
-350,研究大樓,"[2, 1]",7,b0,count floor,89.0,
-351,研究大樓,"[2, 1]",7,a0,count stop,,84.0
-352,研究大樓,"[2, 1]",7,a1,count stop,,64.0
-353,研究大樓,"[2, 1]",7,b0,count stop,,89.0
-354,研究大樓,"[2, 1]",7,a0,count floor,50.0,
-355,研究大樓,"[2, 1]",7,a1,count floor,69.0,
-356,研究大樓,"[2, 1]",7,b0,count floor,90.0,
-357,研究大樓,"[2, 1]",7,a0,count stop,,50.0
-358,研究大樓,"[2, 1]",7,a1,count stop,,69.0
-359,研究大樓,"[2, 1]",7,b0,count stop,,90.0
-360,研究大樓,"[2, 1]",7,a0,count floor,87.0,
-361,研究大樓,"[2, 1]",7,a1,count floor,67.0,
-362,研究大樓,"[2, 1]",7,b0,count floor,83.0,
-363,研究大樓,"[2, 1]",7,a0,count stop,,87.0
-364,研究大樓,"[2, 1]",7,a1,count stop,,67.0
-365,研究大樓,"[2, 1]",7,b0,count stop,,83.0
-366,研究大樓,"[2, 1]",7,a0,count floor,75.0,
-367,研究大樓,"[2, 1]",7,a1,count floor,68.0,
-368,研究大樓,"[2, 1]",7,b0,count floor,89.0,
-369,研究大樓,"[2, 1]",7,a0,count stop,,75.0
-370,研究大樓,"[2, 1]",7,a1,count stop,,68.0
-371,研究大樓,"[2, 1]",7,b0,count stop,,89.0
-372,研究大樓,"[2, 1]",7,a0,count floor,74.0,
-373,研究大樓,"[2, 1]",7,a1,count floor,74.0,
-374,研究大樓,"[2, 1]",7,b0,count floor,89.0,
-375,研究大樓,"[2, 1]",7,a0,count stop,,74.0
-376,研究大樓,"[2, 1]",7,a1,count stop,,74.0
-377,研究大樓,"[2, 1]",7,b0,count stop,,89.0
-378,研究大樓,"[2, 1]",7,a0,count floor,67.0,
-379,研究大樓,"[2, 1]",7,a1,count floor,66.0,
-380,研究大樓,"[2, 1]",7,b0,count floor,81.0,
-381,研究大樓,"[2, 1]",7,a0,count stop,,67.0
-382,研究大樓,"[2, 1]",7,a1,count stop,,66.0
-383,研究大樓,"[2, 1]",7,b0,count stop,,81.0
-384,研究大樓,"[2, 1]",7,a0,count floor,67.0,
-385,研究大樓,"[2, 1]",7,a1,count floor,66.0,
-386,研究大樓,"[2, 1]",7,b0,count floor,84.0,
-387,研究大樓,"[2, 1]",7,a0,count stop,,67.0
-388,研究大樓,"[2, 1]",7,a1,count stop,,66.0
-389,研究大樓,"[2, 1]",7,b0,count stop,,84.0
-390,研究大樓,"[2, 1]",7,a0,count floor,58.0,
-391,研究大樓,"[2, 1]",7,a1,count floor,53.0,
-392,研究大樓,"[2, 1]",7,b0,count floor,84.0,
-393,研究大樓,"[2, 1]",7,a0,count stop,,58.0
-394,研究大樓,"[2, 1]",7,a1,count stop,,53.0
-395,研究大樓,"[2, 1]",7,b0,count stop,,84.0
-396,研究大樓,"[2, 1]",7,a0,count floor,78.0,
-397,研究大樓,"[2, 1]",7,a1,count floor,83.0,
-398,研究大樓,"[2, 1]",7,b0,count floor,85.0,
-399,研究大樓,"[2, 1]",7,a0,count stop,,78.0
-400,研究大樓,"[2, 1]",7,a1,count stop,,83.0
-401,研究大樓,"[2, 1]",7,b0,count stop,,85.0
-402,研究大樓,"[2, 1]",7,a0,count floor,79.0,
-403,研究大樓,"[2, 1]",7,a1,count floor,80.0,
-404,研究大樓,"[2, 1]",7,b0,count floor,77.0,
-405,研究大樓,"[2, 1]",7,a0,count stop,,79.0
-406,研究大樓,"[2, 1]",7,a1,count stop,,80.0
-407,研究大樓,"[2, 1]",7,b0,count stop,,77.0
-408,研究大樓,"[2, 1]",7,a0,count floor,73.0,
-409,研究大樓,"[2, 1]",7,a1,count floor,70.0,
-410,研究大樓,"[2, 1]",7,b0,count floor,87.0,
-411,研究大樓,"[2, 1]",7,a0,count stop,,73.0
-412,研究大樓,"[2, 1]",7,a1,count stop,,70.0
-413,研究大樓,"[2, 1]",7,b0,count stop,,87.0
-414,研究大樓,"[2, 1]",7,a0,count floor,73.0,
-415,研究大樓,"[2, 1]",7,a1,count floor,81.0,
-416,研究大樓,"[2, 1]",7,b0,count floor,79.0,
-417,研究大樓,"[2, 1]",7,a0,count stop,,73.0
-418,研究大樓,"[2, 1]",7,a1,count stop,,81.0
-419,研究大樓,"[2, 1]",7,b0,count stop,,79.0
-420,研究大樓,"[2, 1]",7,a0,count floor,76.0,
-421,研究大樓,"[2, 1]",7,a1,count floor,75.0,
-422,研究大樓,"[2, 1]",7,b0,count floor,83.0,
-423,研究大樓,"[2, 1]",7,a0,count stop,,76.0
-424,研究大樓,"[2, 1]",7,a1,count stop,,75.0
-425,研究大樓,"[2, 1]",7,b0,count stop,,83.0
-426,研究大樓,"[2, 1]",7,a0,count floor,74.0,
-427,研究大樓,"[2, 1]",7,a1,count floor,68.0,
-428,研究大樓,"[2, 1]",7,b0,count floor,83.0,
-429,研究大樓,"[2, 1]",7,a0,count stop,,74.0
-430,研究大樓,"[2, 1]",7,a1,count stop,,68.0
-431,研究大樓,"[2, 1]",7,b0,count stop,,83.0
-432,研究大樓,"[2, 1]",7,a0,count floor,38.0,
-433,研究大樓,"[2, 1]",7,a1,count floor,47.0,
-434,研究大樓,"[2, 1]",7,b0,count floor,71.0,
-435,研究大樓,"[2, 1]",7,a0,count stop,,38.0
-436,研究大樓,"[2, 1]",7,a1,count stop,,47.0
-437,研究大樓,"[2, 1]",7,b0,count stop,,71.0
-438,研究大樓,"[2, 1]",7,a0,count floor,66.0,
-439,研究大樓,"[2, 1]",7,a1,count floor,88.0,
-440,研究大樓,"[2, 1]",7,b0,count floor,71.0,
-441,研究大樓,"[2, 1]",7,a0,count stop,,66.0
-442,研究大樓,"[2, 1]",7,a1,count stop,,88.0
-443,研究大樓,"[2, 1]",7,b0,count stop,,71.0
-444,研究大樓,"[2, 1]",7,a0,count floor,80.0,
-445,研究大樓,"[2, 1]",7,a1,count floor,87.0,
-446,研究大樓,"[2, 1]",7,b0,count floor,80.0,
-447,研究大樓,"[2, 1]",7,a0,count stop,,80.0
-448,研究大樓,"[2, 1]",7,a1,count stop,,87.0
-449,研究大樓,"[2, 1]",7,b0,count stop,,80.0
-450,研究大樓,"[2, 1]",7,a0,count floor,82.0,
-451,研究大樓,"[2, 1]",7,a1,count floor,71.0,
-452,研究大樓,"[2, 1]",7,b0,count floor,80.0,
-453,研究大樓,"[2, 1]",7,a0,count stop,,82.0
-454,研究大樓,"[2, 1]",7,a1,count stop,,71.0
-455,研究大樓,"[2, 1]",7,b0,count stop,,80.0
-456,研究大樓,"[2, 1]",7,a0,count floor,74.0,
-457,研究大樓,"[2, 1]",7,a1,count floor,64.0,
-458,研究大樓,"[2, 1]",7,b0,count floor,87.0,
-459,研究大樓,"[2, 1]",7,a0,count stop,,74.0
-460,研究大樓,"[2, 1]",7,a1,count stop,,64.0
-461,研究大樓,"[2, 1]",7,b0,count stop,,87.0
-462,研究大樓,"[2, 1]",7,a0,count floor,70.0,
-463,研究大樓,"[2, 1]",7,a1,count floor,55.0,
-464,研究大樓,"[2, 1]",7,b0,count floor,84.0,
-465,研究大樓,"[2, 1]",7,a0,count stop,,70.0
-466,研究大樓,"[2, 1]",7,a1,count stop,,55.0
-467,研究大樓,"[2, 1]",7,b0,count stop,,84.0
-468,研究大樓,"[2, 1]",7,a0,count floor,70.0,
-469,研究大樓,"[2, 1]",7,a1,count floor,78.0,
-470,研究大樓,"[2, 1]",7,b0,count floor,82.0,
-471,研究大樓,"[2, 1]",7,a0,count stop,,70.0
-472,研究大樓,"[2, 1]",7,a1,count stop,,78.0
-473,研究大樓,"[2, 1]",7,b0,count stop,,82.0
-474,研究大樓,"[2, 1]",7,a0,count floor,40.0,
-475,研究大樓,"[2, 1]",7,a1,count floor,47.0,
-476,研究大樓,"[2, 1]",7,b0,count floor,76.0,
-477,研究大樓,"[2, 1]",7,a0,count stop,,40.0
-478,研究大樓,"[2, 1]",7,a1,count stop,,47.0
-479,研究大樓,"[2, 1]",7,b0,count stop,,76.0
-480,研究大樓,"[2, 1]",7,a0,count floor,79.0,
-481,研究大樓,"[2, 1]",7,a1,count floor,64.0,
-482,研究大樓,"[2, 1]",7,b0,count floor,89.0,
-483,研究大樓,"[2, 1]",7,a0,count stop,,79.0
-484,研究大樓,"[2, 1]",7,a1,count stop,,64.0
-485,研究大樓,"[2, 1]",7,b0,count stop,,89.0
-486,研究大樓,"[2, 1]",7,a0,count floor,74.0,
-487,研究大樓,"[2, 1]",7,a1,count floor,71.0,
-488,研究大樓,"[2, 1]",7,b0,count floor,79.0,
-489,研究大樓,"[2, 1]",7,a0,count stop,,74.0
-490,研究大樓,"[2, 1]",7,a1,count stop,,71.0
-491,研究大樓,"[2, 1]",7,b0,count stop,,79.0
-492,研究大樓,"[2, 1]",7,a0,count floor,73.0,
-493,研究大樓,"[2, 1]",7,a1,count floor,57.0,
-494,研究大樓,"[2, 1]",7,b0,count floor,88.0,
-495,研究大樓,"[2, 1]",7,a0,count stop,,73.0
-496,研究大樓,"[2, 1]",7,a1,count stop,,57.0
-497,研究大樓,"[2, 1]",7,b0,count stop,,88.0
-498,研究大樓,"[2, 1]",7,a0,count floor,77.0,
-499,研究大樓,"[2, 1]",7,a1,count floor,71.0,
-500,研究大樓,"[2, 1]",7,b0,count floor,87.0,
-501,研究大樓,"[2, 1]",7,a0,count stop,,77.0
-502,研究大樓,"[2, 1]",7,a1,count stop,,71.0
-503,研究大樓,"[2, 1]",7,b0,count stop,,87.0
-504,研究大樓,"[2, 1]",7,a0,count floor,64.0,
-505,研究大樓,"[2, 1]",7,a1,count floor,45.0,
-506,研究大樓,"[2, 1]",7,b0,count floor,81.0,
-507,研究大樓,"[2, 1]",7,a0,count stop,,64.0
-508,研究大樓,"[2, 1]",7,a1,count stop,,45.0
-509,研究大樓,"[2, 1]",7,b0,count stop,,81.0
-510,研究大樓,"[2, 1]",7,a0,count floor,77.0,
-511,研究大樓,"[2, 1]",7,a1,count floor,67.0,
-512,研究大樓,"[2, 1]",7,b0,count floor,81.0,
-513,研究大樓,"[2, 1]",7,a0,count stop,,77.0
-514,研究大樓,"[2, 1]",7,a1,count stop,,67.0
-515,研究大樓,"[2, 1]",7,b0,count stop,,81.0
-516,研究大樓,"[2, 1]",7,a0,count floor,52.0,
-517,研究大樓,"[2, 1]",7,a1,count floor,65.0,
-518,研究大樓,"[2, 1]",7,b0,count floor,85.0,
-519,研究大樓,"[2, 1]",7,a0,count stop,,52.0
-520,研究大樓,"[2, 1]",7,a1,count stop,,65.0
-521,研究大樓,"[2, 1]",7,b0,count stop,,85.0
-522,研究大樓,"[2, 1]",7,a0,count floor,75.0,
-523,研究大樓,"[2, 1]",7,a1,count floor,80.0,
-524,研究大樓,"[2, 1]",7,b0,count floor,77.0,
-525,研究大樓,"[2, 1]",7,a0,count stop,,75.0
-526,研究大樓,"[2, 1]",7,a1,count stop,,80.0
-527,研究大樓,"[2, 1]",7,b0,count stop,,77.0
-528,研究大樓,"[2, 1]",7,a0,count floor,53.0,
-529,研究大樓,"[2, 1]",7,a1,count floor,58.0,
-530,研究大樓,"[2, 1]",7,b0,count floor,88.0,
-531,研究大樓,"[2, 1]",7,a0,count stop,,53.0
-532,研究大樓,"[2, 1]",7,a1,count stop,,58.0
-533,研究大樓,"[2, 1]",7,b0,count stop,,88.0
-534,研究大樓,"[2, 1]",7,a0,count floor,71.0,
-535,研究大樓,"[2, 1]",7,a1,count floor,50.0,
-536,研究大樓,"[2, 1]",7,b0,count floor,80.0,
-537,研究大樓,"[2, 1]",7,a0,count stop,,71.0
-538,研究大樓,"[2, 1]",7,a1,count stop,,50.0
-539,研究大樓,"[2, 1]",7,b0,count stop,,80.0
-540,研究大樓,"[2, 1]",7,a0,count floor,58.0,
-541,研究大樓,"[2, 1]",7,a1,count floor,61.0,
-542,研究大樓,"[2, 1]",7,b0,count floor,88.0,
-543,研究大樓,"[2, 1]",7,a0,count stop,,58.0
-544,研究大樓,"[2, 1]",7,a1,count stop,,61.0
-545,研究大樓,"[2, 1]",7,b0,count stop,,88.0
-546,研究大樓,"[2, 1]",7,a0,count floor,73.0,
-547,研究大樓,"[2, 1]",7,a1,count floor,75.0,
-548,研究大樓,"[2, 1]",7,b0,count floor,78.0,
-549,研究大樓,"[2, 1]",7,a0,count stop,,73.0
-550,研究大樓,"[2, 1]",7,a1,count stop,,75.0
-551,研究大樓,"[2, 1]",7,b0,count stop,,78.0
-552,研究大樓,"[2, 1]",7,a0,count floor,56.0,
-553,研究大樓,"[2, 1]",7,a1,count floor,61.0,
-554,研究大樓,"[2, 1]",7,b0,count floor,88.0,
-555,研究大樓,"[2, 1]",7,a0,count stop,,56.0
-556,研究大樓,"[2, 1]",7,a1,count stop,,61.0
-557,研究大樓,"[2, 1]",7,b0,count stop,,88.0
-558,研究大樓,"[2, 1]",7,a0,count floor,82.0,
-559,研究大樓,"[2, 1]",7,a1,count floor,48.0,
-560,研究大樓,"[2, 1]",7,b0,count floor,85.0,
-561,研究大樓,"[2, 1]",7,a0,count stop,,82.0
-562,研究大樓,"[2, 1]",7,a1,count stop,,48.0
-563,研究大樓,"[2, 1]",7,b0,count stop,,85.0
-564,研究大樓,"[2, 1]",7,a0,count floor,84.0,
-565,研究大樓,"[2, 1]",7,a1,count floor,77.0,
-566,研究大樓,"[2, 1]",7,b0,count floor,84.0,
-567,研究大樓,"[2, 1]",7,a0,count stop,,84.0
-568,研究大樓,"[2, 1]",7,a1,count stop,,77.0
-569,研究大樓,"[2, 1]",7,b0,count stop,,84.0
-570,研究大樓,"[2, 1]",7,a0,count floor,72.0,
-571,研究大樓,"[2, 1]",7,a1,count floor,50.0,
-572,研究大樓,"[2, 1]",7,b0,count floor,81.0,
-573,研究大樓,"[2, 1]",7,a0,count stop,,72.0
-574,研究大樓,"[2, 1]",7,a1,count stop,,50.0
-575,研究大樓,"[2, 1]",7,b0,count stop,,81.0
-576,研究大樓,"[2, 1]",7,a0,count floor,74.0,
-577,研究大樓,"[2, 1]",7,a1,count floor,69.0,
-578,研究大樓,"[2, 1]",7,b0,count floor,82.0,
-579,研究大樓,"[2, 1]",7,a0,count stop,,74.0
-580,研究大樓,"[2, 1]",7,a1,count stop,,69.0
-581,研究大樓,"[2, 1]",7,b0,count stop,,82.0
-582,研究大樓,"[2, 1]",7,a0,count floor,66.0,
-583,研究大樓,"[2, 1]",7,a1,count floor,49.0,
-584,研究大樓,"[2, 1]",7,b0,count floor,87.0,
-585,研究大樓,"[2, 1]",7,a0,count stop,,66.0
-586,研究大樓,"[2, 1]",7,a1,count stop,,49.0
-587,研究大樓,"[2, 1]",7,b0,count stop,,87.0
-588,研究大樓,"[2, 1]",7,a0,count floor,69.0,
-589,研究大樓,"[2, 1]",7,a1,count floor,65.0,
-590,研究大樓,"[2, 1]",7,b0,count floor,75.0,
-591,研究大樓,"[2, 1]",7,a0,count stop,,69.0
-592,研究大樓,"[2, 1]",7,a1,count stop,,65.0
-593,研究大樓,"[2, 1]",7,b0,count stop,,75.0
-594,研究大樓,"[2, 1]",7,a0,count floor,80.0,
-595,研究大樓,"[2, 1]",7,a1,count floor,69.0,
-596,研究大樓,"[2, 1]",7,b0,count floor,91.0,
-597,研究大樓,"[2, 1]",7,a0,count stop,,80.0
-598,研究大樓,"[2, 1]",7,a1,count stop,,69.0
-599,研究大樓,"[2, 1]",7,b0,count stop,,91.0
+,location,elevator_subgroup_number,floor_policy,elevator_name,count_type,floor_count
+0,研究大樓,"[2, 1]",all_feasible,a0,count_floor,422
+1,研究大樓,"[2, 1]",all_feasible,a1,count_floor,438
+2,研究大樓,"[2, 1]",all_feasible,a2,count_floor,381
+3,研究大樓,"[2, 1]",all_feasible,a0,count_stop,422
+4,研究大樓,"[2, 1]",all_feasible,a1,count_stop,438
+5,研究大樓,"[2, 1]",all_feasible,a2,count_stop,381
+6,研究大樓,"[2, 1]",all_feasible,a0,count_floor,126
+7,研究大樓,"[2, 1]",all_feasible,a1,count_floor,127
+8,研究大樓,"[2, 1]",all_feasible,a2,count_floor,96
+9,研究大樓,"[2, 1]",all_feasible,a0,count_stop,126
+10,研究大樓,"[2, 1]",all_feasible,a1,count_stop,127
+11,研究大樓,"[2, 1]",all_feasible,a2,count_stop,96
+12,研究大樓,"[2, 1]",all_feasible,a0,count_floor,87
+13,研究大樓,"[2, 1]",all_feasible,a1,count_floor,80
+14,研究大樓,"[2, 1]",all_feasible,a2,count_floor,100
+15,研究大樓,"[2, 1]",all_feasible,a0,count_stop,87
+16,研究大樓,"[2, 1]",all_feasible,a1,count_stop,80
+17,研究大樓,"[2, 1]",all_feasible,a2,count_stop,100
+18,研究大樓,"[2, 1]",all_feasible,a0,count_floor,74
+19,研究大樓,"[2, 1]",all_feasible,a1,count_floor,104
+20,研究大樓,"[2, 1]",all_feasible,a2,count_floor,114
+21,研究大樓,"[2, 1]",all_feasible,a0,count_stop,74
+22,研究大樓,"[2, 1]",all_feasible,a1,count_stop,104
+23,研究大樓,"[2, 1]",all_feasible,a2,count_stop,114
+24,研究大樓,"[2, 1]",all_feasible,a0,count_floor,161
+25,研究大樓,"[2, 1]",all_feasible,a1,count_floor,132
+26,研究大樓,"[2, 1]",all_feasible,a2,count_floor,164
+27,研究大樓,"[2, 1]",all_feasible,a0,count_stop,161
+28,研究大樓,"[2, 1]",all_feasible,a1,count_stop,132
+29,研究大樓,"[2, 1]",all_feasible,a2,count_stop,164
+30,研究大樓,"[2, 1]",all_feasible,a0,count_floor,156
+31,研究大樓,"[2, 1]",all_feasible,a1,count_floor,166
+32,研究大樓,"[2, 1]",all_feasible,a2,count_floor,166
+33,研究大樓,"[2, 1]",all_feasible,a0,count_stop,156
+34,研究大樓,"[2, 1]",all_feasible,a1,count_stop,166
+35,研究大樓,"[2, 1]",all_feasible,a2,count_stop,166
+36,研究大樓,"[2, 1]",all_feasible,a0,count_floor,579
+37,研究大樓,"[2, 1]",all_feasible,a1,count_floor,576
+38,研究大樓,"[2, 1]",all_feasible,a2,count_floor,566
+39,研究大樓,"[2, 1]",all_feasible,a0,count_stop,579
+40,研究大樓,"[2, 1]",all_feasible,a1,count_stop,576
+41,研究大樓,"[2, 1]",all_feasible,a2,count_stop,566
+42,研究大樓,"[2, 1]",all_feasible,a0,count_floor,415
+43,研究大樓,"[2, 1]",all_feasible,a1,count_floor,416
+44,研究大樓,"[2, 1]",all_feasible,a2,count_floor,380
+45,研究大樓,"[2, 1]",all_feasible,a0,count_stop,415
+46,研究大樓,"[2, 1]",all_feasible,a1,count_stop,416
+47,研究大樓,"[2, 1]",all_feasible,a2,count_stop,380
+48,研究大樓,"[2, 1]",all_feasible,a0,count_floor,219
+49,研究大樓,"[2, 1]",all_feasible,a1,count_floor,210
+50,研究大樓,"[2, 1]",all_feasible,a2,count_floor,186
+51,研究大樓,"[2, 1]",all_feasible,a0,count_stop,219
+52,研究大樓,"[2, 1]",all_feasible,a1,count_stop,210
+53,研究大樓,"[2, 1]",all_feasible,a2,count_stop,186
+54,研究大樓,"[2, 1]",all_feasible,a0,count_floor,425
+55,研究大樓,"[2, 1]",all_feasible,a1,count_floor,435
+56,研究大樓,"[2, 1]",all_feasible,a2,count_floor,399
+57,研究大樓,"[2, 1]",all_feasible,a0,count_stop,425
+58,研究大樓,"[2, 1]",all_feasible,a1,count_stop,435
+59,研究大樓,"[2, 1]",all_feasible,a2,count_stop,399
+60,研究大樓,"[2, 1]",all_feasible,a0,count_floor,216
+61,研究大樓,"[2, 1]",all_feasible,a1,count_floor,202
+62,研究大樓,"[2, 1]",all_feasible,a2,count_floor,227
+63,研究大樓,"[2, 1]",all_feasible,a0,count_stop,216
+64,研究大樓,"[2, 1]",all_feasible,a1,count_stop,202
+65,研究大樓,"[2, 1]",all_feasible,a2,count_stop,227
+66,研究大樓,"[2, 1]",all_feasible,a0,count_floor,18
+67,研究大樓,"[2, 1]",all_feasible,a1,count_floor,7
+68,研究大樓,"[2, 1]",all_feasible,a2,count_floor,43
+69,研究大樓,"[2, 1]",all_feasible,a0,count_stop,18
+70,研究大樓,"[2, 1]",all_feasible,a1,count_stop,7
+71,研究大樓,"[2, 1]",all_feasible,a2,count_stop,43
+72,研究大樓,"[2, 1]",all_feasible,a0,count_floor,41
+73,研究大樓,"[2, 1]",all_feasible,a1,count_floor,22
+74,研究大樓,"[2, 1]",all_feasible,a2,count_floor,58
+75,研究大樓,"[2, 1]",all_feasible,a0,count_stop,41
+76,研究大樓,"[2, 1]",all_feasible,a1,count_stop,22
+77,研究大樓,"[2, 1]",all_feasible,a2,count_stop,58
+78,研究大樓,"[2, 1]",all_feasible,a0,count_floor,1158
+79,研究大樓,"[2, 1]",all_feasible,a1,count_floor,1162
+80,研究大樓,"[2, 1]",all_feasible,a2,count_floor,1141
+81,研究大樓,"[2, 1]",all_feasible,a0,count_stop,1158
+82,研究大樓,"[2, 1]",all_feasible,a1,count_stop,1162
+83,研究大樓,"[2, 1]",all_feasible,a2,count_stop,1141
+84,研究大樓,"[2, 1]",all_feasible,a0,count_floor,370
+85,研究大樓,"[2, 1]",all_feasible,a1,count_floor,384
+86,研究大樓,"[2, 1]",all_feasible,a2,count_floor,369
+87,研究大樓,"[2, 1]",all_feasible,a0,count_stop,370
+88,研究大樓,"[2, 1]",all_feasible,a1,count_stop,384
+89,研究大樓,"[2, 1]",all_feasible,a2,count_stop,369
+90,研究大樓,"[2, 1]",all_feasible,a0,count_floor,191
+91,研究大樓,"[2, 1]",all_feasible,a1,count_floor,200
+92,研究大樓,"[2, 1]",all_feasible,a2,count_floor,153
+93,研究大樓,"[2, 1]",all_feasible,a0,count_stop,191
+94,研究大樓,"[2, 1]",all_feasible,a1,count_stop,200
+95,研究大樓,"[2, 1]",all_feasible,a2,count_stop,153
+96,研究大樓,"[2, 1]",all_feasible,a0,count_floor,152
+97,研究大樓,"[2, 1]",all_feasible,a1,count_floor,104
+98,研究大樓,"[2, 1]",all_feasible,a2,count_floor,130
+99,研究大樓,"[2, 1]",all_feasible,a0,count_stop,152
+100,研究大樓,"[2, 1]",all_feasible,a1,count_stop,104
+101,研究大樓,"[2, 1]",all_feasible,a2,count_stop,130
+102,研究大樓,"[2, 1]",all_feasible,a0,count_floor,233
+103,研究大樓,"[2, 1]",all_feasible,a1,count_floor,260
+104,研究大樓,"[2, 1]",all_feasible,a2,count_floor,237
+105,研究大樓,"[2, 1]",all_feasible,a0,count_stop,233
+106,研究大樓,"[2, 1]",all_feasible,a1,count_stop,260
+107,研究大樓,"[2, 1]",all_feasible,a2,count_stop,237
+108,研究大樓,"[2, 1]",all_feasible,a0,count_floor,225
+109,研究大樓,"[2, 1]",all_feasible,a1,count_floor,237
+110,研究大樓,"[2, 1]",all_feasible,a2,count_floor,223
+111,研究大樓,"[2, 1]",all_feasible,a0,count_stop,225
+112,研究大樓,"[2, 1]",all_feasible,a1,count_stop,237
+113,研究大樓,"[2, 1]",all_feasible,a2,count_stop,223
+114,研究大樓,"[2, 1]",all_feasible,a0,count_floor,516
+115,研究大樓,"[2, 1]",all_feasible,a1,count_floor,529
+116,研究大樓,"[2, 1]",all_feasible,a2,count_floor,542
+117,研究大樓,"[2, 1]",all_feasible,a0,count_stop,516
+118,研究大樓,"[2, 1]",all_feasible,a1,count_stop,529
+119,研究大樓,"[2, 1]",all_feasible,a2,count_stop,542
+120,研究大樓,"[2, 1]",all_feasible,a0,count_floor,532
+121,研究大樓,"[2, 1]",all_feasible,a1,count_floor,511
+122,研究大樓,"[2, 1]",all_feasible,a2,count_floor,548
+123,研究大樓,"[2, 1]",all_feasible,a0,count_stop,532
+124,研究大樓,"[2, 1]",all_feasible,a1,count_stop,511
+125,研究大樓,"[2, 1]",all_feasible,a2,count_stop,548
+126,研究大樓,"[2, 1]",all_feasible,a0,count_floor,20
+127,研究大樓,"[2, 1]",all_feasible,a1,count_floor,36
+128,研究大樓,"[2, 1]",all_feasible,a2,count_floor,35
+129,研究大樓,"[2, 1]",all_feasible,a0,count_stop,20
+130,研究大樓,"[2, 1]",all_feasible,a1,count_stop,36
+131,研究大樓,"[2, 1]",all_feasible,a2,count_stop,35
+132,研究大樓,"[2, 1]",all_feasible,a0,count_floor,568
+133,研究大樓,"[2, 1]",all_feasible,a1,count_floor,542
+134,研究大樓,"[2, 1]",all_feasible,a2,count_floor,512
+135,研究大樓,"[2, 1]",all_feasible,a0,count_stop,568
+136,研究大樓,"[2, 1]",all_feasible,a1,count_stop,542
+137,研究大樓,"[2, 1]",all_feasible,a2,count_stop,512
+138,研究大樓,"[2, 1]",all_feasible,a0,count_floor,219
+139,研究大樓,"[2, 1]",all_feasible,a1,count_floor,256
+140,研究大樓,"[2, 1]",all_feasible,a2,count_floor,235
+141,研究大樓,"[2, 1]",all_feasible,a0,count_stop,219
+142,研究大樓,"[2, 1]",all_feasible,a1,count_stop,256
+143,研究大樓,"[2, 1]",all_feasible,a2,count_stop,235
+144,研究大樓,"[2, 1]",all_feasible,a0,count_floor,321
+145,研究大樓,"[2, 1]",all_feasible,a1,count_floor,307
+146,研究大樓,"[2, 1]",all_feasible,a2,count_floor,328
+147,研究大樓,"[2, 1]",all_feasible,a0,count_stop,321
+148,研究大樓,"[2, 1]",all_feasible,a1,count_stop,307
+149,研究大樓,"[2, 1]",all_feasible,a2,count_stop,328
+150,研究大樓,"[2, 1]",all_feasible,a0,count_floor,531
+151,研究大樓,"[2, 1]",all_feasible,a1,count_floor,480
+152,研究大樓,"[2, 1]",all_feasible,a2,count_floor,489
+153,研究大樓,"[2, 1]",all_feasible,a0,count_stop,531
+154,研究大樓,"[2, 1]",all_feasible,a1,count_stop,480
+155,研究大樓,"[2, 1]",all_feasible,a2,count_stop,489
+156,研究大樓,"[2, 1]",all_feasible,a0,count_floor,68
+157,研究大樓,"[2, 1]",all_feasible,a1,count_floor,92
+158,研究大樓,"[2, 1]",all_feasible,a2,count_floor,88
+159,研究大樓,"[2, 1]",all_feasible,a0,count_stop,68
+160,研究大樓,"[2, 1]",all_feasible,a1,count_stop,92
+161,研究大樓,"[2, 1]",all_feasible,a2,count_stop,88
+162,研究大樓,"[2, 1]",all_feasible,a0,count_floor,162
+163,研究大樓,"[2, 1]",all_feasible,a1,count_floor,144
+164,研究大樓,"[2, 1]",all_feasible,a2,count_floor,125
+165,研究大樓,"[2, 1]",all_feasible,a0,count_stop,162
+166,研究大樓,"[2, 1]",all_feasible,a1,count_stop,144
+167,研究大樓,"[2, 1]",all_feasible,a2,count_stop,125
+168,研究大樓,"[2, 1]",all_feasible,a0,count_floor,732
+169,研究大樓,"[2, 1]",all_feasible,a1,count_floor,684
+170,研究大樓,"[2, 1]",all_feasible,a2,count_floor,678
+171,研究大樓,"[2, 1]",all_feasible,a0,count_stop,732
+172,研究大樓,"[2, 1]",all_feasible,a1,count_stop,684
+173,研究大樓,"[2, 1]",all_feasible,a2,count_stop,678
+174,研究大樓,"[2, 1]",all_feasible,a0,count_floor,604
+175,研究大樓,"[2, 1]",all_feasible,a1,count_floor,651
+176,研究大樓,"[2, 1]",all_feasible,a2,count_floor,653
+177,研究大樓,"[2, 1]",all_feasible,a0,count_stop,604
+178,研究大樓,"[2, 1]",all_feasible,a1,count_stop,651
+179,研究大樓,"[2, 1]",all_feasible,a2,count_stop,653
+180,研究大樓,"[2, 1]",all_feasible,a0,count_floor,120
+181,研究大樓,"[2, 1]",all_feasible,a1,count_floor,102
+182,研究大樓,"[2, 1]",all_feasible,a2,count_floor,100
+183,研究大樓,"[2, 1]",all_feasible,a0,count_stop,120
+184,研究大樓,"[2, 1]",all_feasible,a1,count_stop,102
+185,研究大樓,"[2, 1]",all_feasible,a2,count_stop,100
+186,研究大樓,"[2, 1]",all_feasible,a0,count_floor,323
+187,研究大樓,"[2, 1]",all_feasible,a1,count_floor,352
+188,研究大樓,"[2, 1]",all_feasible,a2,count_floor,344
+189,研究大樓,"[2, 1]",all_feasible,a0,count_stop,323
+190,研究大樓,"[2, 1]",all_feasible,a1,count_stop,352
+191,研究大樓,"[2, 1]",all_feasible,a2,count_stop,344
+192,研究大樓,"[2, 1]",all_feasible,a0,count_floor,54
+193,研究大樓,"[2, 1]",all_feasible,a1,count_floor,27
+194,研究大樓,"[2, 1]",all_feasible,a2,count_floor,46
+195,研究大樓,"[2, 1]",all_feasible,a0,count_stop,54
+196,研究大樓,"[2, 1]",all_feasible,a1,count_stop,27
+197,研究大樓,"[2, 1]",all_feasible,a2,count_stop,46
+198,研究大樓,"[2, 1]",all_feasible,a0,count_floor,686
+199,研究大樓,"[2, 1]",all_feasible,a1,count_floor,702
+200,研究大樓,"[2, 1]",all_feasible,a2,count_floor,738
+201,研究大樓,"[2, 1]",all_feasible,a0,count_stop,686
+202,研究大樓,"[2, 1]",all_feasible,a1,count_stop,702
+203,研究大樓,"[2, 1]",all_feasible,a2,count_stop,738
+204,研究大樓,"[2, 1]",all_feasible,a0,count_floor,298
+205,研究大樓,"[2, 1]",all_feasible,a1,count_floor,247
+206,研究大樓,"[2, 1]",all_feasible,a2,count_floor,263
+207,研究大樓,"[2, 1]",all_feasible,a0,count_stop,298
+208,研究大樓,"[2, 1]",all_feasible,a1,count_stop,247
+209,研究大樓,"[2, 1]",all_feasible,a2,count_stop,263
+210,研究大樓,"[2, 1]",all_feasible,a0,count_floor,338
+211,研究大樓,"[2, 1]",all_feasible,a1,count_floor,369
+212,研究大樓,"[2, 1]",all_feasible,a2,count_floor,311
+213,研究大樓,"[2, 1]",all_feasible,a0,count_stop,338
+214,研究大樓,"[2, 1]",all_feasible,a1,count_stop,369
+215,研究大樓,"[2, 1]",all_feasible,a2,count_stop,311
+216,研究大樓,"[2, 1]",all_feasible,a0,count_floor,277
+217,研究大樓,"[2, 1]",all_feasible,a1,count_floor,301
+218,研究大樓,"[2, 1]",all_feasible,a2,count_floor,277
+219,研究大樓,"[2, 1]",all_feasible,a0,count_stop,277
+220,研究大樓,"[2, 1]",all_feasible,a1,count_stop,301
+221,研究大樓,"[2, 1]",all_feasible,a2,count_stop,277
+222,研究大樓,"[2, 1]",all_feasible,a0,count_floor,66
+223,研究大樓,"[2, 1]",all_feasible,a1,count_floor,73
+224,研究大樓,"[2, 1]",all_feasible,a2,count_floor,37
+225,研究大樓,"[2, 1]",all_feasible,a0,count_stop,66
+226,研究大樓,"[2, 1]",all_feasible,a1,count_stop,73
+227,研究大樓,"[2, 1]",all_feasible,a2,count_stop,37
+228,研究大樓,"[2, 1]",all_feasible,a0,count_floor,266
+229,研究大樓,"[2, 1]",all_feasible,a1,count_floor,263
+230,研究大樓,"[2, 1]",all_feasible,a2,count_floor,236
+231,研究大樓,"[2, 1]",all_feasible,a0,count_stop,266
+232,研究大樓,"[2, 1]",all_feasible,a1,count_stop,263
+233,研究大樓,"[2, 1]",all_feasible,a2,count_stop,236
+234,研究大樓,"[2, 1]",all_feasible,a0,count_floor,79
+235,研究大樓,"[2, 1]",all_feasible,a1,count_floor,90
+236,研究大樓,"[2, 1]",all_feasible,a2,count_floor,47
+237,研究大樓,"[2, 1]",all_feasible,a0,count_stop,79
+238,研究大樓,"[2, 1]",all_feasible,a1,count_stop,90
+239,研究大樓,"[2, 1]",all_feasible,a2,count_stop,47
+240,研究大樓,"[2, 1]",all_feasible,a0,count_floor,458
+241,研究大樓,"[2, 1]",all_feasible,a1,count_floor,485
+242,研究大樓,"[2, 1]",all_feasible,a2,count_floor,506
+243,研究大樓,"[2, 1]",all_feasible,a0,count_stop,458
+244,研究大樓,"[2, 1]",all_feasible,a1,count_stop,485
+245,研究大樓,"[2, 1]",all_feasible,a2,count_stop,506
+246,研究大樓,"[2, 1]",all_feasible,a0,count_floor,77
+247,研究大樓,"[2, 1]",all_feasible,a1,count_floor,89
+248,研究大樓,"[2, 1]",all_feasible,a2,count_floor,93
+249,研究大樓,"[2, 1]",all_feasible,a0,count_stop,77
+250,研究大樓,"[2, 1]",all_feasible,a1,count_stop,89
+251,研究大樓,"[2, 1]",all_feasible,a2,count_stop,93
+252,研究大樓,"[2, 1]",all_feasible,a0,count_floor,370
+253,研究大樓,"[2, 1]",all_feasible,a1,count_floor,311
+254,研究大樓,"[2, 1]",all_feasible,a2,count_floor,344
+255,研究大樓,"[2, 1]",all_feasible,a0,count_stop,370
+256,研究大樓,"[2, 1]",all_feasible,a1,count_stop,311
+257,研究大樓,"[2, 1]",all_feasible,a2,count_stop,344
+258,研究大樓,"[2, 1]",all_feasible,a0,count_floor,48
+259,研究大樓,"[2, 1]",all_feasible,a1,count_floor,60
+260,研究大樓,"[2, 1]",all_feasible,a2,count_floor,50
+261,研究大樓,"[2, 1]",all_feasible,a0,count_stop,48
+262,研究大樓,"[2, 1]",all_feasible,a1,count_stop,60
+263,研究大樓,"[2, 1]",all_feasible,a2,count_stop,50
+264,研究大樓,"[2, 1]",all_feasible,a0,count_floor,228
+265,研究大樓,"[2, 1]",all_feasible,a1,count_floor,243
+266,研究大樓,"[2, 1]",all_feasible,a2,count_floor,228
+267,研究大樓,"[2, 1]",all_feasible,a0,count_stop,228
+268,研究大樓,"[2, 1]",all_feasible,a1,count_stop,243
+269,研究大樓,"[2, 1]",all_feasible,a2,count_stop,228
+270,研究大樓,"[2, 1]",all_feasible,a0,count_floor,300
+271,研究大樓,"[2, 1]",all_feasible,a1,count_floor,280
+272,研究大樓,"[2, 1]",all_feasible,a2,count_floor,272
+273,研究大樓,"[2, 1]",all_feasible,a0,count_stop,300
+274,研究大樓,"[2, 1]",all_feasible,a1,count_stop,280
+275,研究大樓,"[2, 1]",all_feasible,a2,count_stop,272
+276,研究大樓,"[2, 1]",all_feasible,a0,count_floor,324
+277,研究大樓,"[2, 1]",all_feasible,a1,count_floor,340
+278,研究大樓,"[2, 1]",all_feasible,a2,count_floor,313
+279,研究大樓,"[2, 1]",all_feasible,a0,count_stop,324
+280,研究大樓,"[2, 1]",all_feasible,a1,count_stop,340
+281,研究大樓,"[2, 1]",all_feasible,a2,count_stop,313
+282,研究大樓,"[2, 1]",all_feasible,a0,count_floor,514
+283,研究大樓,"[2, 1]",all_feasible,a1,count_floor,516
+284,研究大樓,"[2, 1]",all_feasible,a2,count_floor,497
+285,研究大樓,"[2, 1]",all_feasible,a0,count_stop,514
+286,研究大樓,"[2, 1]",all_feasible,a1,count_stop,516
+287,研究大樓,"[2, 1]",all_feasible,a2,count_stop,497
+288,研究大樓,"[2, 1]",all_feasible,a0,count_floor,116
+289,研究大樓,"[2, 1]",all_feasible,a1,count_floor,86
+290,研究大樓,"[2, 1]",all_feasible,a2,count_floor,74
+291,研究大樓,"[2, 1]",all_feasible,a0,count_stop,116
+292,研究大樓,"[2, 1]",all_feasible,a1,count_stop,86
+293,研究大樓,"[2, 1]",all_feasible,a2,count_stop,74
+294,研究大樓,"[2, 1]",all_feasible,a0,count_floor,27
+295,研究大樓,"[2, 1]",all_feasible,a1,count_floor,44
+296,研究大樓,"[2, 1]",all_feasible,a2,count_floor,51
+297,研究大樓,"[2, 1]",all_feasible,a0,count_stop,27
+298,研究大樓,"[2, 1]",all_feasible,a1,count_stop,44
+299,研究大樓,"[2, 1]",all_feasible,a2,count_stop,51
+300,研究大樓,"[2, 1]",all_feasible,a0,count_floor,82
+301,研究大樓,"[2, 1]",all_feasible,a1,count_floor,49
+302,研究大樓,"[2, 1]",all_feasible,a2,count_floor,74
+303,研究大樓,"[2, 1]",all_feasible,a0,count_stop,82
+304,研究大樓,"[2, 1]",all_feasible,a1,count_stop,49
+305,研究大樓,"[2, 1]",all_feasible,a2,count_stop,74
+306,研究大樓,"[2, 1]",all_feasible,a0,count_floor,1165
+307,研究大樓,"[2, 1]",all_feasible,a1,count_floor,1197
+308,研究大樓,"[2, 1]",all_feasible,a2,count_floor,1140
+309,研究大樓,"[2, 1]",all_feasible,a0,count_stop,1165
+310,研究大樓,"[2, 1]",all_feasible,a1,count_stop,1197
+311,研究大樓,"[2, 1]",all_feasible,a2,count_stop,1140
+312,研究大樓,"[2, 1]",all_feasible,a0,count_floor,1168
+313,研究大樓,"[2, 1]",all_feasible,a1,count_floor,1152
+314,研究大樓,"[2, 1]",all_feasible,a2,count_floor,1129
+315,研究大樓,"[2, 1]",all_feasible,a0,count_stop,1168
+316,研究大樓,"[2, 1]",all_feasible,a1,count_stop,1152
+317,研究大樓,"[2, 1]",all_feasible,a2,count_stop,1129
+318,研究大樓,"[2, 1]",all_feasible,a0,count_floor,282
+319,研究大樓,"[2, 1]",all_feasible,a1,count_floor,277
+320,研究大樓,"[2, 1]",all_feasible,a2,count_floor,289
+321,研究大樓,"[2, 1]",all_feasible,a0,count_stop,282
+322,研究大樓,"[2, 1]",all_feasible,a1,count_stop,277
+323,研究大樓,"[2, 1]",all_feasible,a2,count_stop,289
+324,研究大樓,"[2, 1]",all_feasible,a0,count_floor,75
+325,研究大樓,"[2, 1]",all_feasible,a1,count_floor,112
+326,研究大樓,"[2, 1]",all_feasible,a2,count_floor,86
+327,研究大樓,"[2, 1]",all_feasible,a0,count_stop,75
+328,研究大樓,"[2, 1]",all_feasible,a1,count_stop,112
+329,研究大樓,"[2, 1]",all_feasible,a2,count_stop,86
+330,研究大樓,"[2, 1]",all_feasible,a0,count_floor,65
+331,研究大樓,"[2, 1]",all_feasible,a1,count_floor,37
+332,研究大樓,"[2, 1]",all_feasible,a2,count_floor,64
+333,研究大樓,"[2, 1]",all_feasible,a0,count_stop,65
+334,研究大樓,"[2, 1]",all_feasible,a1,count_stop,37
+335,研究大樓,"[2, 1]",all_feasible,a2,count_stop,64
+336,研究大樓,"[2, 1]",all_feasible,a0,count_floor,187
+337,研究大樓,"[2, 1]",all_feasible,a1,count_floor,230
+338,研究大樓,"[2, 1]",all_feasible,a2,count_floor,201
+339,研究大樓,"[2, 1]",all_feasible,a0,count_stop,187
+340,研究大樓,"[2, 1]",all_feasible,a1,count_stop,230
+341,研究大樓,"[2, 1]",all_feasible,a2,count_stop,201
+342,研究大樓,"[2, 1]",all_feasible,a0,count_floor,500
+343,研究大樓,"[2, 1]",all_feasible,a1,count_floor,485
+344,研究大樓,"[2, 1]",all_feasible,a2,count_floor,528
+345,研究大樓,"[2, 1]",all_feasible,a0,count_stop,500
+346,研究大樓,"[2, 1]",all_feasible,a1,count_stop,485
+347,研究大樓,"[2, 1]",all_feasible,a2,count_stop,528
+348,研究大樓,"[2, 1]",all_feasible,a0,count_floor,117
+349,研究大樓,"[2, 1]",all_feasible,a1,count_floor,85
+350,研究大樓,"[2, 1]",all_feasible,a2,count_floor,96
+351,研究大樓,"[2, 1]",all_feasible,a0,count_stop,117
+352,研究大樓,"[2, 1]",all_feasible,a1,count_stop,85
+353,研究大樓,"[2, 1]",all_feasible,a2,count_stop,96
+354,研究大樓,"[2, 1]",all_feasible,a0,count_floor,1176
+355,研究大樓,"[2, 1]",all_feasible,a1,count_floor,1131
+356,研究大樓,"[2, 1]",all_feasible,a2,count_floor,1212
+357,研究大樓,"[2, 1]",all_feasible,a0,count_stop,1176
+358,研究大樓,"[2, 1]",all_feasible,a1,count_stop,1131
+359,研究大樓,"[2, 1]",all_feasible,a2,count_stop,1212
+360,研究大樓,"[2, 1]",all_feasible,a0,count_floor,102
+361,研究大樓,"[2, 1]",all_feasible,a1,count_floor,88
+362,研究大樓,"[2, 1]",all_feasible,a2,count_floor,73
+363,研究大樓,"[2, 1]",all_feasible,a0,count_stop,102
+364,研究大樓,"[2, 1]",all_feasible,a1,count_stop,88
+365,研究大樓,"[2, 1]",all_feasible,a2,count_stop,73
+366,研究大樓,"[2, 1]",all_feasible,a0,count_floor,140
+367,研究大樓,"[2, 1]",all_feasible,a1,count_floor,113
+368,研究大樓,"[2, 1]",all_feasible,a2,count_floor,99
+369,研究大樓,"[2, 1]",all_feasible,a0,count_stop,140
+370,研究大樓,"[2, 1]",all_feasible,a1,count_stop,113
+371,研究大樓,"[2, 1]",all_feasible,a2,count_stop,99
+372,研究大樓,"[2, 1]",all_feasible,a0,count_floor,1177
+373,研究大樓,"[2, 1]",all_feasible,a1,count_floor,1196
+374,研究大樓,"[2, 1]",all_feasible,a2,count_floor,1154
+375,研究大樓,"[2, 1]",all_feasible,a0,count_stop,1177
+376,研究大樓,"[2, 1]",all_feasible,a1,count_stop,1196
+377,研究大樓,"[2, 1]",all_feasible,a2,count_stop,1154
+378,研究大樓,"[2, 1]",all_feasible,a0,count_floor,195
+379,研究大樓,"[2, 1]",all_feasible,a1,count_floor,155
+380,研究大樓,"[2, 1]",all_feasible,a2,count_floor,186
+381,研究大樓,"[2, 1]",all_feasible,a0,count_stop,195
+382,研究大樓,"[2, 1]",all_feasible,a1,count_stop,155
+383,研究大樓,"[2, 1]",all_feasible,a2,count_stop,186
+384,研究大樓,"[2, 1]",all_feasible,a0,count_floor,97
+385,研究大樓,"[2, 1]",all_feasible,a1,count_floor,130
+386,研究大樓,"[2, 1]",all_feasible,a2,count_floor,115
+387,研究大樓,"[2, 1]",all_feasible,a0,count_stop,97
+388,研究大樓,"[2, 1]",all_feasible,a1,count_stop,130
+389,研究大樓,"[2, 1]",all_feasible,a2,count_stop,115
+390,研究大樓,"[2, 1]",all_feasible,a0,count_floor,1177
+391,研究大樓,"[2, 1]",all_feasible,a1,count_floor,1187
+392,研究大樓,"[2, 1]",all_feasible,a2,count_floor,1186
+393,研究大樓,"[2, 1]",all_feasible,a0,count_stop,1177
+394,研究大樓,"[2, 1]",all_feasible,a1,count_stop,1187
+395,研究大樓,"[2, 1]",all_feasible,a2,count_stop,1186
+396,研究大樓,"[2, 1]",all_feasible,a0,count_floor,225
+397,研究大樓,"[2, 1]",all_feasible,a1,count_floor,268
+398,研究大樓,"[2, 1]",all_feasible,a2,count_floor,245
+399,研究大樓,"[2, 1]",all_feasible,a0,count_stop,225
+400,研究大樓,"[2, 1]",all_feasible,a1,count_stop,268
+401,研究大樓,"[2, 1]",all_feasible,a2,count_stop,245
+402,研究大樓,"[2, 1]",all_feasible,a0,count_floor,1170
+403,研究大樓,"[2, 1]",all_feasible,a1,count_floor,1190
+404,研究大樓,"[2, 1]",all_feasible,a2,count_floor,1134
+405,研究大樓,"[2, 1]",all_feasible,a0,count_stop,1170
+406,研究大樓,"[2, 1]",all_feasible,a1,count_stop,1190
+407,研究大樓,"[2, 1]",all_feasible,a2,count_stop,1134
+408,研究大樓,"[2, 1]",all_feasible,a0,count_floor,518
+409,研究大樓,"[2, 1]",all_feasible,a1,count_floor,504
+410,研究大樓,"[2, 1]",all_feasible,a2,count_floor,480
+411,研究大樓,"[2, 1]",all_feasible,a0,count_stop,518
+412,研究大樓,"[2, 1]",all_feasible,a1,count_stop,504
+413,研究大樓,"[2, 1]",all_feasible,a2,count_stop,480
+414,研究大樓,"[2, 1]",all_feasible,a0,count_floor,38
+415,研究大樓,"[2, 1]",all_feasible,a1,count_floor,60
+416,研究大樓,"[2, 1]",all_feasible,a2,count_floor,44
+417,研究大樓,"[2, 1]",all_feasible,a0,count_stop,38
+418,研究大樓,"[2, 1]",all_feasible,a1,count_stop,60
+419,研究大樓,"[2, 1]",all_feasible,a2,count_stop,44
+420,研究大樓,"[2, 1]",all_feasible,a0,count_floor,398
+421,研究大樓,"[2, 1]",all_feasible,a1,count_floor,370
+422,研究大樓,"[2, 1]",all_feasible,a2,count_floor,422
+423,研究大樓,"[2, 1]",all_feasible,a0,count_stop,398
+424,研究大樓,"[2, 1]",all_feasible,a1,count_stop,370
+425,研究大樓,"[2, 1]",all_feasible,a2,count_stop,422
+426,研究大樓,"[2, 1]",all_feasible,a0,count_floor,124
+427,研究大樓,"[2, 1]",all_feasible,a1,count_floor,124
+428,研究大樓,"[2, 1]",all_feasible,a2,count_floor,87
+429,研究大樓,"[2, 1]",all_feasible,a0,count_stop,124
+430,研究大樓,"[2, 1]",all_feasible,a1,count_stop,124
+431,研究大樓,"[2, 1]",all_feasible,a2,count_stop,87
+432,研究大樓,"[2, 1]",all_feasible,a0,count_floor,272
+433,研究大樓,"[2, 1]",all_feasible,a1,count_floor,260
+434,研究大樓,"[2, 1]",all_feasible,a2,count_floor,224
+435,研究大樓,"[2, 1]",all_feasible,a0,count_stop,272
+436,研究大樓,"[2, 1]",all_feasible,a1,count_stop,260
+437,研究大樓,"[2, 1]",all_feasible,a2,count_stop,224
+438,研究大樓,"[2, 1]",all_feasible,a0,count_floor,245
+439,研究大樓,"[2, 1]",all_feasible,a1,count_floor,202
+440,研究大樓,"[2, 1]",all_feasible,a2,count_floor,255
+441,研究大樓,"[2, 1]",all_feasible,a0,count_stop,245
+442,研究大樓,"[2, 1]",all_feasible,a1,count_stop,202
+443,研究大樓,"[2, 1]",all_feasible,a2,count_stop,255
+444,研究大樓,"[2, 1]",all_feasible,a0,count_floor,65
+445,研究大樓,"[2, 1]",all_feasible,a1,count_floor,59
+446,研究大樓,"[2, 1]",all_feasible,a2,count_floor,72
+447,研究大樓,"[2, 1]",all_feasible,a0,count_stop,65
+448,研究大樓,"[2, 1]",all_feasible,a1,count_stop,59
+449,研究大樓,"[2, 1]",all_feasible,a2,count_stop,72
+450,研究大樓,"[2, 1]",all_feasible,a0,count_floor,793
+451,研究大樓,"[2, 1]",all_feasible,a1,count_floor,834
+452,研究大樓,"[2, 1]",all_feasible,a2,count_floor,814
+453,研究大樓,"[2, 1]",all_feasible,a0,count_stop,793
+454,研究大樓,"[2, 1]",all_feasible,a1,count_stop,834
+455,研究大樓,"[2, 1]",all_feasible,a2,count_stop,814
+456,研究大樓,"[2, 1]",all_feasible,a0,count_floor,1187
+457,研究大樓,"[2, 1]",all_feasible,a1,count_floor,1166
+458,研究大樓,"[2, 1]",all_feasible,a2,count_floor,1203
+459,研究大樓,"[2, 1]",all_feasible,a0,count_stop,1187
+460,研究大樓,"[2, 1]",all_feasible,a1,count_stop,1166
+461,研究大樓,"[2, 1]",all_feasible,a2,count_stop,1203
+462,研究大樓,"[2, 1]",all_feasible,a0,count_floor,409
+463,研究大樓,"[2, 1]",all_feasible,a1,count_floor,362
+464,研究大樓,"[2, 1]",all_feasible,a2,count_floor,436
+465,研究大樓,"[2, 1]",all_feasible,a0,count_stop,409
+466,研究大樓,"[2, 1]",all_feasible,a1,count_stop,362
+467,研究大樓,"[2, 1]",all_feasible,a2,count_stop,436
+468,研究大樓,"[2, 1]",all_feasible,a0,count_floor,349
+469,研究大樓,"[2, 1]",all_feasible,a1,count_floor,334
+470,研究大樓,"[2, 1]",all_feasible,a2,count_floor,308
+471,研究大樓,"[2, 1]",all_feasible,a0,count_stop,349
+472,研究大樓,"[2, 1]",all_feasible,a1,count_stop,334
+473,研究大樓,"[2, 1]",all_feasible,a2,count_stop,308
+474,研究大樓,"[2, 1]",all_feasible,a0,count_floor,170
+475,研究大樓,"[2, 1]",all_feasible,a1,count_floor,197
+476,研究大樓,"[2, 1]",all_feasible,a2,count_floor,180
+477,研究大樓,"[2, 1]",all_feasible,a0,count_stop,170
+478,研究大樓,"[2, 1]",all_feasible,a1,count_stop,197
+479,研究大樓,"[2, 1]",all_feasible,a2,count_stop,180
+480,研究大樓,"[2, 1]",all_feasible,a0,count_floor,156
+481,研究大樓,"[2, 1]",all_feasible,a1,count_floor,133
+482,研究大樓,"[2, 1]",all_feasible,a2,count_floor,138
+483,研究大樓,"[2, 1]",all_feasible,a0,count_stop,156
+484,研究大樓,"[2, 1]",all_feasible,a1,count_stop,133
+485,研究大樓,"[2, 1]",all_feasible,a2,count_stop,138
+486,研究大樓,"[2, 1]",all_feasible,a0,count_floor,446
+487,研究大樓,"[2, 1]",all_feasible,a1,count_floor,448
+488,研究大樓,"[2, 1]",all_feasible,a2,count_floor,408
+489,研究大樓,"[2, 1]",all_feasible,a0,count_stop,446
+490,研究大樓,"[2, 1]",all_feasible,a1,count_stop,448
+491,研究大樓,"[2, 1]",all_feasible,a2,count_stop,408
+492,研究大樓,"[2, 1]",all_feasible,a0,count_floor,29
+493,研究大樓,"[2, 1]",all_feasible,a1,count_floor,49
+494,研究大樓,"[2, 1]",all_feasible,a2,count_floor,46
+495,研究大樓,"[2, 1]",all_feasible,a0,count_stop,29
+496,研究大樓,"[2, 1]",all_feasible,a1,count_stop,49
+497,研究大樓,"[2, 1]",all_feasible,a2,count_stop,46
+498,研究大樓,"[2, 1]",all_feasible,a0,count_floor,178
+499,研究大樓,"[2, 1]",all_feasible,a1,count_floor,170
+500,研究大樓,"[2, 1]",all_feasible,a2,count_floor,138
+501,研究大樓,"[2, 1]",all_feasible,a0,count_stop,178
+502,研究大樓,"[2, 1]",all_feasible,a1,count_stop,170
+503,研究大樓,"[2, 1]",all_feasible,a2,count_stop,138
+504,研究大樓,"[2, 1]",all_feasible,a0,count_floor,177
+505,研究大樓,"[2, 1]",all_feasible,a1,count_floor,170
+506,研究大樓,"[2, 1]",all_feasible,a2,count_floor,136
+507,研究大樓,"[2, 1]",all_feasible,a0,count_stop,177
+508,研究大樓,"[2, 1]",all_feasible,a1,count_stop,170
+509,研究大樓,"[2, 1]",all_feasible,a2,count_stop,136
+510,研究大樓,"[2, 1]",all_feasible,a0,count_floor,54
+511,研究大樓,"[2, 1]",all_feasible,a1,count_floor,14
+512,研究大樓,"[2, 1]",all_feasible,a2,count_floor,25
+513,研究大樓,"[2, 1]",all_feasible,a0,count_stop,54
+514,研究大樓,"[2, 1]",all_feasible,a1,count_stop,14
+515,研究大樓,"[2, 1]",all_feasible,a2,count_stop,25
+516,研究大樓,"[2, 1]",all_feasible,a0,count_floor,68
+517,研究大樓,"[2, 1]",all_feasible,a1,count_floor,70
+518,研究大樓,"[2, 1]",all_feasible,a2,count_floor,32
+519,研究大樓,"[2, 1]",all_feasible,a0,count_stop,68
+520,研究大樓,"[2, 1]",all_feasible,a1,count_stop,70
+521,研究大樓,"[2, 1]",all_feasible,a2,count_stop,32
+522,研究大樓,"[2, 1]",all_feasible,a0,count_floor,84
+523,研究大樓,"[2, 1]",all_feasible,a1,count_floor,43
+524,研究大樓,"[2, 1]",all_feasible,a2,count_floor,73
+525,研究大樓,"[2, 1]",all_feasible,a0,count_stop,84
+526,研究大樓,"[2, 1]",all_feasible,a1,count_stop,43
+527,研究大樓,"[2, 1]",all_feasible,a2,count_stop,73
+528,研究大樓,"[2, 1]",all_feasible,a0,count_floor,127
+529,研究大樓,"[2, 1]",all_feasible,a1,count_floor,164
+530,研究大樓,"[2, 1]",all_feasible,a2,count_floor,150
+531,研究大樓,"[2, 1]",all_feasible,a0,count_stop,127
+532,研究大樓,"[2, 1]",all_feasible,a1,count_stop,164
+533,研究大樓,"[2, 1]",all_feasible,a2,count_stop,150
+534,研究大樓,"[2, 1]",all_feasible,a0,count_floor,362
+535,研究大樓,"[2, 1]",all_feasible,a1,count_floor,310
+536,研究大樓,"[2, 1]",all_feasible,a2,count_floor,318
+537,研究大樓,"[2, 1]",all_feasible,a0,count_stop,362
+538,研究大樓,"[2, 1]",all_feasible,a1,count_stop,310
+539,研究大樓,"[2, 1]",all_feasible,a2,count_stop,318
+540,研究大樓,"[2, 1]",all_feasible,a0,count_floor,644
+541,研究大樓,"[2, 1]",all_feasible,a1,count_floor,588
+542,研究大樓,"[2, 1]",all_feasible,a2,count_floor,606
+543,研究大樓,"[2, 1]",all_feasible,a0,count_stop,644
+544,研究大樓,"[2, 1]",all_feasible,a1,count_stop,588
+545,研究大樓,"[2, 1]",all_feasible,a2,count_stop,606
+546,研究大樓,"[2, 1]",all_feasible,a0,count_floor,158
+547,研究大樓,"[2, 1]",all_feasible,a1,count_floor,202
+548,研究大樓,"[2, 1]",all_feasible,a2,count_floor,181
+549,研究大樓,"[2, 1]",all_feasible,a0,count_stop,158
+550,研究大樓,"[2, 1]",all_feasible,a1,count_stop,202
+551,研究大樓,"[2, 1]",all_feasible,a2,count_stop,181
+552,研究大樓,"[2, 1]",all_feasible,a0,count_floor,854
+553,研究大樓,"[2, 1]",all_feasible,a1,count_floor,895
+554,研究大樓,"[2, 1]",all_feasible,a2,count_floor,935
+555,研究大樓,"[2, 1]",all_feasible,a0,count_stop,854
+556,研究大樓,"[2, 1]",all_feasible,a1,count_stop,895
+557,研究大樓,"[2, 1]",all_feasible,a2,count_stop,935
+558,研究大樓,"[2, 1]",all_feasible,a0,count_floor,17
+559,研究大樓,"[2, 1]",all_feasible,a1,count_floor,41
+560,研究大樓,"[2, 1]",all_feasible,a2,count_floor,38
+561,研究大樓,"[2, 1]",all_feasible,a0,count_stop,17
+562,研究大樓,"[2, 1]",all_feasible,a1,count_stop,41
+563,研究大樓,"[2, 1]",all_feasible,a2,count_stop,38
+564,研究大樓,"[2, 1]",all_feasible,a0,count_floor,116
+565,研究大樓,"[2, 1]",all_feasible,a1,count_floor,149
+566,研究大樓,"[2, 1]",all_feasible,a2,count_floor,135
+567,研究大樓,"[2, 1]",all_feasible,a0,count_stop,116
+568,研究大樓,"[2, 1]",all_feasible,a1,count_stop,149
+569,研究大樓,"[2, 1]",all_feasible,a2,count_stop,135
+570,研究大樓,"[2, 1]",all_feasible,a0,count_floor,1166
+571,研究大樓,"[2, 1]",all_feasible,a1,count_floor,1146
+572,研究大樓,"[2, 1]",all_feasible,a2,count_floor,1158
+573,研究大樓,"[2, 1]",all_feasible,a0,count_stop,1166
+574,研究大樓,"[2, 1]",all_feasible,a1,count_stop,1146
+575,研究大樓,"[2, 1]",all_feasible,a2,count_stop,1158
+576,研究大樓,"[2, 1]",all_feasible,a0,count_floor,69
+577,研究大樓,"[2, 1]",all_feasible,a1,count_floor,98
+578,研究大樓,"[2, 1]",all_feasible,a2,count_floor,84
+579,研究大樓,"[2, 1]",all_feasible,a0,count_stop,69
+580,研究大樓,"[2, 1]",all_feasible,a1,count_stop,98
+581,研究大樓,"[2, 1]",all_feasible,a2,count_stop,84
+582,研究大樓,"[2, 1]",all_feasible,a0,count_floor,152
+583,研究大樓,"[2, 1]",all_feasible,a1,count_floor,198
+584,研究大樓,"[2, 1]",all_feasible,a2,count_floor,158
+585,研究大樓,"[2, 1]",all_feasible,a0,count_stop,152
+586,研究大樓,"[2, 1]",all_feasible,a1,count_stop,198
+587,研究大樓,"[2, 1]",all_feasible,a2,count_stop,158
+588,研究大樓,"[2, 1]",all_feasible,a0,count_floor,1050
+589,研究大樓,"[2, 1]",all_feasible,a1,count_floor,1098
+590,研究大樓,"[2, 1]",all_feasible,a2,count_floor,1113
+591,研究大樓,"[2, 1]",all_feasible,a0,count_stop,1050
+592,研究大樓,"[2, 1]",all_feasible,a1,count_stop,1098
+593,研究大樓,"[2, 1]",all_feasible,a2,count_stop,1113
+594,研究大樓,"[2, 1]",all_feasible,a0,count_floor,172
+595,研究大樓,"[2, 1]",all_feasible,a1,count_floor,168
+596,研究大樓,"[2, 1]",all_feasible,a2,count_floor,182
+597,研究大樓,"[2, 1]",all_feasible,a0,count_stop,172
+598,研究大樓,"[2, 1]",all_feasible,a1,count_stop,168
+599,研究大樓,"[2, 1]",all_feasible,a2,count_stop,182
+0,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,765
+1,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,898
+2,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,958
+3,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,765
+4,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,898
+5,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,958
+6,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,780
+7,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,950
+8,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,926
+9,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,780
+10,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,950
+11,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,926
+12,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,854
+13,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,911
+14,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,938
+15,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,854
+16,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,911
+17,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,938
+18,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,779
+19,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,874
+20,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,854
+21,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,779
+22,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,874
+23,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,854
+24,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,768
+25,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,896
+26,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,862
+27,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,768
+28,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,896
+29,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,862
+30,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,808
+31,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,913
+32,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,893
+33,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,808
+34,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,913
+35,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,893
+36,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,794
+37,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,911
+38,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,856
+39,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,794
+40,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,911
+41,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,856
+42,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,800
+43,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,860
+44,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,910
+45,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,800
+46,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,860
+47,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,910
+48,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,760
+49,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,904
+50,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,859
+51,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,760
+52,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,904
+53,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,859
+54,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,799
+55,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,895
+56,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,889
+57,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,799
+58,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,895
+59,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,889
+60,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,752
+61,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,908
+62,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,864
+63,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,752
+64,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,908
+65,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,864
+66,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,761
+67,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,902
+68,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,849
+69,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,761
+70,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,902
+71,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,849
+72,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,811
+73,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,928
+74,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,945
+75,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,811
+76,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,928
+77,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,945
+78,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,771
+79,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,868
+80,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,872
+81,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,771
+82,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,868
+83,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,872
+84,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,804
+85,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,942
+86,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,952
+87,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,804
+88,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,942
+89,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,952
+90,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,773
+91,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,815
+92,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,819
+93,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,773
+94,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,815
+95,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,819
+96,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,713
+97,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,919
+98,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,898
+99,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,713
+100,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,919
+101,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,898
+102,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,869
+103,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,884
+104,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,822
+105,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,869
+106,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,884
+107,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,822
+108,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,767
+109,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,838
+110,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,799
+111,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,767
+112,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,838
+113,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,799
+114,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,755
+115,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,868
+116,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,874
+117,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,755
+118,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,868
+119,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,874
+120,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,832
+121,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,897
+122,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,882
+123,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,832
+124,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,897
+125,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,882
+126,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,790
+127,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,898
+128,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,944
+129,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,790
+130,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,898
+131,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,944
+132,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,734
+133,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,888
+134,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,812
+135,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,734
+136,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,888
+137,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,812
+138,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,817
+139,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,909
+140,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,840
+141,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,817
+142,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,909
+143,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,840
+144,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,721
+145,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,879
+146,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,740
+147,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,721
+148,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,879
+149,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,740
+150,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,779
+151,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,900
+152,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,919
+153,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,779
+154,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,900
+155,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,919
+156,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,775
+157,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,926
+158,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,928
+159,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,775
+160,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,926
+161,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,928
+162,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,740
+163,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,832
+164,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,838
+165,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,740
+166,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,832
+167,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,838
+168,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,729
+169,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,842
+170,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,829
+171,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,729
+172,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,842
+173,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,829
+174,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,697
+175,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,845
+176,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,893
+177,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,697
+178,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,845
+179,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,893
+180,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,797
+181,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,880
+182,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,903
+183,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,797
+184,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,880
+185,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,903
+186,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,788
+187,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,890
+188,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,871
+189,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,788
+190,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,890
+191,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,871
+192,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,717
+193,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,846
+194,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,799
+195,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,717
+196,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,846
+197,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,799
+198,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,662
+199,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,807
+200,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,764
+201,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,662
+202,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,807
+203,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,764
+204,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,836
+205,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,923
+206,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,950
+207,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,836
+208,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,923
+209,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,950
+210,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,782
+211,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,898
+212,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,912
+213,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,782
+214,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,898
+215,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,912
+216,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,752
+217,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,854
+218,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,865
+219,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,752
+220,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,854
+221,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,865
+222,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,864
+223,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,946
+224,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,875
+225,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,864
+226,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,946
+227,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,875
+228,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,807
+229,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,867
+230,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,872
+231,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,807
+232,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,867
+233,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,872
+234,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,785
+235,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,879
+236,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,888
+237,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,785
+238,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,879
+239,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,888
+240,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,812
+241,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,819
+242,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,875
+243,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,812
+244,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,819
+245,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,875
+246,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,777
+247,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,851
+248,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,798
+249,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,777
+250,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,851
+251,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,798
+252,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,762
+253,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,830
+254,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,848
+255,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,762
+256,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,830
+257,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,848
+258,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,732
+259,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,809
+260,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,762
+261,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,732
+262,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,809
+263,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,762
+264,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,798
+265,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,938
+266,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,897
+267,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,798
+268,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,938
+269,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,897
+270,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,702
+271,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,854
+272,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,877
+273,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,702
+274,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,854
+275,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,877
+276,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,802
+277,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,884
+278,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,905
+279,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,802
+280,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,884
+281,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,905
+282,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,708
+283,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,859
+284,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,859
+285,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,708
+286,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,859
+287,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,859
+288,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,773
+289,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,919
+290,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,877
+291,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,773
+292,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,919
+293,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,877
+294,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,784
+295,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,912
+296,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,889
+297,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,784
+298,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,912
+299,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,889
+300,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,835
+301,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,891
+302,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,863
+303,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,835
+304,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,891
+305,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,863
+306,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,705
+307,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,764
+308,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,855
+309,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,705
+310,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,764
+311,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,855
+312,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,816
+313,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,901
+314,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,845
+315,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,816
+316,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,901
+317,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,845
+318,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,789
+319,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,888
+320,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,946
+321,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,789
+322,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,888
+323,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,946
+324,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,756
+325,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,784
+326,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,824
+327,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,756
+328,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,784
+329,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,824
+330,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,717
+331,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,827
+332,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,765
+333,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,717
+334,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,827
+335,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,765
+336,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,816
+337,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,940
+338,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,902
+339,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,816
+340,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,940
+341,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,902
+342,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,763
+343,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,846
+344,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,836
+345,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,763
+346,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,846
+347,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,836
+348,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,894
+349,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,893
+350,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,857
+351,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,894
+352,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,893
+353,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,857
+354,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,704
+355,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,789
+356,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,789
+357,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,704
+358,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,789
+359,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,789
+360,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,797
+361,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,925
+362,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,856
+363,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,797
+364,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,925
+365,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,856
+366,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,814
+367,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,938
+368,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,870
+369,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,814
+370,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,938
+371,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,870
+372,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,847
+373,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,978
+374,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,902
+375,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,847
+376,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,978
+377,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,902
+378,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,766
+379,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,901
+380,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,907
+381,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,766
+382,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,901
+383,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,907
+384,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,756
+385,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,898
+386,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,885
+387,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,756
+388,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,898
+389,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,885
+390,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,791
+391,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,961
+392,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,864
+393,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,791
+394,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,961
+395,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,864
+396,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,786
+397,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,887
+398,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,898
+399,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,786
+400,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,887
+401,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,898
+402,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,818
+403,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,888
+404,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,842
+405,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,818
+406,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,888
+407,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,842
+408,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,761
+409,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,860
+410,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,854
+411,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,761
+412,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,860
+413,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,854
+414,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,808
+415,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,960
+416,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,890
+417,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,808
+418,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,960
+419,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,890
+420,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,786
+421,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,939
+422,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,887
+423,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,786
+424,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,939
+425,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,887
+426,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,834
+427,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,914
+428,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,819
+429,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,834
+430,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,914
+431,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,819
+432,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,772
+433,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,840
+434,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,830
+435,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,772
+436,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,840
+437,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,830
+438,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,772
+439,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,888
+440,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,869
+441,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,772
+442,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,888
+443,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,869
+444,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,791
+445,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,865
+446,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,846
+447,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,791
+448,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,865
+449,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,846
+450,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,798
+451,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,891
+452,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,906
+453,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,798
+454,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,891
+455,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,906
+456,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,801
+457,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,871
+458,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,875
+459,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,801
+460,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,871
+461,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,875
+462,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,811
+463,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,929
+464,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,970
+465,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,811
+466,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,929
+467,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,970
+468,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,860
+469,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,965
+470,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,892
+471,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,860
+472,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,965
+473,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,892
+474,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,699
+475,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,760
+476,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,892
+477,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,699
+478,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,760
+479,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,892
+480,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,771
+481,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,904
+482,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,881
+483,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,771
+484,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,904
+485,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,881
+486,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,752
+487,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,813
+488,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,833
+489,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,752
+490,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,813
+491,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,833
+492,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,848
+493,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,904
+494,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,861
+495,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,848
+496,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,904
+497,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,861
+498,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,755
+499,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,898
+500,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,836
+501,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,755
+502,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,898
+503,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,836
+504,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,768
+505,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,844
+506,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,864
+507,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,768
+508,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,844
+509,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,864
+510,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,768
+511,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,884
+512,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,902
+513,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,768
+514,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,884
+515,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,902
+516,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,777
+517,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,890
+518,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,869
+519,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,777
+520,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,890
+521,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,869
+522,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,750
+523,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,867
+524,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,799
+525,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,750
+526,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,867
+527,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,799
+528,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,747
+529,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,910
+530,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,880
+531,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,747
+532,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,910
+533,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,880
+534,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,701
+535,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,874
+536,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,795
+537,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,701
+538,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,874
+539,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,795
+540,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,782
+541,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,890
+542,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,834
+543,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,782
+544,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,890
+545,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,834
+546,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,732
+547,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,878
+548,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,930
+549,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,732
+550,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,878
+551,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,930
+552,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,794
+553,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,932
+554,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,946
+555,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,794
+556,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,932
+557,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,946
+558,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,781
+559,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,934
+560,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,889
+561,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,781
+562,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,934
+563,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,889
+564,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,788
+565,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,896
+566,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,840
+567,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,788
+568,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,896
+569,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,840
+570,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,794
+571,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,944
+572,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,856
+573,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,794
+574,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,944
+575,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,856
+576,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,732
+577,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,859
+578,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,845
+579,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,732
+580,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,859
+581,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,845
+582,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,815
+583,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,854
+584,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,827
+585,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,815
+586,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,854
+587,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,827
+588,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,709
+589,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,800
+590,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,712
+591,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,709
+592,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,800
+593,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,712
+594,研究大樓,"[2, 1]",sep_1_5,a0,count_floor,757
+595,研究大樓,"[2, 1]",sep_1_5,a1,count_floor,844
+596,研究大樓,"[2, 1]",sep_1_5,a2,count_floor,812
+597,研究大樓,"[2, 1]",sep_1_5,a0,count_stop,757
+598,研究大樓,"[2, 1]",sep_1_5,a1,count_stop,844
+599,研究大樓,"[2, 1]",sep_1_5,a2,count_stop,812
+0,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,979
+1,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,964
+2,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1052
+3,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,979
+4,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,964
+5,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1052
+6,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,988
+7,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,901
+8,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1078
+9,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,988
+10,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,901
+11,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1078
+12,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,977
+13,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,986
+14,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1037
+15,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,977
+16,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,986
+17,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1037
+18,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,939
+19,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,905
+20,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,975
+21,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,939
+22,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,905
+23,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,975
+24,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,961
+25,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,891
+26,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1001
+27,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,961
+28,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,891
+29,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1001
+30,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,933
+31,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,937
+32,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1017
+33,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,933
+34,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,937
+35,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1017
+36,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,1039
+37,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1019
+38,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1054
+39,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,1039
+40,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1019
+41,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1054
+42,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,980
+43,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,976
+44,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1093
+45,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,980
+46,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,976
+47,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1093
+48,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,886
+49,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,942
+50,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1091
+51,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,886
+52,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,942
+53,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1091
+54,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,896
+55,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,941
+56,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,984
+57,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,896
+58,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,941
+59,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,984
+60,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,1007
+61,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,974
+62,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1039
+63,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,1007
+64,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,974
+65,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1039
+66,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,970
+67,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,942
+68,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1032
+69,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,970
+70,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,942
+71,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1032
+72,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,929
+73,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,913
+74,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1040
+75,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,929
+76,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,913
+77,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1040
+78,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,998
+79,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,949
+80,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1062
+81,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,998
+82,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,949
+83,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1062
+84,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,941
+85,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,995
+86,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,996
+87,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,941
+88,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,995
+89,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,996
+90,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,928
+91,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,946
+92,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1044
+93,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,928
+94,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,946
+95,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1044
+96,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,932
+97,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1014
+98,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1072
+99,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,932
+100,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1014
+101,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1072
+102,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,985
+103,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,922
+104,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1016
+105,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,985
+106,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,922
+107,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1016
+108,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,933
+109,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,920
+110,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1010
+111,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,933
+112,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,920
+113,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1010
+114,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,979
+115,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,914
+116,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1073
+117,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,979
+118,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,914
+119,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1073
+120,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,945
+121,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1004
+122,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1000
+123,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,945
+124,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1004
+125,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1000
+126,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,902
+127,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,960
+128,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1004
+129,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,902
+130,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,960
+131,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1004
+132,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,964
+133,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,929
+134,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,950
+135,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,964
+136,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,929
+137,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,950
+138,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,825
+139,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,892
+140,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,943
+141,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,825
+142,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,892
+143,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,943
+144,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,991
+145,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,985
+146,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1055
+147,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,991
+148,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,985
+149,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1055
+150,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,959
+151,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,944
+152,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1021
+153,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,959
+154,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,944
+155,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1021
+156,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,948
+157,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,880
+158,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,971
+159,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,948
+160,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,880
+161,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,971
+162,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,970
+163,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1000
+164,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1063
+165,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,970
+166,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1000
+167,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1063
+168,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,950
+169,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,846
+170,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1024
+171,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,950
+172,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,846
+173,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1024
+174,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,910
+175,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,945
+176,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1038
+177,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,910
+178,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,945
+179,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1038
+180,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,985
+181,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,922
+182,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1016
+183,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,985
+184,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,922
+185,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1016
+186,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,933
+187,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,920
+188,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1010
+189,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,933
+190,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,920
+191,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1010
+192,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,979
+193,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,914
+194,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1073
+195,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,979
+196,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,914
+197,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1073
+198,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,945
+199,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1004
+200,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1000
+201,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,945
+202,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1004
+203,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1000
+204,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,902
+205,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,960
+206,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1004
+207,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,902
+208,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,960
+209,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1004
+210,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,964
+211,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,929
+212,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,950
+213,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,964
+214,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,929
+215,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,950
+216,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,825
+217,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,892
+218,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,943
+219,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,825
+220,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,892
+221,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,943
+222,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,991
+223,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,985
+224,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1055
+225,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,991
+226,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,985
+227,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1055
+228,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,959
+229,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,944
+230,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1021
+231,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,959
+232,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,944
+233,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1021
+234,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,948
+235,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,880
+236,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,971
+237,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,948
+238,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,880
+239,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,971
+240,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,970
+241,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1000
+242,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1063
+243,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,970
+244,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1000
+245,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1063
+246,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,950
+247,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,846
+248,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1024
+249,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,950
+250,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,846
+251,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1024
+252,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,910
+253,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,945
+254,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1038
+255,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,910
+256,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,945
+257,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1038
+258,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,985
+259,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,922
+260,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1016
+261,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,985
+262,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,922
+263,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1016
+264,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,933
+265,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,920
+266,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1010
+267,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,933
+268,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,920
+269,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1010
+270,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,979
+271,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,914
+272,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1073
+273,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,979
+274,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,914
+275,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1073
+276,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,945
+277,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1004
+278,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1000
+279,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,945
+280,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1004
+281,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1000
+282,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,902
+283,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,960
+284,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1004
+285,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,902
+286,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,960
+287,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1004
+288,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,964
+289,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,929
+290,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,950
+291,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,964
+292,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,929
+293,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,950
+294,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,825
+295,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,892
+296,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,943
+297,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,825
+298,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,892
+299,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,943
+300,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,991
+301,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,985
+302,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1055
+303,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,991
+304,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,985
+305,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1055
+306,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,959
+307,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,944
+308,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1021
+309,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,959
+310,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,944
+311,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1021
+312,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,948
+313,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,880
+314,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,971
+315,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,948
+316,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,880
+317,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,971
+318,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,970
+319,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1000
+320,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1063
+321,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,970
+322,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1000
+323,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1063
+324,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,950
+325,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,846
+326,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1024
+327,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,950
+328,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,846
+329,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1024
+330,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,910
+331,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,945
+332,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1038
+333,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,910
+334,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,945
+335,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1038
+336,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,985
+337,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,922
+338,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1016
+339,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,985
+340,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,922
+341,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1016
+342,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,933
+343,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,920
+344,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1010
+345,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,933
+346,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,920
+347,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1010
+348,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,979
+349,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,914
+350,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1073
+351,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,979
+352,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,914
+353,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1073
+354,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,945
+355,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1004
+356,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1000
+357,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,945
+358,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1004
+359,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1000
+360,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,902
+361,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,960
+362,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1004
+363,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,902
+364,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,960
+365,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1004
+366,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,964
+367,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,929
+368,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,950
+369,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,964
+370,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,929
+371,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,950
+372,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,825
+373,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,892
+374,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,943
+375,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,825
+376,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,892
+377,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,943
+378,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,991
+379,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,985
+380,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1055
+381,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,991
+382,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,985
+383,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1055
+384,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,959
+385,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,944
+386,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1021
+387,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,959
+388,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,944
+389,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1021
+390,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,948
+391,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,880
+392,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,971
+393,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,948
+394,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,880
+395,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,971
+396,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,970
+397,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1000
+398,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1063
+399,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,970
+400,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1000
+401,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1063
+402,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,950
+403,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,846
+404,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1024
+405,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,950
+406,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,846
+407,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1024
+408,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,910
+409,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,945
+410,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1038
+411,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,910
+412,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,945
+413,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1038
+414,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,985
+415,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,922
+416,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1016
+417,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,985
+418,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,922
+419,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1016
+420,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,933
+421,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,920
+422,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1010
+423,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,933
+424,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,920
+425,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1010
+426,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,979
+427,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,914
+428,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1073
+429,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,979
+430,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,914
+431,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1073
+432,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,945
+433,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1004
+434,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1000
+435,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,945
+436,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1004
+437,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1000
+438,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,902
+439,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,960
+440,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1004
+441,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,902
+442,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,960
+443,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1004
+444,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,964
+445,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,929
+446,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,950
+447,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,964
+448,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,929
+449,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,950
+450,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,825
+451,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,892
+452,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,943
+453,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,825
+454,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,892
+455,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,943
+456,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,991
+457,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,985
+458,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1055
+459,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,991
+460,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,985
+461,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1055
+462,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,959
+463,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,944
+464,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1021
+465,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,959
+466,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,944
+467,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1021
+468,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,948
+469,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,880
+470,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,971
+471,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,948
+472,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,880
+473,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,971
+474,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,970
+475,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1000
+476,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1063
+477,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,970
+478,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1000
+479,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1063
+480,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,950
+481,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,846
+482,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1024
+483,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,950
+484,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,846
+485,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1024
+486,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,910
+487,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,945
+488,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1038
+489,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,910
+490,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,945
+491,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1038
+492,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,985
+493,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,922
+494,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1016
+495,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,985
+496,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,922
+497,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1016
+498,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,933
+499,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,920
+500,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1010
+501,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,933
+502,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,920
+503,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1010
+504,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,979
+505,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,914
+506,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1073
+507,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,979
+508,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,914
+509,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1073
+510,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,945
+511,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1004
+512,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1000
+513,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,945
+514,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1004
+515,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1000
+516,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,902
+517,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,960
+518,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1004
+519,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,902
+520,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,960
+521,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1004
+522,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,964
+523,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,929
+524,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,950
+525,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,964
+526,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,929
+527,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,950
+528,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,825
+529,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,892
+530,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,943
+531,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,825
+532,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,892
+533,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,943
+534,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,991
+535,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,985
+536,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1055
+537,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,991
+538,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,985
+539,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1055
+540,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,959
+541,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,944
+542,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1021
+543,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,959
+544,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,944
+545,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1021
+546,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,948
+547,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,880
+548,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,971
+549,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,948
+550,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,880
+551,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,971
+552,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,970
+553,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1000
+554,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1063
+555,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,970
+556,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1000
+557,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1063
+558,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,950
+559,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,846
+560,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1024
+561,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,950
+562,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,846
+563,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1024
+564,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,910
+565,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,945
+566,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1038
+567,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,910
+568,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,945
+569,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1038
+570,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,985
+571,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,922
+572,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1016
+573,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,985
+574,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,922
+575,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1016
+576,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,933
+577,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,920
+578,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1010
+579,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,933
+580,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,920
+581,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1010
+582,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,979
+583,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,914
+584,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1073
+585,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,979
+586,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,914
+587,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1073
+588,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,945
+589,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,1004
+590,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1000
+591,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,945
+592,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,1004
+593,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1000
+594,研究大樓,"[2, 1]",sep_2_7,a0,count_floor,902
+595,研究大樓,"[2, 1]",sep_2_7,a1,count_floor,960
+596,研究大樓,"[2, 1]",sep_2_7,a2,count_floor,1004
+597,研究大樓,"[2, 1]",sep_2_7,a0,count_stop,902
+598,研究大樓,"[2, 1]",sep_2_7,a1,count_stop,960
+599,研究大樓,"[2, 1]",sep_2_7,a2,count_stop,1004

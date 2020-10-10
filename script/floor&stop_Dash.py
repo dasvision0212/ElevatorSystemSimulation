@@ -14,11 +14,11 @@ import sys
 
 ###########  import data  #############
 
-data = pd.read_csv('../data/floor_count.csv',columns = ['location','elevator_subgroup_number','policy_middle_floor','elevator_name','count_type','count'])
+data = pd.read_csv('../data/floor_count.csv')
 
 locationList = data.location.unique()
 elevSup_NumPairList = data.elevator_subgroup_number.unique()
-middle_floorList = data.policy_middle_floor.unique()
+floor_policyList = data.floor_policy.unique()
 
 
 
@@ -36,11 +36,11 @@ app.layout = html.Div([
             options=[{'label': i, 'value': i} for i in locationList],
             value='研究大樓'
         ),
-        html.Label('電梯分隔樓層'),
+        html.Label('電梯分層政策'),
         dcc.Dropdown(
-                id='middle_floor',
-                options=[{'label':i, 'value':i} for i in middle_floorList],
-                value='7'
+                id='floor_policy',
+                options=[{'label':i, 'value':i} for i in floor_policyList],
+                value="all_feasible"
         )
     ],style={'width': '15%', 'display': 'inline-block'}),
     dcc.Graph(
@@ -58,18 +58,18 @@ app.layout = html.Div([
 @app.callback(
     Output('GraphMeasurement','figure'),
     [Input('location','value'),
-    Input('middle_floor','value')
+    Input('floor_policy','value')
     ]
 )
 
 
 
-def update_graph(location, middle_floor):
-    df = data[(data["location"] == location) & (data["policy_middle_floor"] == middle_floor) ]
+def update_graph(location, floor_policy):
+    df = data[(data["location"] == location) & (data["floor_policy"] == floor_policy)]
     if len(df) == 0:
         pass
     else:
-        fig = px.histogram(df, x= "floor_count", title=location, facet_col="policy_middle_floor", color="policy_middle_floor")
+        fig = px.histogram(df, x= "floor_count", title=location, facet_col="count_type", color="count_type")
     fig.update_layout(title_text=location)
 
     return fig
@@ -77,7 +77,7 @@ def update_graph(location, middle_floor):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True,port=8051)
 
 
 

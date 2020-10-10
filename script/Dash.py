@@ -18,7 +18,7 @@ data = pd.read_csv('../data/simulation_multipleTimes.csv')
 
 locationList = data.location.unique()
 elevSup_NumPairList = data.elevator_subgroup_number.unique()
-middle_floorList = data.policy_middle_floor.unique()
+floor_policyList = data.floor_policy.unique()
 
 
 
@@ -37,11 +37,11 @@ app.layout = html.Div([
 	        options=[{'label': i, 'value': i} for i in locationList],
 	        value='研究大樓'
     	),
-        html.Label('電梯分隔樓層'),
+        html.Label('電梯分層政策'),
     	dcc.Dropdown(
-                id='middle_floor',
-                options=[{'label':i, 'value':i} for i in middle_floorList],
-                value='7'
+                id='floor_policy',
+                options=[{'label':i, 'value':i} for i in floor_policyList],
+                value="all_feasible"
     	),
         html.Label('小電梯組'),
     	dcc.Dropdown(
@@ -65,15 +65,15 @@ app.layout = html.Div([
 @app.callback(
     Output('GraphMeasurement','figure'),
     [Input('location','value'),
-    Input('middle_floor','value'),
+    Input('floor_policy','value'),
     Input('elevSup_NumPair','value')
     ]
 )
 
 
 
-def update_graph(location, middle_floor,elevSup_NumPair):
-    df = data[(data["location"] == location) & (data["policy_middle_floor"] == middle_floor) & (data["elevator_subgroup_number"] == elevSup_NumPair) ]
+def update_graph(location, floor_policy,elevSup_NumPair):
+    df = data[(data["location"] == location) & (data["floor_policy"] == floor_policy) & (data["elevator_subgroup_number"] == elevSup_NumPair) ]
     if len(df) == 0:
         pass
     else:
