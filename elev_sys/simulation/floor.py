@@ -42,7 +42,7 @@ def cid_generator():
 
 class Customer:
     def __init__(self, cid_gen=None):
-        if(cid_gen != None):
+        if(not cid_gen is None):
             self.cid = next(cid_gen)
         else:
             self.cid = next(self._cid_generator)
@@ -137,7 +137,7 @@ class Queue:
             logging.info('[INFLOW] {} people waiting on {} floor'.format(
                 len(self.queue_array), self.floor))
 
-            if(self.queue_logger != None):
+            if(not self.queue_logger is None):
                 self.queue_logger.log_inflow(len(self.queue_array), self.floorIndex, self.direction, float(self.env.now))
     
     def updatePanel():
@@ -186,9 +186,10 @@ class Queue:
                 # elevator's infeasible list
                 infeasible = self.group_setting[elevIndex[0]]["infeasibles"][int(elevIndex[1:])]
                 if (self.floor not in infeasible) & (advance(self.floor,customer.destination) not in infeasible):
-                    if self.customer_logger != None:
+                    if(not self.customer_logger is None):
                         yield self.env.timeout(np.random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX))
-                        self.customer_logger.log_board(customer.cid, float(self.env.now))
+                        if(not self.customer_logger is None):
+                            self.customer_logger.log_board(customer.cid, float(self.env.now))
                     
                     riders.append(customer)
                     self.queue_array.pop(customerIndex)
@@ -198,7 +199,7 @@ class Queue:
             
             logging.info('[OUTFLOW] {} People Enters'.format(len(riders)))
             
-            if(self.queue_logger != None):
+            if(not self.queue_logger is None):
                 self.queue_logger.log_outflow(len(self.queue_array), self.floorIndex, self.direction, float(self.env.now))
 
             # customers on board
@@ -246,7 +247,7 @@ class Floor:
                 customer = Customer(self.cid_gen)
                 customer.destination = np.random.choice(self.distination_dist.index, p=self.distination_dist)
 
-                if(self.customer_logger != None):
+                if(not self.customer_logger is None):
                     self.customer_logger.log_appear(customer.cid, self.floor, customer.destination, float(self.env.now))
 
                 customers.append(customer)

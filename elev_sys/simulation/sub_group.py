@@ -90,6 +90,7 @@ class SubGroup:
                 "sub_group" : self.sub_group_name, 
                 "elevator"  : elev_name,  
                 "stop_num"   : elevator.stopNum, 
+                "waste_stop_num"   : elevator.wasteStopNum, 
                 "move_floor_num": elevator.moveFloorNum
             })
         

@@ -67,10 +67,6 @@ class Elev_logger(Logger):
             'direction'    : direction,
             'time'         : time
         })
-    @property
-    def df(self):
-        super().df
-        return self._df
 
 
 class Customer_logger(Logger):
@@ -90,10 +86,16 @@ class Customer_logger(Logger):
         }))
 
     def log_board(self, cid, time:float):
+        if(not self.status):
+            return
+
         customer = self._log[cid]
         customer["boarding_time"].append(time)
 
     def log_get_off(self, cid, floor, time ):
+        if(not self.status):
+            return
+
         customer = self._log[cid]
         customer["pass_by"].append(floor)
         customer["get_off_time"].append(time)
@@ -122,12 +124,17 @@ class Customer_logger(Logger):
 
 
             # deal with exception
-            if(pd.isna(row["boarding_time"])):
+            if(not isinstance(row["boarding_time"], list)): 
+                '''
+                Check if row["boarding_time"] not pd.na. 
+                We cannot apply pd.isnull or pd.isna because it will return a list, e.g., [True, False]. 
+                It is not out expectation. What we want is that the cell row["boarding_time"] is pd.nan or not. 
+                '''
                 waiting_time_list.append(self.untilTime - row["appear_time"])
                 journey_time_list.append(pd.NA)
                 continue
 
-            if(pd.isna(row["get_off_time"])):
+            if(not isinstance(row["get_off_time"], list)):
                 waiting_time_list.append(row["boarding_time"][0] - row["appear_time"])
                 journey_time_list.append(self.untilTime - row["boarding_time"][0])
                 continue
@@ -166,6 +173,9 @@ class Queue_logger(Logger):
         super().__init__(status)
 
     def log_inflow(self, riderNumAfter, floorIndex, direction, time):
+        if(not self.status):
+            return
+
         self._log.append({
             'action'       : QUEUE_LOG_CONFIG.INFLOW,
             'riderNumAfter': riderNumAfter,
@@ -175,6 +185,9 @@ class Queue_logger(Logger):
         })
 
     def log_outflow(self, riderNumAfter, floorIndex, direction, time):
+        if(not self.status):
+            return
+
         self._log.append({
             'action'       : QUEUE_LOG_CONFIG.OUTFLOW,
             'riderNumAfter': riderNumAfter,
@@ -189,6 +202,9 @@ class StopList_logger(Logger):
         super().__init__(status)
 
     def log_active(self, elevIndex, direction, floorIndex, time):
+        if(not self.status):
+            return
+
         self._log.append({
             "elevIndex"    : elevIndex, 
             "direction"    : direction, 
@@ -198,6 +214,9 @@ class StopList_logger(Logger):
         })
 
     def log_idle(self, elevIndex, direction, floorIndex, time):
+        if(not self.status):
+            return
+
         self._log.append({
             "elevIndex"    : elevIndex, 
             "direction"    : direction, 

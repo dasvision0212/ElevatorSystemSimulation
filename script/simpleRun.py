@@ -14,8 +14,8 @@ import json
 if(__name__ == "__main__"):
 
     # simulation related
-    logging.basicConfig(level=logging.WARNING)
-    untilTime = 2500
+    logging.basicConfig(level=logging.CRITICAL)
+    untilTime = 3600 * 4
 
     # env variable
     Ratio_byFloor = {"北棟病床": '../data/FloorRatio_NHB.csv',
@@ -63,9 +63,10 @@ if(__name__ == "__main__"):
                           elev_logger=elev_logger,
                           queue_logger=queue_logger,
                           stopList_logger=stopList_logger)
-    print(statistics)
+
+
     # logging
-    log_folder = r"../data"
+    log_folder = r"../data/log"
     elev_logger.to_csv(joinPath(log_folder, "elev_log.csv"))
     queue_logger.to_csv(joinPath(log_folder, "queue_log.csv"))
     stopList_logger.to_csv(joinPath(log_folder, "stopList_log.csv"))

@@ -75,7 +75,7 @@ class JT_displayer:
                 
                 self.img = tk.PhotoImage(width=width, height=height, data=get_img_from_fig(fig))
                 
-                if(self.rectangle != None):
+                if(not self.rectangle is None):
                     self.statPic = self.canvas.create_image((self.posConfig.jt_block.left, self.posConfig.jt_block.top), 
                                                              anchor="nw", image=self.img)
                     self.canvas.delete(self.rectangle)

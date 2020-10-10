@@ -77,7 +77,7 @@ class StopList:
 
         # add outer call to stoplist
         self._list[direction][currentIndex] = StopList.ACTIVE
-        if(self.stopList_logger != None):
+        if(not self.stopList_logger is None):
             self.stopList_logger.log_active(elev.elev_name, direction, currentIndex, float(elev.env.now))
 
     def pushInner(self, elev, destination):
@@ -89,7 +89,7 @@ class StopList:
 
         # add inner call to stoplist
         self._list[elev.direction][floorIndex] = StopList.ACTIVE
-        if(self.stopList_logger != None):
+        if(not self.stopList_logger is None):
             self.stopList_logger.log_active(elev.elev_name, elev.direction, floorIndex, float(elev.env.now))
 
 
@@ -102,7 +102,7 @@ class StopList:
 
         # remove target floor from stoplist
         self._list[elev.direction][currentIndex] = StopList.IDLE
-        if(self.stopList_logger != None):
+        if(not self.stopList_logger is None):
             self.stopList_logger.log_idle(elev.elev_name, elev.direction, currentIndex, float(elev.env.now))
             
         logging.debug('[POP] ele {}, curFlo {}, dir {}'.format(
@@ -195,7 +195,6 @@ class Elevator:
         self.floorList = floorList
 
         # schedule list
-        # print('!!!!!!!!!!!!',elev_name, infeasible)
         self.stop_list = StopList(self.floorList, infeasible, stopList_logger)
         self.infeasible = infeasible
 
@@ -218,10 +217,9 @@ class Elevator:
 
     def idle(self):
         logging.info('[IDLE] Elev {} Activated'.format(self.elev_name))
-#         print('[IDLE] Elevator {} Activated'.format(self.elev_name))
 
         while True:
-            if(self.elev_logger != None):
+            if(not self.elev_logger is None):
                 self.elev_logger.log_idle(self.elev_name, self.current_floor, float(self.env.now))
 
             # first assignment
@@ -263,10 +261,9 @@ class Elevator:
 #             logging.info('[ONMISSION] NEXT TARGET {}'.format(nextTarget))
             logging.info('[ONMISSION] Elev {}, NEXT TARGET {}'.format(
                 self.elev_name, nextTarget))
-#             print('[ONMISSION] NEXT TARGET {}'.format(nextTarget))
 
-            moving_proc = self.env.process(
-                self.moving(nextTarget, self.current_floor))
+            moving_proc = self.env.process(self.moving(nextTarget, self.current_floor))
+                
 
             while self.current_floor != nextTarget:
                 value = yield self.assign_event | moving_proc
@@ -317,7 +314,7 @@ class Elevator:
                 self.current_floor = self.forwards(self.current_floor, self.direction)
                 self.moveFloorNum += 1
 
-                if(self.elev_logger != None):
+                if(not self.elev_logger is None):
                     self.elev_logger.log_arrive(
                         self.elev_name, self.direction, self.current_floor, float(self.env.now))
 
@@ -345,22 +342,25 @@ class Elevator:
         leaveCount = 0
         transfer_customers= []
         for i in range(len(self.riders)-1, -1, -1):
-            customer = self.riders.pop(i)
-            if customer.temp_destination ==  self.current_floor:
+            if(self.riders[i].destination ==  self.current_floor):
+                customer = self.riders.pop(i)
+          
+                if(not self.customer_logger is None):
+                    self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
+            elif(self.riders[i].temp_destination ==  self.current_floor):
+                customer = self.riders.pop(i)
                 transfer_customers.append(customer)
-                if(self.customer_logger != None):
+                
+                if(not self.customer_logger is None):
                     self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
 
-            elif customer.destination == self.current_floor:
-                # do nothing
-                if(self.customer_logger != None):
-                    self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
-
+                
             leaveCount += 1
+
         if leaveCount > 0:
             isServed = True
 
-        yield self.env.timeout(leaveCount*1)
+        yield self.env.timeout(leaveCount*1) # !!!
 
         logging.info('[SERVING] Elev {}, {} Customers Leave'.format(
             self.elev_name, leaveCount))
@@ -369,7 +369,7 @@ class Elevator:
             self.EVENT.ELEV_TRANSFER[self.direction][self.current_floor].succeed(value=transfer_customers)
             self.EVENT.ELEV_TRANSFER[self.direction][self.current_floor] = self.env.event()
 
-        # exclude 'peak' condition
+        # The common situation, not on the peak
         if not((self.current_floor == self.floorList[-1] and self.direction == 1) or
                (self.current_floor == self.floorList[0] and self.direction == -1)):
 
@@ -393,16 +393,17 @@ class Elevator:
 
             self.riders = self.riders + riders
 
-            if(self.elev_logger != None):
+            if(not self.elev_logger is None):
                 self.elev_logger.log_serve(self.elev_name, len(
                     self.riders), self.direction, self.current_floor, float(self.env.now))
 
-        # determine direction
+        # The situation on the peak
+        ## Determine direction
         nextTarget = self.stop_list.next_target(self)
         logging.info('[SERVING] Elev {}, NEXT TARGET {}'.format(
             self.elev_name, nextTarget))
 
-        if nextTarget == None:
+        if not nextTarget is None:
             logging.debug('[SERVING] Elev {}, nextTarget is None, {}'.format(
                 self.elev_name, nextTarget))
             return
@@ -438,12 +439,14 @@ class Elevator:
                 
                 self.riders = self.riders + riders
 
-                if(self.elev_logger != None):
+                if(not self.elev_logger is None):
                     self.elev_logger.log_serve(
                         self.elev_name, len(self.riders), self.direction, self.current_floor, float(self.env.now))
 
                 if not isServed:
                     self.wasteStopNum += 1
+
+
 
     def travelingTime(self, destination, current, source):
         # acceleration should be considered

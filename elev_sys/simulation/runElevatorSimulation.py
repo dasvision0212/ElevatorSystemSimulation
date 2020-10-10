@@ -35,12 +35,12 @@ def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting
                             distination_dist.loc[floorName][floorName.lstrip("0"):], group_setting, cid_gen, event
                             , queue_logger=queue_logger, customer_logger=customer_logger) \
                                 for floorIndex, floorName in enumerate(floorList[:-1]) \
-                                if IAT_D.getter('up', floorName)  != None]
+                                if not IAT_D.getter('up', floorName) is None]
     floors_downward = [Floor(env, floorName, floorIndex, -1, IAT_D.getter('down', floorName), 
                             distination_dist.loc[floorName][:floorName.lstrip("0")], group_setting, cid_gen, event, 
                             queue_logger=queue_logger, customer_logger=customer_logger) \
                                 for floorIndex, floorName in enumerate(floorList[1:]) \
-                                if IAT_D.getter('up', floorName) != None]
+                                if not IAT_D.getter('up', floorName) is None]
     
     elevator_group = Elevator_group(env, group_setting, floorList, event, 
                                 customer_logger=customer_logger, 

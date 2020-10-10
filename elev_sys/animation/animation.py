@@ -41,7 +41,7 @@ class Animation:
         self.building_name = building_name
 
         self.window = tk.Tk()
-        if(title != None):
+        if(not title is None):
             self.window.title(title)
         else:
             self.window.title("Elevator Animation")
