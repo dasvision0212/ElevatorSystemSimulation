@@ -90,40 +90,21 @@ class Queue:
         self.EVENT = EVENT
         self.queue_logger = queue_logger
         self.customer_logger = customer_logger
-    
+
     #     self.env.process(self.checkpanel())
+    
     # def checkpanel(self):
     
-    #     if (self.floor == '5') & (self.direction == -1):
+    #     if True:#(self.floor == '5') & (self.direction == -1):
     #         while True:
-    #             yield self.env.timeout(10)
+    #             yield self.env.timeout(100)
     #             print(self.env.now,'Floor',self.floor, 'direction',self.direction, 'num:', len(self.queue_array))
                 
-                # print(self.panels_state)
         
 
-
-    def inflow(self):
-        while True:
-            customers = yield self.arrival_event | self.EVENT.ELEV_TRANSFER[self.direction][self.floor]
-            customers = list(customers.values())[0]
-
-            logging.info('[INFLOW] Outer Call {} Floor {} '.format(
-                self.floor, 'up' if self.direction == 1 else 'down'))
-
-            self.pushButton(customers)
-
-            # add customers to waiting queue
-            self.queue_array = self.queue_array + customers
-            logging.info('[INFLOW] {} people waiting on {} floor'.format(
-                len(self.queue_array), self.floor))
-
-            if(not self.queue_logger is None):
-                self.queue_logger.log_inflow(len(self.queue_array), self.floorIndex, self.direction, float(self.env.now))
-    
-    def pushButton(self, customers):
-        # foR each customer
-        for customer in customers:
+    def pushButton(self):
+        # for each customer
+        for customer in self.queue_array:
             # for each sub-group
             for sub_group_name, sub_group_setting in self.group_setting.items():
 
@@ -136,28 +117,52 @@ class Queue:
                     if (self.floor not in infeasible) & (advance(self.floor, target) not in infeasible):
 
                         # disable call if already assigned
-                        if self.panels_state[sub_group_name] == False:
+                        if True:#self.panels_state[sub_group_name] == False:
+
                             self.panels_state[sub_group_name] = True
+
                             mission = Mission(direction=self.direction, destination=self.floor)
 
                             self.EVENT.CALL[sub_group_name].succeed(value=mission)
                             self.EVENT.CALL[sub_group_name] = self.env.event()
 
+    def inflow(self):
+        while True:
+            customers = yield self.arrival_event | self.EVENT.ELEV_TRANSFER[self.direction][self.floor]
+            customers = list(customers.values())[0]
+
+            logging.info('[INFLOW] Outer Call {} Floor {} '.format(
+                self.floor, 'up' if self.direction == 1 else 'down'))
+
+            
+
+            # add customers to waiting queue
+            self.queue_array = self.queue_array + customers
+            self.pushButton()
+
+            logging.info('[INFLOW] {} people waiting on {} floor'.format(
+                len(self.queue_array), self.floor))
+
+            if(not self.queue_logger is None):
+                self.queue_logger.log_inflow(len(self.queue_array), self.floorIndex, self.direction, float(self.env.now))
+    
+    
+
     def updatePanel(self):
         # waiting for elevator leave
-        yield self.env.timeout(ELEV_CONFIG.ELEV_VELOCITY+1)
-        self.pushButton(self.queue_array)
+        yield self.env.timeout(ELEV_CONFIG.ELEV_VELOCITY+2)
+        self.pushButton()
 
     def outflow(self):
         while True:
             # elevator arrives
             availible, elevIndex = yield self.EVENT.ELEV_ARRIVAL[self.direction][self.floor]
-
+    
             # cancel panel
-            if (self.floor == '5') & (self.direction == -1):
-                print(elevIndex,availible, len(self.queue_array) )
-
             self.panels_state[elevIndex[0]] = False
+
+            # if (self.floor == '5') & (self.direction == -1):
+            #     print(elevIndex,'avail:',availible, 'customers:',len(self.queue_array) )
 
             riders = []
             customerIndex = 0
@@ -197,7 +202,8 @@ class Queue:
             # customers on board
             self.EVENT.ELEV_LEAVE[elevIndex].succeed(value=riders)
             self.EVENT.ELEV_LEAVE[elevIndex] = self.env.event()
-
+            # if (self.floor == '5') & (self.direction == -1):
+            #     print(elevIndex,availible, len(self.queue_array) )
             self.env.process(self.updatePanel())
 
             
