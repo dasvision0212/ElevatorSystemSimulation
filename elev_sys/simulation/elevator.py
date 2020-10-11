@@ -223,6 +223,7 @@ class Elevator:
     #     if (self.elev_name == 'a1'):
     #         while True:
     #             yield self.env.timeout(10)
+    #             print(self.wasteStopNum)
     #             if self.current_floor == '5':
                     
     #                 print(self.elev_name,self.direction, self.current_floor,'down',self.stop_list._list[-1][10:-4])
@@ -359,18 +360,18 @@ class Elevator:
         for i in range(len(self.riders)-1, -1, -1):
             if(self.riders[i].destination ==  self.current_floor):
                 customer = self.riders.pop(i)
-          
+                leaveCount += 1
                 if(not self.customer_logger is None):
                     self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
             elif(self.riders[i].temp_destination ==  self.current_floor):
                 customer = self.riders.pop(i)
                 transfer_customers.append(customer)
-                
+                leaveCount += 1
                 if(not self.customer_logger is None):
                     self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
 
                 
-            leaveCount += 1
+            
 
         if leaveCount > 0:
             isServed = True
@@ -399,7 +400,7 @@ class Elevator:
             # customers on board
             riders = yield self.EVENT.ELEV_LEAVE[self.elev_name]
 
-            if riders:
+            if len(riders) > 0:
                 isServed = True
 
             logging.info('[SERVING] Elev {}, Customers Aboard: \n {}'.format(
@@ -447,7 +448,7 @@ class Elevator:
                 # new customers
                 riders = yield self.EVENT.ELEV_LEAVE[self.elev_name]
 
-                if riders:
+                if len(riders) > 0:
                     isServed = True
 
                 logging.info('[SERVING] Elev {}, Customers Aboard: \n {} '.format(
@@ -462,8 +463,8 @@ class Elevator:
                     self.elev_logger.log_serve(
                         self.elev_name, len(self.riders), self.direction, self.current_floor, float(self.env.now))
 
-                if not isServed:
-                    self.wasteStopNum += 1
+        if not isServed:
+            self.wasteStopNum += 1
 
 
 
