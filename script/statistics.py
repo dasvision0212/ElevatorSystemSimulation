@@ -60,13 +60,12 @@ if(__name__ == "__main__"):
         for floor_policy_1_sep in range(1, len(BUILDING_FLOOR[building_name])-2): # set floor_policy, overlap floor
             group_setting = {'a':{'infeasibles':[list() for i in range(3)]}}
             group_setting['a']['infeasibles'][0] = (BUILDING_FLOOR[building_name][floor_policy_1_sep+1:]) # set first elev
-
             df = []
+
             for floor_policy_2_sep in range(floor_policy_1_sep+1,len(BUILDING_FLOOR[building_name])-1): # set floor_policy, overlap floor
                 group_setting['a']['infeasibles'][1] = (BUILDING_FLOOR[building_name][:floor_policy_1_sep]+BUILDING_FLOOR[building_name][floor_policy_2_sep+1:])
                 group_setting['a']['infeasibles'][2] = (BUILDING_FLOOR[building_name][:floor_policy_2_sep])
                 group_setting_name = [BUILDING_FLOOR[building_name][floor_policy_1_sep],BUILDING_FLOOR[building_name][floor_policy_2_sep]]
-                
                 for i in range(3): # times of simulation
                     # setting parameter
                     randomSeed = int(random.rand(1)*10000)
@@ -83,7 +82,7 @@ if(__name__ == "__main__"):
                     queue_logger = Queue_logger(status=True)
                     stopList_logger = StopList_logger(status=True)
 
-                    runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, 
+                    reReturn = runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, 
                                         randomSeed, untilTime, cid_gen=cid_gen,
                                         customer_logger=customer_logger,
                                         elev_logger=elev_logger,
@@ -92,7 +91,7 @@ if(__name__ == "__main__"):
 
                     result = customer_logger.df
                     
-                    # waiting & journey time df recording
+                    waiting & journey time df recording
                     df.append({
                             'location': building_name
                             ,'sep_1_floor': BUILDING_FLOOR[building_name][floor_policy_1_sep]
@@ -126,6 +125,16 @@ if(__name__ == "__main__"):
                             ,'sep_2_floor': BUILDING_FLOOR[building_name][floor_policy_2_sep]
                             ,'dataType': "count_stop"
                             ,'data': len(ele_result_stop)
+                    })
+
+
+                    # ineffective door open
+                    df.append({
+                            'location': building_name
+                            ,'sep_1_floor': BUILDING_FLOOR[building_name][floor_policy_1_sep]
+                            ,'sep_2_floor': BUILDING_FLOOR[building_name][floor_policy_2_sep]
+                            ,'dataType': "count_wasted"
+                            ,'data': reReturn['waste_stop_num'].mean()
                     })
 
                 # output n times record in one policy at once
