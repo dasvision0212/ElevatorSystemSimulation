@@ -23,10 +23,9 @@ if(__name__ == "__main__"):
     path = '../data/BestFitDistribution.csv'
     IAT_D_section = 2 # inter-arrival time, time section
     logging.basicConfig(level=logging.CRITICAL)
-    group_setting = []
-    group_setting_name = ["sep_equal","sep_1_5", "sep_1_8"]
     
-    group_setting.append({
+    preset_group_setting = []
+    preset_group_setting.append({
         'a': {
             'infeasibles': [
                 [ "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
@@ -35,7 +34,7 @@ if(__name__ == "__main__"):
             ]
         }
     })
-    group_setting.append({
+    preset_group_setting.append({
         'a': {
             'infeasibles': [
                 [ '2', '3', '4','5','6','7','8','9','10','11','12','13','14','15'],
@@ -44,7 +43,7 @@ if(__name__ == "__main__"):
             ]
         }
     })
-    group_setting.append({
+    preset_group_setting.append({
         'a': {
             'infeasibles': [
                 [  "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
@@ -53,27 +52,32 @@ if(__name__ == "__main__"):
             ]
         }
     })
+    if os.path.exists("../data/simulation_multipleTimes.csv"):
+        os.remove("../data/simulation_multipleTimes.csv")
 
-
-
-    
     for buildingI in range(1): # every building
-        for subElevNum in [2]: #range(2, len(ELEVATOR_GROUP[location[buildingI]])) : # subgroup elevator num pair
-            for floor_policy in range(len(group_setting)): #BUILDING_FLOOR[location[buildingI]][1:len(BUILDING_FLOOR[location[buildingI]])]: # seperate floor using every floor
+        building_name = location[buildingI]
+        for floor_policy_1_sep in range(1, len(BUILDING_FLOOR[building_name])-2): # set floor_policy, overlap floor
+            group_setting = {'a':{'infeasibles':[list() for i in range(3)]}}
+            group_setting['a']['infeasibles'][0] = (BUILDING_FLOOR[building_name][floor_policy_1_sep+1:]) # set first elev
+            if(floor_policy_1_sep==2):
+                break
+            for floor_policy_2_sep in range(floor_policy_1_sep+1,len(BUILDING_FLOOR[building_name])-1): # set floor_policy, overlap floor
+                group_setting['a']['infeasibles'][1] = (BUILDING_FLOOR[building_name][:floor_policy_1_sep]+BUILDING_FLOOR[building_name][floor_policy_2_sep+1:])
+                group_setting['a']['infeasibles'][2] = (BUILDING_FLOOR[building_name][:floor_policy_2_sep])
+                group_setting_name = [BUILDING_FLOOR[building_name][floor_policy_1_sep],BUILDING_FLOOR[building_name][floor_policy_2_sep]]
+
                 df = []
                 ele_df = []
-                for i in range(100): # times of simulation
+                for i in range(3): # times of simulation
                     # setting parameter
                     randomSeed = int(random.rand(1)*10000)
-                    floorList = BUILDING_FLOOR[location[buildingI]]
-                    IAT_D = IAT_Distribution(path, location[buildingI], IAT_D_section)
+                    floorList = BUILDING_FLOOR[building_name]
+                    IAT_D = IAT_Distribution(path, building_name, IAT_D_section)
                     distination_dist = pd.read_csv('../data/FloorRatio_'+buildingName[0]+'.csv').iloc[:, 1:].set_index(
                         'from').iloc[0:len(floorList)+1, 0:len(floorList)+1]
-                    group_set = group_setting[floor_policy]
                     env = simpy.Environment()
                     cid_gen = cid_generator()
-
-                    
 
                     # Global
                     customer_logger = Customer_logger(untilTime, status=True)
@@ -81,7 +85,7 @@ if(__name__ == "__main__"):
                     queue_logger = Queue_logger(status=True)
                     stopList_logger = StopList_logger(status=True)
 
-                    runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_set, 
+                    runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, 
                                         randomSeed, untilTime, cid_gen=cid_gen,
                                         customer_logger=customer_logger,
                                         elev_logger=elev_logger,
@@ -89,68 +93,47 @@ if(__name__ == "__main__"):
                                         stopList_logger=stopList_logger)
 
                     result = customer_logger.df
-
+                    
+                    # waiting & journey time df recording
                     df.append({
-                            'location': location[buildingI]
-                            ,'elevator_subgroup_number': [subElevNum,len(ELEVATOR_GROUP[location[buildingI]])-subElevNum]
-                            ,'floor_policy':group_setting_name[floor_policy]
-                            ,'TimeType':'waiting_time'
-                            ,'Time': result['total_waiting_time'].mean()
+                            'location': building_name
+                            ,'sep_1_floor': BUILDING_FLOOR[building_name][floor_policy_1_sep]
+                            ,'sep_2_floor': BUILDING_FLOOR[building_name][floor_policy_2_sep]
+                            ,'dataType':'waiting_time'
+                            ,'data': result['total_waiting_time'].mean()
                     })
                     df.append({
-                            'location': location[buildingI]
-                            ,'elevator_subgroup_number': [subElevNum,len(ELEVATOR_GROUP[location[buildingI]])-subElevNum]
-                            ,'floor_policy':group_setting_name[floor_policy]
-                            ,'TimeType':'journey_time'
-                            ,'Time': result['total_journey_time'].mean()
+                            'location': building_name
+                            ,'sep_1_floor': BUILDING_FLOOR[building_name][floor_policy_1_sep]
+                            ,'sep_2_floor': BUILDING_FLOOR[building_name][floor_policy_2_sep]
+                            ,'dataType':'journey_time'
+                            ,'data': result['total_journey_time'].mean()
                     })
 
-                    # elevator log
-
+                    # elevator stop & floor_count df recording
                     ele_log_result = elev_logger.df
                     ele_result_floor = ele_log_result.loc[ele_log_result["action"]==1]
                     ele_result_stop = ele_log_result.loc[ele_log_result["action"]==0]
 
-                    floor_count = ele_result_floor.groupby('name')
-                    stop_count = ele_result_floor.groupby('name')
+                    df.append({
+                            'location': building_name
+                            ,'sep_1_floor': BUILDING_FLOOR[building_name][floor_policy_1_sep]
+                            ,'sep_2_floor': BUILDING_FLOOR[building_name][floor_policy_2_sep]
+                            ,'dataType': "count_floor"
+                            ,'data':len(ele_result_floor)
+                    })
+                    df.append({
+                            'location': building_name
+                            ,'sep_1_floor': BUILDING_FLOOR[building_name][floor_policy_1_sep]
+                            ,'sep_2_floor': BUILDING_FLOOR[building_name][floor_policy_2_sep]
+                            ,'dataType': "count_stop"
+                            ,'data': len(ele_result_stop)
+                    })
 
-                    for name, ele in floor_count:
-                        count = ele["action"].count()
-                        ele_df.append({
-                                'location': location[buildingI]
-                                ,'elevator_subgroup_number': [subElevNum,len(ELEVATOR_GROUP[location[buildingI]])-subElevNum]
-                                ,'floor_policy':group_setting_name[floor_policy]
-                                ,'elevator_name': name
-                                ,'count_type': "count_floor"
-                                ,'floor_count':count
-                        })
-                    for name, ele in stop_count:
-                        count = ele["action"].count()
-                        ele_df.append({
-                                'location': location[buildingI]
-                                ,'elevator_subgroup_number': [subElevNum,len(ELEVATOR_GROUP[location[buildingI]])-subElevNum]
-                                ,'floor_policy':group_setting_name[floor_policy]
-                                ,'elevator_name': name
-                                ,'count_type': "count_stop"
-                                ,'floor_count': count
-                        })
-
+                # output n times record in one policy at once
                 df = pd.DataFrame(df)
                 df.to_csv('../data/simulation_multipleTimes.csv', mode = 'a', header = False)
-                ele_df = pd.DataFrame(ele_df)
-                ele_df.to_csv('../data/floor_count.csv', mode = 'a', header = False)
 
-    statistic_df = pd.read_csv('../data/simulation_multipleTimes.csv',names=['location', 'elevator_subgroup_number', 'floor_policy', 'TimeType', 'Time'])
+    # add header & output
+    statistic_df = pd.read_csv('../data/simulation_multipleTimes.csv',names=['location', 'sep_1_floor', 'sep_2_floor', 'dataType', 'data'])
     statistic_df.to_csv('../data/simulation_multipleTimes.csv')
-    floor_policy_df = pd.read_csv('../data/floor_count.csv',names=['location', 'elevator_subgroup_number', 'floor_policy', 'elevator_name','count_type','floor_count'])
-    floor_policy_df.to_csv('../data/floor_count.csv')
-    
-
-# floor list must contain ground floor
-# for eleName, eleInfo in sub_group_setting.items():
-#     bottomFloorI = floorList.index(eleInfo["infeasible"][0])
-#     if "1" not in eleInfo["infeasible"]:
-#         if bottomFloorI < floorList.index("1"):
-#             eleInfo["infeasible"].append("1")
-#         else:
-#             eleInfo["infeasible"].insert(0,"1")
