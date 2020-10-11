@@ -60,15 +60,13 @@ if(__name__ == "__main__"):
         for floor_policy_1_sep in range(1, len(BUILDING_FLOOR[building_name])-2): # set floor_policy, overlap floor
             group_setting = {'a':{'infeasibles':[list() for i in range(3)]}}
             group_setting['a']['infeasibles'][0] = (BUILDING_FLOOR[building_name][floor_policy_1_sep+1:]) # set first elev
-            if(floor_policy_1_sep==2):
-                break
+
+            df = []
             for floor_policy_2_sep in range(floor_policy_1_sep+1,len(BUILDING_FLOOR[building_name])-1): # set floor_policy, overlap floor
                 group_setting['a']['infeasibles'][1] = (BUILDING_FLOOR[building_name][:floor_policy_1_sep]+BUILDING_FLOOR[building_name][floor_policy_2_sep+1:])
                 group_setting['a']['infeasibles'][2] = (BUILDING_FLOOR[building_name][:floor_policy_2_sep])
                 group_setting_name = [BUILDING_FLOOR[building_name][floor_policy_1_sep],BUILDING_FLOOR[building_name][floor_policy_2_sep]]
-
-                df = []
-                ele_df = []
+                
                 for i in range(3): # times of simulation
                     # setting parameter
                     randomSeed = int(random.rand(1)*10000)
@@ -131,8 +129,8 @@ if(__name__ == "__main__"):
                     })
 
                 # output n times record in one policy at once
-                df = pd.DataFrame(df)
-                df.to_csv('../data/simulation_multipleTimes.csv', mode = 'a', header = False)
+            df = pd.DataFrame(df)
+            df.to_csv('../data/simulation_multipleTimes.csv', mode = 'a', header = False)
 
     # add header & output
     statistic_df = pd.read_csv('../data/simulation_multipleTimes.csv',names=['location', 'sep_1_floor', 'sep_2_floor', 'dataType', 'data'])
