@@ -114,7 +114,7 @@ class Customer_logger(Logger):
 
         # calculate total_waiting_time and total_journey_time
         waiting_time_list = list()
-        journey_time_list = list()
+        time_in_elev_list = list()
         transfer_num_list = list()
         isSuccessful_list = list()
         for i, row in self._df.iterrows():
@@ -134,12 +134,12 @@ class Customer_logger(Logger):
                 It is not out expectation. What we want is that the cell row["boarding_time"] is pd.nan or not. 
                 '''
                 waiting_time_list.append(self.untilTime - row["appear_time"])
-                journey_time_list.append(pd.NA)
+                time_in_elev_list.append(pd.NA)
                 continue
 
             if(not isinstance(row["get_off_time"], list)):
                 waiting_time_list.append(row["boarding_time"][0] - row["appear_time"])
-                journey_time_list.append(self.untilTime - row["boarding_time"][0])
+                time_in_elev_list.append(self.untilTime - row["boarding_time"][0])
                 continue
 
             # get total_waiting_time
@@ -162,10 +162,11 @@ class Customer_logger(Logger):
                 total_journey_time += self.untilTime - row["boarding_time"][-1]
 
             waiting_time_list.append(total_waiting_time)
-            journey_time_list.append(total_journey_time)
+            time_in_elev_list.append(total_journey_time)
 
         self._df["total_waiting_time"] = waiting_time_list
-        self._df["total_journey_time"] = journey_time_list
+        self._df["time_in_elev"]       = time_in_elev_list
+        self._df["journey_time"]       = self._df["total_waiting_time"] + self._df["time_in_elev"]
         self._df["transfer_num"]       = transfer_num_list
         self._df["isSuccessful"]       = isSuccessful_list
 
