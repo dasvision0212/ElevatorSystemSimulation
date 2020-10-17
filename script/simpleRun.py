@@ -57,20 +57,21 @@ if(__name__ == "__main__"):
     stopList_logger = StopList_logger(status=True)
 
     # Simulation
-    statistics = runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, randomSeed, untilTime,
-                          cid_gen=cid_gen,
-                          customer_logger=customer_logger,
-                          elev_logger=elev_logger,
-                          queue_logger=queue_logger,
-                          stopList_logger=stopList_logger)
+    statistics = runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, randomSeed, 14000,
+                          cid_gen=cid_gen)
+                        #   ,
+                        #   customer_logger=customer_logger,
+                        #   elev_logger=elev_logger,
+                        #   queue_logger=queue_logger,
+                        #   stopList_logger=stopList_logger)
 
 
     # logging
-    log_folder = r"../data/log"
-    elev_logger.to_csv(joinPath(log_folder, "elev_log.csv"))
-    queue_logger.to_csv(joinPath(log_folder, "queue_log.csv"))
-    stopList_logger.to_csv(joinPath(log_folder, "stopList_log.csv"))
-    customer_logger.to_csv(joinPath(log_folder, "customer_log.csv"))
+    # log_folder = r"../data/log"
+    # elev_logger.to_csv(joinPath(log_folder, "elev_log.csv"))
+    # queue_logger.to_csv(joinPath(log_folder, "queue_log.csv"))
+    # stopList_logger.to_csv(joinPath(log_folder, "stopList_log.csv"))
+    # customer_logger.to_csv(joinPath(log_folder, "customer_log.csv"))
 
     background = dict()
     background["buildingName"] = location
@@ -82,8 +83,8 @@ if(__name__ == "__main__"):
     background["elev_infeasible"] = {group_name+str(i):infeasible for i, infeasible in enumerate(group_setting[group_name]["infeasibles"])}
     background["elevatorList"] = [group_name+str(i) for i in range(len(group_setting[group_name]["infeasibles"]))]
     background["sub_group_setting"] = group_setting
-    with open(joinPath(log_folder, "background.json"), 'w', encoding="utf-8") as file:
-        file.write(json.dumps(background))
+    # with open(joinPath(log_folder, "background.json"), 'w', encoding="utf-8") as file:
+    #     file.write(json.dumps(background))
 
     # statistics records stop_num and move_floor_num
     print(statistics)
