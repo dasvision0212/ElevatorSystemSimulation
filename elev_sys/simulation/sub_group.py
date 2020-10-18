@@ -2,38 +2,21 @@ import logging
 import pandas as pd
 
 from elev_sys.conf.elevator_conf import ELEV_CONFIG
-from elev_sys.simulation.elevator import Elevator, displacement
+from elev_sys.simulation.elevator import Elevator
 from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.logger import (Customer_logger, Elev_logger, StopList_logger)
+import elev_sys.simulation.utils as utils
 
-def floor_to_index(floor):
-    return int(floor) if not 'B' in floor else -int(floor[1:]) + 1
-def index_to_floor(index):
-    return str(index) if index > 0  else 'B'+str(-(index-1))
-def compare_direction(destination, current_floor):
-    if destination > current_floor:
-        return 1
-    elif destination < current_floor:
-        return -1
-    else:
-        return 0
-def advance(currrent_floor, direction):
-    currrent_floor_index = floor_to_index(currrent_floor)
-    return index_to_floor(currrent_floor_index + direction)
 
 class SubGroup:
     def __init__(self, env, floorList,  sub_group_name, sub_group_setting, EVENT, 
-                 customer_logger:Customer_logger = None, elev_logger:Elev_logger = None, stopList_logger:StopList_logger=None):
-        '''
-        @param setting: tuple(sub_group_name, { "infeasible":["1", "15"], 
-                                                "elevNum": 2})
-        '''
-        
+                 customer_logger:Customer_logger = None, elev_logger:Elev_logger = None, stopList_logger:StopList_logger=None):        
         self.env = env
         self.EVENT = EVENT
+        
+        self.sub_group_name = sub_group_name
 
         self.elevators = dict()
-        self.sub_group_name = sub_group_name
         for i in range(len(sub_group_setting["infeasibles"])):
             elev_name = sub_group_name + str(i)
             self.elevators[elev_name] = Elevator(env, elev_name, floorList, sub_group_setting["infeasibles"][i], self.EVENT, 
@@ -47,11 +30,13 @@ class SubGroup:
         while True:
             mission = yield self.EVENT.CALL[self.sub_group_name]
 
+            # decide candidate given the call's floor and direction
             candidate = self.bestCandidate(mission)
             
-            self.elevators[candidate].assign_event.succeed(value=mission)
-
-            yield self.elevators[candidate].finish_event
+            # pass call over to elevator
+            self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
+            yield self.elevators[candidate].FINISH_EVENT
+            
             logging.info('[AssignCalls] Succeed')
 
 
@@ -61,40 +46,59 @@ class SubGroup:
         direction, source = mission
 
         if(isinstance(ELEV_CONFIG.VERSION, int)):
-            DIFFERENT_DIR_BASE = 100
-            SAME_DIR_BACK_BASE = 200
 
-            minDistance = 50000000
+            # Penalty
+            DIFFERENT_DIR_BIAS = 10
+            SAME_DIR_BACK_BIAS = 20
+
+            # Initial
+            minDistance = 1000
+
             logging.warning("Mission: dir {}, des {}".format(direction, source))
 
+            # elevators that can arrive the mission destination
             elevators = [elevator for elevator in self.elevators.values() if not elevator.stop_list.isNA(direction, source)]
 
             for elevator in elevators:
-                elevator_score = int()
-                if ((direction == elevator.direction and displacement(elevator.current_floor, source) * direction > 0) \
-                    or (elevator.direction == 0)):
-                    elevator_score = abs(displacement(source, elevator.current_floor))
-                
-                elif(direction != elevator.direction):
-                    elevator_score  = DIFFERENT_DIR_BASE + displacement(elevator.current_floor, source) * elevator.direction
 
-                # we should notice that the situation of the same direction and same floor belongs to this block
-                elif(direction == elevator.direction and displacement(elevator.current_floor, source) * direction <= 0):
-                    elevator_score  = SAME_DIR_BACK_BASE + displacement(elevator.current_floor, source) * -elevator.direction
-                    
-                if source in elevator.infeasible:
-                    elevator_score += 50000000
+                # condition
+                isSameDirection = direction == elevator.direction
+                isCustomerAhead = utils.displacement(elevator.current_floor, source) * direction > 0
+                isElevIdle = (elevator.direction == 0)
                 
-                if advance(source, direction) in elevator.infeasible:
-                    elevator_score += 50000000
+                # cost function
+                dispatching_cost = 0
 
-                if(elevator_score < minDistance):
+                # mission destination is ahead of the elevator
+                ## (down)       
+                ## ( up )     [E]→　　→   (M)→  
+                if ( isSameDirection & isCustomerAhead | isElevIdle):
+                    distance = abs(utils.displacement(source, elevator.current_floor)) 
+                    dispatching_cost = distance
+                
+                # mission destination is not in the direction with the elevator
+                ## (down)     ←(M)　　　 ←　      ←
+                ## ( up )       →    [E]→      →  ↑
+                elif not isSameDirection:
+                    dispatching_cost  = DIFFERENT_DIR_BIAS + utils.displacement(elevator.current_floor, source) * elevator.direction
+
+                # mission destination is behind the elevator
+                ## (down) ↓     ←　　　  　←　　　 ←　
+                ## ( up ) →  (M)→    [E]→      →  ↑
+                elif isSameDirection & (not isCustomerAhead):
+                    dispatching_cost  = SAME_DIR_BACK_BIAS + utils.displacement(elevator.current_floor, source) * -elevator.direction
+                
+                ## ONLY IN THIS FLOOR PARTITION SCHEMA
+                if utils.advance(source, direction) in elevator.infeasible:
+                    dispatching_cost += 1000
+
+                if(dispatching_cost < minDistance):
                     bestElevator = elevator.elev_name
-                    minDistance = elevator_score
+                    minDistance = dispatching_cost
 
                 logging.warning(elevator.elev_name)
                 logging.warning("dir: {}, curr: {}".format(elevator.direction, elevator.current_floor))
-                logging.warning("score: {}".format(elevator_score))
+                logging.warning("score: {}".format(dispatching_cost))
 
         logging.warning("best: {}".format(bestElevator))
         logging.warning("---------------------------------------------")
