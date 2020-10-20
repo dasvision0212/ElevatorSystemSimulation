@@ -10,18 +10,12 @@ from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.event import Event
 from elev_sys.simulation.logger import Elev_logger, Customer_logger, StopList_logger
 from elev_sys.animation.general import cal_floorNum
-
-
-def displacement(floor1, floor2):
-    floor1 = int(floor1) if not 'B' in floor1 else -int(floor1[1:]) + 1
-    floor2 = int(floor2) if not 'B' in floor2 else -int(floor2[1:]) + 1
-    return floor2-floor1
+import elev_sys.simulation.utils as utils
 
 
 class IndexError(Exception):
     """Exception : Wrong Index."""
     pass
-
 
 class StopList:
     IDLE = 0
@@ -29,7 +23,7 @@ class StopList:
     NA = -1
 
     def __init__(self, FloorList, infeasible, stopList_logger:StopList_logger=None):
-        self.floorList = deepcopy(FloorList)
+        # self.floorList = deepcopy(FloorList)
         self.stopList_logger = stopList_logger
 
         self._list = {
@@ -52,22 +46,12 @@ class StopList:
             -1: {index: floor for index, floor in enumerate(reversed(FloorList))}
         }
 
-    def __str__(self):
-        string = 'Stop List: \n  up   down \n'
-        formatStr = ['{} [{}] [{}] {}\n'.format(f, i, j, f) for f, i, j in zip(self.floorList, self._list[1], self._list[-1])]
-        string.join(formatStr)
-        return str(formatStr)
-#     up  down
-# 4   [0]  [0]
-# 3   [1]  [1]
-# 2   [0]  [0]
-# 1   [1]  [0]
-
-    def isEmpyty(self):
+    def notEmpyty(self):
+        notEmpty = False
         for i, j in zip(self._list[1], self._list[-1]):
             if i == StopList.ACTIVE or j == StopList.ACTIVE:
-                return False
-        return True
+                notEmpty = True
+        return notEmpty
 
     def pushOuter(self, elev, direction, floor):
         currentIndex = self.index[direction][floor]
@@ -165,7 +149,7 @@ class StopList:
         curr_index = self.index[elev.direction][elev.current_floor]
         # same direction, front
         if(direction == elev.direction):
-            floor_diff = displacement(elev.current, destination)
+            floor_diff = utils.displacement(elev.current, destination)
             if(floor_diff * direction > 0):
                 return floor_diff
         
@@ -176,8 +160,8 @@ class StopList:
                 change_point_index += 1
 
         if(direction != elev.direction):
-            return displacement(elev.current, self.reversed_index[elev.direction][change_point_index]) * elev.direction + \
-                   abs(displacement(self.reversed_index[elev.direction][change_point_index], destination))
+            return utils.displacement(elev.current, self.reversed_index[elev.direction][change_point_index]) * elev.direction + \
+                   abs(utils.displacement(self.reversed_index[elev.direction][change_point_index], destination))
 
         # same direction, back
         for i, state in enumerate(self._list[-elev.direction][:curr_index]):
@@ -196,7 +180,7 @@ class Elevator:
         self.floorList = floorList
 
         # schedule list
-        self.stop_list = StopList(self.floorList, infeasible, stopList_logger)
+        self.stop_list = StopList(floorList, infeasible, stopList_logger)
         self.infeasible = infeasible
 
         # initial states
@@ -204,8 +188,8 @@ class Elevator:
         self.available = [floor for floor in floorList if floor not in infeasible]
 
         self.direction = 0
-        self.assign_event = self.env.event()
-        self.finish_event = self.env.event()
+        self.ASSIGN_EVENT = self.env.event()
+        self.FINISH_EVENT = self.env.event()
         # start process
         self.env.process(self.idle())
 
@@ -218,13 +202,12 @@ class Elevator:
         self.wasteStopNum = 0
         self.moveFloorNum = 0
 
-    #     self.env.process(self.checkpanel())
-    # def checkpanel(self):
+    #     self.env.process(self.debug())
+    # def debug(self):
     #     if (self.elev_name == 'a1'):
     #         while True:
     #             yield self.env.timeout(10)
     #             if self.current_floor == '5':
-                    
     #                 print(self.elev_name,self.direction, self.current_floor,'down',self.stop_list._list[-1][10:-4])
 
 
@@ -236,174 +219,169 @@ class Elevator:
                 self.elev_logger.log_idle(self.elev_name, self.current_floor, float(self.env.now))
 
             # first assignment
-            mission = yield self.assign_event
-            logging.debug(
-                '[Assign_event - idle] Elev {}, stopList {}'.format(self.elev_name, self.stop_list))
-
+            mission = yield self.ASSIGN_EVENT
             # reactivate
-            self.assign_event = self.env.event()
-            self.finish_event.succeed()
-            self.finish_event = self.env.event()
+            self.ASSIGN_EVENT = self.env.event()
+            self.FINISH_EVENT.succeed()
+            self.FINISH_EVENT = self.env.event()
 
-            logging.info('[IDLE] Elev {}, Outer Call: {}'.format(
-                self.elev_name, mission))
+            logging.debug('[Assign_event - idle] Elev {}, stopList {}'.format(self.elev_name, self.stop_list))
+            logging.info('[IDLE] Elev {}, Outer Call: {}'.format(self.elev_name, mission))
 
             # push outer call
             self.stop_list.pushOuter(self, mission.direction, mission.destination)
 
             # determine initial direction
-            if displacement(self.current_floor, mission.destination) > 0:
+            displacement = utils.displacement(self.current_floor, mission.destination)
+            if displacement > 0:
                 self.direction = 1
-            elif displacement(self.current_floor, mission.destination) < 0:
+            elif displacement < 0:
                 self.direction = -1
             else:
-                # set the direction of elevator to that of mission
+                # same floor, forced direction
                 self.direction = mission.direction
 
-            # start onMission process
             yield self.env.process(self.onMission())
-            logging.info('[IDLE] Elev {} Stopped.'.format(self.elev_name))
-
+            
             # return to IDLE state
             self.direction = 0
+            logging.info('[IDLE] Elev {} Stopped.'.format(self.elev_name))
 
     def onMission(self):
-        while not self.stop_list.isEmpyty():
+        while self.stop_list.notEmpyty():
 
+            # initialize moving process
             nextTarget = self.stop_list.next_target(self)
-#             logging.info('[ONMISSION] NEXT TARGET {}'.format(nextTarget))
-            logging.info('[ONMISSION] Elev {}, NEXT TARGET {}'.format(
-                self.elev_name, nextTarget))
-
             moving_proc = self.env.process(self.moving(nextTarget, self.current_floor))
-                
 
-            while self.current_floor != nextTarget:
-                value = yield self.assign_event | moving_proc
-                if self.assign_event.triggered:
+            logging.info('[ONMISSION] Elev {}, NEXT TARGET {}'.format(self.elev_name, nextTarget))
+            
+            # before arriving target destination
+            while not self.current_floor == nextTarget:
 
-                    mission = value[self.assign_event]
-                    self.assign_event = self.env.event()
-                    self.finish_event.succeed()
-                    self.finish_event = self.env.event()
+                value = yield self.ASSIGN_EVENT | moving_proc
+
+                if self.ASSIGN_EVENT.triggered:
+                    mission = list(value.values())[0]
+                    self.ASSIGN_EVENT = self.env.event()
+                    self.FINISH_EVENT.succeed()
+                    self.FINISH_EVENT = self.env.event()
+                    
                     logging.info('[ONMISSION] Elev {}, New OuterCall {}'.format(
                         self.elev_name, mission))
 
-                    before = nextTarget
+                    # previous next Target
+                    temp = nextTarget
 
                     self.stop_list.pushOuter(self, mission.direction, mission.destination)
-
-                    logging.debug('[ONMISSION] Elev {}, STOP LIST {}'.format(
-                        self.elev_name, self.stop_list))
-
                     nextTarget = self.stop_list.next_target(self)
-                    logging.info('[ONMISSION] Elev {}, NEXT TARGET {}'.format(
-                        self.elev_name, nextTarget))
+                    
+                    logging.debug('[ONMISSION] Elev {}, STOP LIST {}'.format(self.elev_name, self.stop_list))
+                    logging.info('[ONMISSION] Elev {}, NEXT TARGET {}'.format(self.elev_name, nextTarget))
 
-                    if before != nextTarget:
+                    # target changed, interrupt current mission
+                    if temp != nextTarget:
                         moving_proc.interrupt()
-                        moving_proc = self.env.process(
-                            self.moving(nextTarget, self.current_floor))
+                        moving_proc = self.env.process(self.moving(nextTarget, self.current_floor))
 
-            logging.info('[ONMISSION] Elev {}, Arrive At {} Floor'.format(
-                self.elev_name, self.current_floor))
+            logging.info('[ONMISSION] Elev {}, Arrive At {} Floor'.format(self.elev_name, self.current_floor))
 
+            # arrive taarget floor
             yield self.env.process(self.serving())
 
-            logging.info('[Afer Serving] Elev {}, rider {}'.format(
-                self.elev_name, [(vars(i)) for i in self.riders]))
+            logging.info('[Afer Serving] Elev {}, rider {}'.format(self.elev_name, [(vars(i)) for i in self.riders]))
 
     def moving(self, destination, source):
         """source is needed to account for the acceleration and deceleration rate of the elevator"""
-        logging.info('[MOVING] Elev {}, Moving Process Started: to {}'.format(
-            self.elev_name, destination))
+        
+        logging.info('[MOVING] Elev {}, Moving Process Started: to {}'.format(self.elev_name, destination))
 
         try:
             while self.current_floor != destination:
 
-                # determine traveling time for 1 floor
+                # calculate traveling time for passing 1 floor
                 t = self.travelingTime(destination, self.current_floor, source)
                 yield self.env.timeout(t)
 
                 # advance 1 floor
-                self.current_floor = self.forwards(self.current_floor, self.direction)
+                self.current_floor = utils.advance(self.current_floor, self.direction)
                 self.moveFloorNum += 1
 
                 if(not self.elev_logger is None):
-                    self.elev_logger.log_arrive(
-                        self.elev_name, self.direction, self.current_floor, float(self.env.now))
-
-                logging.info('[MOVING] Elev {}, Update To {} Floor'.format(
-                    self.elev_name, self.current_floor))
+                    self.elev_logger.log_arrive(self.elev_name, self.direction, self.current_floor, float(self.env.now))
+                logging.info('[MOVING] Elev {}, Update To {} Floor'.format(self.elev_name, self.current_floor))
 
         except simpy.Interrupt:
-            pass
-            logging.info(
-                '[MOVING] Elev {}, Interrupted'.format(self.elev_name))
-            logging.debug('[MOVING] Elev {}, stop_list {}'.format(
-                self.elev_name, self.stop_list))
+            logging.info('[MOVING] Elev {}, Interrupted'.format(self.elev_name))
+            logging.debug('[MOVING] Elev {}, stop_list {}'.format(self.elev_name, self.stop_list))
 
     def serving(self):
-        isServed = False
+        isWasted = True
 
-        # deal with statistic
+        # Count Elevator Stop
         self.stopNum += 1
 
-        # remove from schedule
+        # Door Opens
+        yield self.env.timeout(ELEV_CONFIG.ELEV_OPEN)
+
+        # Cross out current target
         self.stop_list.pop(self)
+
         logging.info('[SERVING] Elev {}, after pop:{}'.format(self.elev_name, self.stop_list))
 
-        # customers leave
-        leaveCount = 0
+        # 
+        fulfill_customer = []
         transfer_customers= []
         for i in range(len(self.riders)-1, -1, -1):
+
+            # customer arrive destination
             if(self.riders[i].destination ==  self.current_floor):
+
                 customer = self.riders.pop(i)
-          
+                fulfill_customer.append(customer)
+
                 if(not self.customer_logger is None):
                     self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
+            
+            # customer wait to transfer
             elif(self.riders[i].temp_destination ==  self.current_floor):
+
                 customer = self.riders.pop(i)
                 transfer_customers.append(customer)
-                
+
                 if(not self.customer_logger is None):
                     self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
 
                 
-            leaveCount += 1
+        leaveNum = len(fulfill_customer) + len(transfer_customers)  
 
-        if leaveCount > 0:
-            isServed = True
+        if leaveNum > 0:
+            isWasted = False
 
-        walking_time = [np.random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX) for i in range(leaveCount)]
-        yield self.env.timeout(sum(walking_time))
+        total_walking_time = [np.random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX) for i in range(leaveNum)]
+        yield self.env.timeout(sum(total_walking_time))
 
-        logging.info('[SERVING] Elev {}, {} Customers Leave'.format(
-            self.elev_name, leaveCount))
+        logging.info('[SERVING] Elev {}, {} Customers Leave'.format(self.elev_name, leaveNum))
 
-
-        # if (self.elev_name == 'a1'):
-        #     print(self.elev_name,self.direction, self.current_floor,'down',self.stop_list._list[-1][9:])
+        # transfer customer enter queue
         if transfer_customers:
             self.EVENT.ELEV_TRANSFER[self.direction][self.current_floor].succeed(value=transfer_customers)
             self.EVENT.ELEV_TRANSFER[self.direction][self.current_floor] = self.env.event()
 
         # The common situation, not on the peak
-        if not((self.current_floor == self.available[-1] and self.direction == 1) or
-               (self.current_floor == self.available[0] and self.direction == -1)):
-
-            # elevator arrive
+        if not (self.current_floor == self.available[-1] and self.direction == 1) | (self.current_floor == self.available[0] and self.direction == -1):
+            
+            # elevator signal queue
             self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor].succeed(value=(self.capacity-len(self.riders), self.elev_name))
             self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor] = self.env.event()
             
             # customers on board
             riders = yield self.EVENT.ELEV_LEAVE[self.elev_name]
 
-            if riders:
-                isServed = True
+            if len(riders) > 0:
+                isWasted = False
 
-            logging.info('[SERVING] Elev {}, Customers Aboard: \n {}'.format(
-                self.elev_name, [vars(i) for i in riders]))
+            logging.info('[SERVING] Elev {}, Customers Aboard: \n {}'.format(self.elev_name, [vars(i) for i in riders]))
 
             # add inner calls
             for customer in riders:
@@ -413,27 +391,30 @@ class Elevator:
             self.riders = self.riders + riders
 
             if(not self.elev_logger is None):
-                self.elev_logger.log_serve(self.elev_name, len(
-                    self.riders), self.direction, self.current_floor, float(self.env.now))
+                self.elev_logger.log_serve(self.elev_name, len(self.riders), self.direction, self.current_floor, float(self.env.now))
 
-        # The situation on the peak
-        ## Determine direction
+        # Update Target
         nextTarget = self.stop_list.next_target(self)
-        logging.info('[SERVING] Elev {}, NEXT TARGET {}'.format(
-            self.elev_name, nextTarget))
 
+        logging.info('[SERVING] Elev {}, NEXT TARGET {}'.format(self.elev_name, nextTarget))
+
+        # if no target, turn idle
         if nextTarget == None:
-            logging.debug('[SERVING] Elev {}, nextTarget is None, {}'.format(
-                self.elev_name, nextTarget))
+            logging.debug('[SERVING] Elev {}, nextTarget is None, {}'.format(self.elev_name, nextTarget))
             return
+        
+        # update direction
         else:
             logging.debug('[SERVING] Elev {}, currFloor {}, nextTarget {}'.format(
                 self.elev_name, self.current_floor, nextTarget))
 
-            if displacement(self.current_floor, nextTarget) > 0:
+            displacement = utils.displacement(self.current_floor, nextTarget)
+            if displacement > 0:
                 self.direction = 1
-            elif displacement(self.current_floor, nextTarget) < 0:
+            elif displacement < 0:
                 self.direction = -1
+            
+            # same target floor means change direction
             else:
                 # make a turn
                 self.direction = -1*self.direction
@@ -447,14 +428,14 @@ class Elevator:
                 # new customers
                 riders = yield self.EVENT.ELEV_LEAVE[self.elev_name]
 
-                if riders:
-                    isServed = True
+                if len(riders) > 0:
+                    isWasted = False
 
-                logging.info('[SERVING] Elev {}, Customers Aboard: \n {} '.format(
-                    self.elev_name, [vars(i) for i in riders]))
+                logging.info('[SERVING] Elev {}, Customers Aboard: \n {} '.format(self.elev_name, [vars(i) for i in riders]))
 
                 for customer in riders:
-                    self.stop_list.pushInner(self, customer.select_destination(self.current_floor, self.direction, self.infeasible))
+                    temp_destination = customer.select_destination(self.current_floor, self.direction, self.infeasible)
+                    self.stop_list.pushInner(self, temp_destination)
                 
                 self.riders = self.riders + riders
 
@@ -462,26 +443,15 @@ class Elevator:
                     self.elev_logger.log_serve(
                         self.elev_name, len(self.riders), self.direction, self.current_floor, float(self.env.now))
 
-                if not isServed:
-                    self.wasteStopNum += 1
+        # Update Wasted Stop
+        if isWasted:
+            self.wasteStopNum += 1
+        
+        # Door Close
+        yield self.env.timeout(ELEV_CONFIG.ELEV_CLOSE)
 
 
 
     def travelingTime(self, destination, current, source):
         # acceleration should be considered
         return ELEV_CONFIG.ELEV_VELOCITY
-
-    @staticmethod
-    def mission_priority(mission):
-        floor = mission.destination
-        direction = mission.direction
-        index = int(floor) if not 'B' in floor else -int(floor[1:]) + 1
-        index = index*direction
-        return index
-
-    @staticmethod
-    def forwards(floor, direction):
-        floor = int(floor) if not 'B' in floor else -int(floor[1:]) + 1
-        floor += direction
-        floor = str(floor) if floor > 0 else "B{}".format(abs(floor-1))
-        return floor

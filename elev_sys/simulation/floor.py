@@ -10,42 +10,22 @@ from elev_sys.conf.elevator_conf import ELEV_CONFIG
 from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.event import Event
 from elev_sys.simulation.logger import Queue_logger, Customer_logger
-def floor_to_index(floor):
-    return int(floor) if not 'B' in floor else -int(floor[1:]) + 1
-def index_to_floor(index):
-    return str(index) if index > 0  else 'B'+str(-(index-1))
-def compare_direction(destination, current_floor):
-    if destination > current_floor:
-        return 1
-    elif destination < current_floor:
-        return -1
-    else:
-        return 0
-def advance(currrent_floor, destination):
-    currrent_floor_index = floor_to_index(currrent_floor)
-    destination_index = floor_to_index(destination)
-    direction = compare_direction(destination_index, currrent_floor_index)
-    return index_to_floor(currrent_floor_index + direction)
-
+import elev_sys.simulation.utils as utils
 
 def cid_generator():
-        '''
-        Generate unique, global customer ID.
-        [!] In order to maintain the feasibility of Customer_logger, cid must start from 0.
-        '''
-        
+        ''' Generate unique, global customer ID.[!] In order to maintain the feasibility of Customer_logger, cid must start from 0. '''
         i = 0
         while True:
             yield i
             i += 1
 
-
 class Customer:
     def __init__(self, cid_gen=None):
-        if(not cid_gen is None):
+        if cid_gen is not None:
             self.cid = next(cid_gen)
         else:
             self.cid = next(self._cid_generator)
+
         self.source = None
         self.destination = None
         self.leave_time = None
@@ -53,11 +33,11 @@ class Customer:
         self.temp_destination = None
 
     def select_destination(self, current_floor, direction, infeasible):
-        # need tranfer
-
+  
         if str(self.destination) in infeasible:
-            infeasible = [int(floor) if not 'B' in floor else -int(floor[1:]) + 1 for floor in infeasible]
-            current_floor = int(current_floor) if not 'B' in current_floor else -int(current_floor[1:]) + 1
+            infeasible = [utils.floor_to_index(floor) for floor in infeasible]
+            
+            current_floor = utils.floor_to_index(current_floor)
             if direction == 1:
                 t = [floor for floor in infeasible if not floor <= current_floor]
             if direction == -1:
@@ -65,7 +45,7 @@ class Customer:
  
             temp_destination_index = t[min(range(len(t)), key = lambda i: abs(t[i]-current_floor))] - direction
 
-            self.temp_destination = str(temp_destination_index) if temp_destination_index > 0  else 'B'+str(-(temp_destination_index-1))
+            self.temp_destination = utils.index_to_floor(temp_destination_index)
             return self.temp_destination
         return self.destination 
 
@@ -79,8 +59,6 @@ class Queue:
         self.queue_array = []
         self.arrival_event = self.env.event()
 
-        # !!subgroup
-        self.panels_state = dict(zip(group_setting, [False]*len(group_setting)))
         self.group_setting = group_setting
 
         # start process
@@ -91,119 +69,114 @@ class Queue:
         self.queue_logger = queue_logger
         self.customer_logger = customer_logger
 
-    #     self.env.process(self.checkpanel())
-    
-    # def checkpanel(self):
-    
+    #     self.env.process(self.debug())
+    # def debug(self):
     #     if True:#(self.floor == '5') & (self.direction == -1):
     #         while True:
     #             yield self.env.timeout(100)
     #             print(self.env.now,'Floor',self.floor, 'direction',self.direction, 'num:', len(self.queue_array))
                 
         
+    def rigisterCall(self):
 
-    def pushButton(self):
-        # for each customer
+        # Call registration when customer arrive
         for customer in self.queue_array:
-            # for each sub-group
             for sub_group_name, sub_group_setting in self.group_setting.items():
 
-                # for each elevator
+                # each elevator
                 for infeasible in sub_group_setting['infeasibles']:
-                    
-                    target = customer.select_destination(self.floor, self.direction, infeasible)
+                    floor_list = ["B4", "B3", "B2", "B1", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
+                    available = [floor for floor in floor_list if floor not in infeasible]
 
-                    # if served by current elevator
-                    if (self.floor not in infeasible) & (advance(self.floor, target) not in infeasible):
+                    # temporary destination of customer
+                    temp_destination = customer.select_destination(self.floor, self.direction, infeasible)
 
-                        # disable call if already assigned
-                        if True:#self.panels_state[sub_group_name] == False:
+                    # if elevator can arrive current floor & if elevator serves floors between customer's destination
+                    if (self.floor in available) & (utils.advance_toward(self.floor, temp_destination) in available):
 
-                            self.panels_state[sub_group_name] = True
+                        mission = Mission(direction=self.direction, destination=self.floor)
 
-                            mission = Mission(direction=self.direction, destination=self.floor)
+                        self.EVENT.CALL[sub_group_name].succeed(value=mission)
+                        self.EVENT.CALL[sub_group_name] = self.env.event()
+    
+    def updatePanel(self):
 
-                            self.EVENT.CALL[sub_group_name].succeed(value=mission)
-                            self.EVENT.CALL[sub_group_name] = self.env.event()
+        # delay call registration until elevator left
+        yield self.env.timeout(ELEV_CONFIG.ELEV_VELOCITY+2)
+        self.rigisterCall()
 
     def inflow(self):
         while True:
+
+            # new customer | transfer customer
             customers = yield self.arrival_event | self.EVENT.ELEV_TRANSFER[self.direction][self.floor]
-            customers = list(customers.values())[0]
+            customers = list(customers.values())[0] # Unpack simPy comdition variable
 
             logging.info('[INFLOW] Outer Call {} Floor {} '.format(
                 self.floor, 'up' if self.direction == 1 else 'down'))
 
-            
-
-            # add customers to waiting queue
+            # append customers to waiting queue
             self.queue_array = self.queue_array + customers
-            self.pushButton()
 
-            logging.info('[INFLOW] {} people waiting on {} floor'.format(
-                len(self.queue_array), self.floor))
+            # call registeration
+            self.rigisterCall()
 
+            logging.info('[INFLOW] {} people waiting on {} floor'.format(len(self.queue_array), self.floor))
             if(not self.queue_logger is None):
                 self.queue_logger.log_inflow(len(self.queue_array), self.floorIndex, self.direction, float(self.env.now))
     
-    
-
-    def updatePanel(self):
-        # waiting for elevator leave
-        yield self.env.timeout(ELEV_CONFIG.ELEV_VELOCITY+2)
-        self.pushButton()
-
     def outflow(self):
         while True:
-            # elevator arrives
-            availible, elevIndex = yield self.EVENT.ELEV_ARRIVAL[self.direction][self.floor]
-    
-            # cancel panel
-            self.panels_state[elevIndex[0]] = False
+
+            # elevator arrival
+            space, elev_name = yield self.EVENT.ELEV_ARRIVAL[self.direction][self.floor]
 
             riders = []
-            customerIndex = 0
-            while (availible > 0) and (len(self.queue_array) > 0) and (customerIndex != len(self.queue_array)):
-                customer = self.queue_array[customerIndex]
-                
-                # elevator's infeasible list
-                infeasible = self.group_setting[elevIndex[0]]["infeasibles"][int(elevIndex[1:])]
 
+            index = 0
+            while (space > 0) & (len(self.queue_array) > 0) & (not index == len(self.queue_array)):
+                customer = self.queue_array[index]
                 
-                if (advance(self.floor, customer.destination) not in infeasible):
-                    if(not self.customer_logger is None):
-                        yield self.env.timeout(np.random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX))
-                        if(not self.customer_logger is None):
-                            self.customer_logger.log_board(customer.cid, float(self.env.now))
-                    
+                # infeasible list of elevator
+                infeasible = self.group_setting[elev_name[0]]["infeasibles"][int(elev_name[1:])]
+
+                # temporary destination of customer
+                temp_destination = customer.select_destination(self.floor, self.direction, infeasible)
+                
+                # if elevator serves floors between customer's destination
+                if (utils.advance_toward(self.floor, temp_destination) not in infeasible):
                     riders.append(customer)
-                    self.queue_array.pop(customerIndex)
-                    availible -= 1
+                    self.queue_array.pop(index)
+                    space -= 1
+                    
+                    # micmic customer enter time
+                    yield self.env.timeout(np.random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX))
+                        
+                    if(not self.customer_logger is None):
+                        self.customer_logger.log_board(customer.cid, float(self.env.now))
                 else:
-                    customerIndex += 1
+                    index += 1
             
             logging.info('[OUTFLOW] {} People Enters'.format(len(riders)))
-            
             if(not self.queue_logger is None):
                 self.queue_logger.log_outflow(len(self.queue_array), self.floorIndex, self.direction, float(self.env.now))
 
             # customers on board
-            self.EVENT.ELEV_LEAVE[elevIndex].succeed(value=riders)
-            self.EVENT.ELEV_LEAVE[elevIndex] = self.env.event()
+            self.EVENT.ELEV_LEAVE[elev_name].succeed(value=riders)
+            self.EVENT.ELEV_LEAVE[elev_name] = self.env.event()
 
-
+            # Call registration after elevator left
             self.env.process(self.updatePanel())
 
-            
-            
 class Floor:
     def __init__(self, env, floor, floorIndex, direction, IAT, distination_dist, group_setting, cid_gen, EVENT:Event, 
-                 queue_logger:Queue_logger=None, customer_logger:Customer_logger=None):
+                 queue_logger:Queue_logger=None,
+                 customer_logger:Customer_logger=None):
         self.env = env
         self.floor = floor
         self.direction = direction
 
-        # statistical data
+        # customer behaviors data
         self.IAT = IAT
         self.distination_dist = distination_dist if len(distination_dist) == 1 else distination_dist/distination_dist.sum()
 
@@ -218,23 +191,28 @@ class Floor:
 
     def Source(self, env):
         while True:
-            # 1. set inter-arrival time based on given distribution
+            # 1. inter-arrival time based on given distribution
             t = -1
             while t < 0:
                 t = self.IAT['dist'].rvs(
                     *self.IAT['params'][:-2], loc=self.IAT['params'][-2], scale=self.IAT['params'][-1], size=1)
             yield self.env.timeout(t)
 
+            # 2. number of people of arrival group
+            number_of_arrival = np.random.randint(ELEV_CONFIG.ARRIVAL_MIN, ELEV_CONFIG.ARRIVAL_MAX)
 
-            # 2. set number of people of arrival group
+
             customers = []
-            for i in range(np.random.randint(ELEV_CONFIG.ARRIVAL_MIN, ELEV_CONFIG.ARRIVAL_MAX)):
-                # 3. set customer destination based on given posibility
+            for i in range(number_of_arrival):
+                
+                # 3. customer destination based on given posibility
                 customer = Customer(self.cid_gen)
                 customer.destination = np.random.choice(self.distination_dist.index, p=self.distination_dist)
 
                 if(not self.customer_logger is None):
                     self.customer_logger.log_appear(customer.cid, self.floor, customer.destination, float(self.env.now))
+
+                # 4. redirect to other elevator group
 
                 customers.append(customer)
 
