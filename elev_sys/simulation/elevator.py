@@ -1,3 +1,4 @@
+from elev_sys.simulation import floor
 import simpy
 import random
 import numpy as np
@@ -10,7 +11,7 @@ from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.event import Event
 from elev_sys.simulation.logger import Elev_logger, Customer_logger, StopList_logger
 from elev_sys.animation.general import cal_floorNum
-import elev_sys.simulation.utils as utils
+from elev_sys.simulation.utils import cal_displacement, advance, floor_complement
 
 
 class IndexError(Exception):
@@ -22,28 +23,29 @@ class StopList:
     ACTIVE = 1
     NA = -1
 
-    def __init__(self, FloorList, infeasible, stopList_logger:StopList_logger=None):
-        # self.floorList = deepcopy(FloorList)
+    def __init__(self, floorList, available_floor, stopList_logger:StopList_logger=None):
+        # self.floorList = deepcopy(floorList)
         self.stopList_logger = stopList_logger
 
         self._list = {
-             1: [0] * (len(FloorList)),
-            -1: [0] * (len(FloorList))
+             1: [0] * (len(floorList)),
+            -1: [0] * (len(floorList))
         }
 
         # dictionary for indexing
         self.index = {
-            1: {floor: index for index, floor in enumerate(FloorList)},
-            -1: {floor: index for index, floor in enumerate(reversed(FloorList))}
+            1: {floor: index for index, floor in enumerate(floorList)},
+            -1: {floor: index for index, floor in enumerate(reversed(floorList))}
         }
 
-        for floorName in infeasible:
+        infeasible_floor = floor_complement(floorList, available_floor)
+        for floorName in infeasible_floor:
             self._list[1][self.index[1][floorName]] = StopList.NA
             self._list[-1][self.index[-1][floorName]] = StopList.NA
 
         self.reversed_index = {
-            1: {index: floor for index, floor in enumerate(FloorList)},
-            -1: {index: floor for index, floor in enumerate(reversed(FloorList))}
+            1: {index: floor for index, floor in enumerate(floorList)},
+            -1: {index: floor for index, floor in enumerate(reversed(floorList))}
         }
 
     def notEmpyty(self):
@@ -96,23 +98,6 @@ class StopList:
     def next_target(self, elev):
         current_floor = elev.current_floor
 
-        if ELEV_CONFIG.VERSION == 3:
-            # same direction, front
-            curr_index = self.index[elev.direction][current_floor]
-            for i, state in enumerate(self._list[elev.direction][curr_index:]):
-                if state == StopList.ACTIVE:
-                    return self.reversed_index[elev.direction][i+curr_index]
-
-            # different direction
-            for i, state in enumerate(self._list[-elev.direction]):
-                if state == StopList.ACTIVE:
-                    return self.reversed_index[-elev.direction][i]
-
-            # same direction, back
-            for i, state in enumerate(self._list[elev.direction][:curr_index]):
-                if state == StopList.ACTIVE:
-                    return self.reversed_index[elev.direction][i]
-
         if ELEV_CONFIG.VERSION == 2:
             peak = None
 
@@ -135,6 +120,24 @@ class StopList:
             for i, state in enumerate(self._list[elev.direction][:curr_index]):
                 if state == StopList.ACTIVE:
                     return self.reversed_index[elev.direction][i]
+        elif isinstance(ELEV_CONFIG.VERSION, int):
+            # same direction, front
+            curr_index = self.index[elev.direction][current_floor]
+            for i, state in enumerate(self._list[elev.direction][curr_index:]):
+                if state == StopList.ACTIVE:
+                    return self.reversed_index[elev.direction][i+curr_index]
+
+            # different direction
+            for i, state in enumerate(self._list[-elev.direction]):
+                if state == StopList.ACTIVE:
+                    return self.reversed_index[-elev.direction][i]
+
+            # same direction, back
+            for i, state in enumerate(self._list[elev.direction][:curr_index]):
+                if state == StopList.ACTIVE:
+                    return self.reversed_index[elev.direction][i]
+        else:
+            raise Exception("[! The version of elevator simulation system is not supported. ")
 
         return None
 
@@ -149,7 +152,7 @@ class StopList:
         curr_index = self.index[elev.direction][elev.current_floor]
         # same direction, front
         if(direction == elev.direction):
-            floor_diff = utils.displacement(elev.current, destination)
+            floor_diff = cal_displacement(elev.current, destination)
             if(floor_diff * direction > 0):
                 return floor_diff
         
@@ -160,8 +163,8 @@ class StopList:
                 change_point_index += 1
 
         if(direction != elev.direction):
-            return utils.displacement(elev.current, self.reversed_index[elev.direction][change_point_index]) * elev.direction + \
-                   abs(utils.displacement(self.reversed_index[elev.direction][change_point_index], destination))
+            return cal_displacement(elev.current, self.reversed_index[elev.direction][change_point_index]) * elev.direction + \
+                   abs(cal_displacement(self.reversed_index[elev.direction][change_point_index], destination))
 
         # same direction, back
         for i, state in enumerate(self._list[-elev.direction][:curr_index]):
@@ -170,7 +173,7 @@ class StopList:
 
 
 class Elevator:
-    def __init__(self, env, elev_name, floorList, infeasible, EVENT: Event,
+    def __init__(self, env, elev_name, floorList, available_floor, EVENT: Event,
                  customer_logger: Customer_logger=None, elev_logger: Elev_logger=None, stopList_logger:StopList_logger=None):
         self.env = env
         self.elev_name = str(elev_name)
@@ -178,14 +181,14 @@ class Elevator:
         self.riders = []
         self.EVENT = EVENT
         self.floorList = floorList
+        self.available_floor = available_floor
 
         # schedule list
-        self.stop_list = StopList(floorList, infeasible, stopList_logger)
-        self.infeasible = infeasible
+        self.stop_list = StopList(floorList, available_floor, stopList_logger)
 
         # initial states
-        self.current_floor = [floor for floor in floorList if floor not in infeasible][0]
-        self.available = [floor for floor in floorList if floor not in infeasible]
+        self.current_floor = available_floor[0]
+        
 
         self.direction = 0
         self.ASSIGN_EVENT = self.env.event()
@@ -232,7 +235,7 @@ class Elevator:
             self.stop_list.pushOuter(self, mission.direction, mission.destination)
 
             # determine initial direction
-            displacement = utils.displacement(self.current_floor, mission.destination)
+            displacement = cal_displacement(self.current_floor, mission.destination)
             if displacement > 0:
                 self.direction = 1
             elif displacement < 0:
@@ -300,11 +303,10 @@ class Elevator:
             while self.current_floor != destination:
 
                 # calculate traveling time for passing 1 floor
-                t = self.travelingTime(destination, self.current_floor, source)
-                yield self.env.timeout(t)
+                yield self.env.timeout(ELEV_CONFIG.ELEV_VELOCITY)
 
                 # advance 1 floor
-                self.current_floor = utils.advance(self.current_floor, self.direction)
+                self.current_floor = advance(self.current_floor, self.direction)
                 self.moveFloorNum += 1
 
                 if(not self.elev_logger is None):
@@ -369,7 +371,8 @@ class Elevator:
             self.EVENT.ELEV_TRANSFER[self.direction][self.current_floor] = self.env.event()
 
         # The common situation, not on the peak
-        if not (self.current_floor == self.available[-1] and self.direction == 1) | (self.current_floor == self.available[0] and self.direction == -1):
+        if not ((self.current_floor == self.available_floor[-1] and self.direction == 1) or \
+               (self.current_floor == self.available_floor[0] and self.direction == -1)):
             
             # elevator signal queue
             self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor].succeed(value=(self.capacity-len(self.riders), self.elev_name))
@@ -385,7 +388,7 @@ class Elevator:
 
             # add inner calls
             for customer in riders:
-                destination = customer.select_destination(self.current_floor, self.direction,  self.infeasible)
+                destination = customer.select_destination(self.current_floor, self.direction, self.floorList, self.available_floor)
                 self.stop_list.pushInner(self, destination)
 
             self.riders = self.riders + riders
@@ -408,7 +411,7 @@ class Elevator:
             logging.debug('[SERVING] Elev {}, currFloor {}, nextTarget {}'.format(
                 self.elev_name, self.current_floor, nextTarget))
 
-            displacement = utils.displacement(self.current_floor, nextTarget)
+            displacement = cal_displacement(self.current_floor, nextTarget)
             if displacement > 0:
                 self.direction = 1
             elif displacement < 0:
@@ -434,7 +437,7 @@ class Elevator:
                 logging.info('[SERVING] Elev {}, Customers Aboard: \n {} '.format(self.elev_name, [vars(i) for i in riders]))
 
                 for customer in riders:
-                    temp_destination = customer.select_destination(self.current_floor, self.direction, self.infeasible)
+                    temp_destination = customer.select_destination(self.current_floor, self.direction, self.floorList, self.available_floor)
                     self.stop_list.pushInner(self, temp_destination)
                 
                 self.riders = self.riders + riders
@@ -449,9 +452,3 @@ class Elevator:
         
         # Door Close
         yield self.env.timeout(ELEV_CONFIG.ELEV_CLOSE)
-
-
-
-    def travelingTime(self, destination, current, source):
-        # acceleration should be considered
-        return ELEV_CONFIG.ELEV_VELOCITY

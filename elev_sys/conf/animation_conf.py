@@ -1,6 +1,7 @@
 from elev_sys.conf.block import Block
 from elev_sys.conf.log_conf import STOPLIST_LOG_CONFIG
 
+
 class DEFAULT_ANIMA_CONFIG:
     SPEED = 50
 

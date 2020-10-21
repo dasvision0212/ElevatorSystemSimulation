@@ -1,9 +1,9 @@
 from queue import Queue
 import itertools
 
-def adjacent(available_list):
+def adjacent(floorList, available_list):
     adjacent_list = {}
-    for floor in floor_list:
+    for floor in floorList:
         adjacent_list[floor] = []
     for available in available_list:
         for pair in itertools.permutations(available,2):

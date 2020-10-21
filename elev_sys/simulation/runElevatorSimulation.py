@@ -20,32 +20,33 @@ def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting
                           queue_logger:Queue_logger=None, 
                           stopList_logger:StopList_logger=None):
     np.random.seed(seed = randomSeed)
+    random.seed(randomSeed)
     # get the list of elevName
     sub_group_names = group_setting.keys()
     elevNameList = []
     for sub_group_name, sub_group_setting in group_setting.items():
-        for i in range(len(sub_group_setting["infeasibles"])):
+        for i in range(len(sub_group_setting["available_floor"])):
             elevNameList.append(sub_group_name + str(i))
 
     # initialization
     event = Event(env, floorList, sub_group_names, elevNameList)
     
     # process
-    floors_upward = [Floor(env, floorName, floorIndex, 1, IAT_D.getter('up', floorName), 
+    floors_upward = [Floor(env, floorList, floorName, floorIndex, 1, IAT_D.getter('up', floorName), 
                             distination_dist.loc[floorName][floorName.lstrip("0"):], group_setting, cid_gen, event
                             , queue_logger=queue_logger, customer_logger=customer_logger) \
                                 for floorIndex, floorName in enumerate(floorList[:-1]) \
                                 if not IAT_D.getter('up', floorName) is None]
-    floors_downward = [Floor(env, floorName, floorIndex, -1, IAT_D.getter('down', floorName), 
+    floors_downward = [Floor(env, floorList, floorName, floorIndex, -1, IAT_D.getter('down', floorName), 
                             distination_dist.loc[floorName][:floorName.lstrip("0")], group_setting, cid_gen, event, 
                             queue_logger=queue_logger, customer_logger=customer_logger) \
                                 for floorIndex, floorName in enumerate(floorList[1:]) \
                                 if not IAT_D.getter('up', floorName) is None]
     
     elevator_group = Elevator_group(env, group_setting, floorList, event, 
-                                customer_logger=customer_logger, 
-                                elev_logger=elev_logger, 
-                                stopList_logger=stopList_logger)
+                                    customer_logger=customer_logger, 
+                                    elev_logger=elev_logger, 
+                                    stopList_logger=stopList_logger)
 
     env.run(until=untilTime)
     return elevator_group.get_statistics()
