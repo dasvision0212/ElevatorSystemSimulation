@@ -174,7 +174,9 @@ class Queue:
 
                 # temporary destination of customer
                 temp_destination = customer.next_stop(self.floor)
-                
+                if(temp_destination != customer.destination):
+                    customer.temp_destination = temp_destination
+
                 # if elevator serves floors between customer's destination
                 if (temp_destination in available_floor):
                     riders.append(customer)

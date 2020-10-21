@@ -335,7 +335,6 @@ class Elevator:
         fulfill_customer = []
         transfer_customers= []
         for i in range(len(self.riders)-1, -1, -1):
-
             # customer arrive destination
             if(self.riders[i].destination ==  self.current_floor):
 
@@ -347,7 +346,6 @@ class Elevator:
             
             # customer wait to transfer
             elif(self.riders[i].temp_destination ==  self.current_floor):
-
                 customer = self.riders.pop(i)
                 transfer_customers.append(customer)
 
