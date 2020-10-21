@@ -38,13 +38,33 @@ def BFS(adjacent_list, start = '1'):
                 predecessor[v] = u
                 level[v] = level[u] + 1
                 queue.put(v)
-    return predecessor, level
 
-def find_path(predecessor, start):
-    v = start
+    isConnected = not False in visited.values()
+
+    return predecessor, level, isConnected
+
+def find_path(predecessor, target):
+    v = target
     path = []
     while v is not None:
         path.append(v)
         v = predecessor[v]
     path.reverse()
     return path
+
+floor_list = ["B4", "B3", "B2", "B1", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
+
+available_list = [
+    ['B4', 'B3', 'B2', 'B1', '1','2', '3', '4'],
+    ["4", "5", "6", "7", "8", "9"],
+    ["9","10", "11", "12", "13", "14", "15"]
+]
+
+# calculate adjacent matrix
+adj_list = adjacent(floor_list,available_list)
+
+# create spanning tree based on BFS
+predecessor, level, isConnected = BFS(adj_list, start="1")
+
+# find path from 1 to 15
+p = find_path(predecessor, target="15")
