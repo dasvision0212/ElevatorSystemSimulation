@@ -388,7 +388,7 @@ class Elevator:
 
             # add inner calls
             for customer in riders:
-                destination = customer.select_destination(self.current_floor, self.direction, self.floorList, self.available_floor)
+                destination = customer.next_stop(self.current_floor)
                 self.stop_list.pushInner(self, destination)
 
             self.riders = self.riders + riders
@@ -437,7 +437,7 @@ class Elevator:
                 logging.info('[SERVING] Elev {}, Customers Aboard: \n {} '.format(self.elev_name, [vars(i) for i in riders]))
 
                 for customer in riders:
-                    temp_destination = customer.select_destination(self.current_floor, self.direction, self.floorList, self.available_floor)
+                    temp_destination = customer.next_stop(self.current_floor)
                     self.stop_list.pushInner(self, temp_destination)
                 
                 self.riders = self.riders + riders

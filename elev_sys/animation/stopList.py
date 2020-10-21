@@ -3,14 +3,14 @@ from elev_sys.conf.log_conf import STOPLIST_LOG_CONFIG
 
 
 class StopList:
-    def __init__(self, env, canvas, posConfig, name, index, log, floorList, elev_infeasible):
+    def __init__(self, env, canvas, posConfig, name, index, log, floorList, elev_available_floor):
         self.env = env
         self.canvas = canvas
         self.name = name
         self.index = index
         self.log = log.reset_index()
         self.floorList = floorList
-        self.infeasible = elev_infeasible[self.name]
+        self.elev_available_floor = elev_available_floor[self.name]
 
         self.posConfig = posConfig
         self.block = self.posConfig.stopList_subBlock[self.index]
@@ -44,10 +44,11 @@ class StopList:
         self.stop_list[1] = list()
         for i, floor in enumerate(floorList):
             color = None
-            if(floor in self.infeasible):
-                color = colConfig.sl_flag[STOPLIST_LOG_CONFIG.NA]
-            else:
+            if(floor in self.elev_available_floor):
                 color = colConfig.sl_flag[STOPLIST_LOG_CONFIG.IDLE]
+            else:
+                color = colConfig.sl_flag[STOPLIST_LOG_CONFIG.NA]
+
             self.stop_list[1].append(self.canvas.create_rectangle(*self.floorCoord(1, i), 
                                          fill=color, 
                                          width=0))
@@ -55,10 +56,10 @@ class StopList:
         self.stop_list[-1] = list()
         for i, floor in enumerate(floorList):
             color = None
-            if(floor in self.infeasible):
-                color = colConfig.sl_flag[STOPLIST_LOG_CONFIG.NA]
-            else:
+            if(floor in self.elev_available_floor):
                 color = colConfig.sl_flag[STOPLIST_LOG_CONFIG.IDLE]
+            else:
+                color = colConfig.sl_flag[STOPLIST_LOG_CONFIG.NA]
             self.stop_list[-1].append(self.canvas.create_rectangle(*self.floorCoord(-1, i), 
                                          fill=color, 
                                          width=0))

@@ -1,8 +1,6 @@
 import string
 from itertools import combinations, permutations, product
 def initElevatorGroups(elevators_list, floor_list, break_points):
-#     print(elevators_list)
-#     print(break_points)
     elevator_group = {}
     for index, elevators in enumerate(elevators_list):
         avalible_list = [[]]*(elevators)

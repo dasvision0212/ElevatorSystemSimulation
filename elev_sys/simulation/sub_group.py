@@ -6,7 +6,7 @@ from elev_sys.conf.elevator_conf import ELEV_CONFIG
 from elev_sys.simulation.elevator import Elevator
 from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.logger import (Customer_logger, Elev_logger, StopList_logger)
-from elev_sys.simulation.utils import cal_displacement, advance
+from elev_sys.simulation.utils import cal_displacement
 
 
 class SubGroup:
@@ -58,7 +58,7 @@ class SubGroup:
         return bestElevator
 
 
-    def _assign_v4(self, mission, randomPolicy_prob=0.3):
+    def _assign_v4(self, mission, randomPolicy_prob=0.1):
         if(random.random() < randomPolicy_prob):
             direction, source = mission
             elev_candidate = [elevName for elevName, elevator in self.elevators.items()\
@@ -116,7 +116,6 @@ class SubGroup:
             elif isSameDirection & (not isCustomerAhead):
                 dispatching_cost  = SAME_DIR_BACK_BIAS + cal_displacement(elevator.current_floor, source) * -elevator.direction
             
-            oneStep = advance(source, direction)
             if (source == elevator.available_floor[-1] and direction == 1) or \
                (source == elevator.available_floor[0] and direction == -1):
                 continue

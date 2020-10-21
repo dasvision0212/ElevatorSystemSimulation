@@ -1,3 +1,5 @@
+from elev_sys.simulation.path_finder import Path_finder
+from elev_sys.simulation import path_finder
 import simpy
 import random
 import numpy as np
@@ -30,15 +32,17 @@ def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting
 
     # initialization
     event = Event(env, floorList, sub_group_names, elevNameList)
-    
+    path_finder = Path_finder(floorList, group_setting)
+
+
     # process
     floors_upward = [Floor(env, floorList, floorName, floorIndex, 1, IAT_D.getter('up', floorName), 
-                            distination_dist.loc[floorName][floorName.lstrip("0"):], group_setting, cid_gen, event
-                            , queue_logger=queue_logger, customer_logger=customer_logger) \
+                            distination_dist.loc[floorName][floorName.lstrip("0"):], group_setting, cid_gen, event, path_finder, 
+                            queue_logger=queue_logger, customer_logger=customer_logger) \
                                 for floorIndex, floorName in enumerate(floorList[:-1]) \
                                 if not IAT_D.getter('up', floorName) is None]
     floors_downward = [Floor(env, floorList, floorName, floorIndex, -1, IAT_D.getter('down', floorName), 
-                            distination_dist.loc[floorName][:floorName.lstrip("0")], group_setting, cid_gen, event, 
+                            distination_dist.loc[floorName][:floorName.lstrip("0")], group_setting, cid_gen, event, path_finder, 
                             queue_logger=queue_logger, customer_logger=customer_logger) \
                                 for floorIndex, floorName in enumerate(floorList[1:]) \
                                 if not IAT_D.getter('up', floorName) is None]

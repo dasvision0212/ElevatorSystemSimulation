@@ -1,3 +1,4 @@
+from sys import path
 from elev_sys.simulation import sub_group
 import simpy
 import numpy as np
@@ -6,11 +7,14 @@ import scipy.stats as st
 from collections import namedtuple
 from copy import deepcopy
 import logging
+import itertools
 from elev_sys.conf.elevator_conf import ELEV_CONFIG
 from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.event import Event
 from elev_sys.simulation.logger import Queue_logger, Customer_logger
-from elev_sys.simulation.utils import floor_complement, floor_to_index, index_to_floor, advance_toward, floor_complement
+from elev_sys.simulation.utils import floor_complement, floor_to_index, index_to_floor, floor_complement
+from elev_sys.simulation.path_finder import Path_finder, next_transfer
+
 
 def cid_generator():
         ''' Generate unique, global customer ID.[!] In order to maintain the feasibility of Customer_logger, cid must start from 0. '''
@@ -19,8 +23,9 @@ def cid_generator():
             yield i
             i += 1
 
+
 class Customer:
-    def __init__(self, cid_gen=None):
+    def __init__(self, group_setting, path_finder:Path_finder, cid_gen=None, ):
         if cid_gen is not None:
             self.cid = next(cid_gen)
         else:
@@ -30,28 +35,20 @@ class Customer:
         self.destination = None
         self.leave_time = None
 
+        self.group_setting = group_setting
+        self.path_finder = path_finder
+
         self.temp_destination = None
 
-    def select_destination(self, current_floor, direction, floorList, available_floor):
-  
-        infeasible_floor = floor_complement(floorList, available_floor)
-        if str(self.destination) in infeasible_floor:
-            infeasible_floor = [floor_to_index(floor) for floor in infeasible_floor]
-            
-            current_floor = floor_to_index(current_floor)
-            if direction == 1:
-                t = [floor for floor in infeasible_floor if not floor <= current_floor]
-            if direction == -1:
-                t = [floor for floor in infeasible_floor if not floor >= current_floor]
- 
-            temp_destination_index = t[min(range(len(t)), key = lambda i: abs(t[i]-current_floor))] - direction
 
-            self.temp_destination = index_to_floor(temp_destination_index)
-            return self.temp_destination
-        return self.destination 
+    def next_stop(self, current_floor):
+        all_subGroup_set = frozenset([subGroupName for subGroupName in self.group_setting])
+        next_stop_matrix = self.path_finder.predecessor_dict[all_subGroup_set]
+        return next_stop_matrix[self.destination][current_floor]
+
 
 class Queue:
-    def __init__(self, env, floorList, floor, floorIndex, direction, group_setting, EVENT:Event, 
+    def __init__(self, env, floorList, floor, floorIndex, direction, group_setting, EVENT:Event, path_finder:Path_finder, 
                 queue_logger:Queue_logger=None, customer_logger:Customer_logger=None):
         self.env = env
         self.floorList = floorList
@@ -62,6 +59,7 @@ class Queue:
         self.arrival_event = self.env.event()
 
         self.group_setting = group_setting
+        self.path_finder = path_finder
 
         # start process
         self.inflow_proc = self.env.process(self.inflow())
@@ -78,29 +76,62 @@ class Queue:
     #             yield self.env.timeout(100)
     #             print(self.env.now,'Floor',self.floor, 'direction',self.direction, 'num:', len(self.queue_array))
                 
-        
+    
+    def do_subgroup_contain(self, subGroupName, floor):
+        available_floor = self.group_setting[subGroupName]["available_floor"]
+        for available in available_floor:
+            if(floor in available):
+                return True
+
+        return False
+
+
     def rigisterCall(self):
         # Call registration when customer arrive
+
+        # subGroup_candidate_combination = list()
+        # for subGroupNum in range(len(self.group_setting.keys()), 0, -1):
+        #     subGroup_candidate_combination = subGroup_candidate_combination + \
+        #                                 [frozenset(subGroup_combination) for subGroup_combination in\
+        #                                  itertools.combinations(self.group_setting.keys(), subGroupNum)]
+
+        unCalled_subGroup_name = set([subGroupName for subGroupName in self.group_setting])
         for customer in self.queue_array:
-            for sub_group_name, sub_group_setting in self.group_setting.items():
+            if(unCalled_subGroup_name):
+                next_stop = customer.next_stop(self.floor)
 
-                # each elevator
-                for available_floor in sub_group_setting["available_floor"]:
-                    # temporary destination of customer
-                    temp_destination = customer.select_destination(self.floor, self.direction, self.floorList, available_floor)
+                if(not next_stop is None):
+                    called_subGroup = set()
+                    for subGroupName in unCalled_subGroup_name:
+                        if(self.do_subgroup_contain(subGroupName, next_stop)):
+                            mission = Mission(direction=self.direction, destination=self.floor)
+                            self.EVENT.CALL[subGroupName].succeed(value=mission)
+                            self.EVENT.CALL[subGroupName] = self.env.event()
+                            called_subGroup.update([subGroupName])
+                        
+                    unCalled_subGroup_name = unCalled_subGroup_name.difference(called_subGroup)
 
-                    # if elevator can arrive current floor & if elevator serves floors between customer's destination
-                    if (self.floor in available_floor) & (advance_toward(self.floor, temp_destination) in available_floor):
+            # for sub_group_name, sub_group_setting in self.group_setting.items():
 
-                        mission = Mission(direction=self.direction, destination=self.floor)
+            #     # each elevator
+            #     for available_floor in sub_group_setting["available_floor"]:
+            #         # temporary destination of customer
+            #         temp_destination = customer.select_destination(self.floor, self.direction, self.floorList, available_floor)
 
-                        self.EVENT.CALL[sub_group_name].succeed(value=mission)
-                        self.EVENT.CALL[sub_group_name] = self.env.event()
+            #         # if elevator can arrive current floor & if elevator serves floors between customer's destination
+            #         if (self.floor in available_floor) and (advance_toward(self.floor, temp_destination) in available_floor):
+
+            #             mission = Mission(direction=self.direction, destination=self.floor)
+
+            #             self.EVENT.CALL[sub_group_name].succeed(value=mission)
+            #             self.EVENT.CALL[sub_group_name] = self.env.event()
     
+
     def updatePanel(self):
         # delay call registration until elevator left
         yield self.env.timeout(ELEV_CONFIG.CUSTOMER__RECALL_ELEV_TIME)
         self.rigisterCall()
+
 
     def inflow(self):
         while True:
@@ -122,6 +153,7 @@ class Queue:
             if(not self.queue_logger is None):
                 self.queue_logger.log_inflow(len(self.queue_array), self.floorIndex, self.direction, float(self.env.now))
     
+
     def outflow(self):
         while True:
 
@@ -131,6 +163,7 @@ class Queue:
             riders = []
 
             index = 0
+
             while (space > 0) & (len(self.queue_array) > 0) & (not index == len(self.queue_array)):
                 customer = self.queue_array[index]
                 
@@ -140,10 +173,10 @@ class Queue:
                 available_floor = self.group_setting[sub_group_name]["available_floor"][elev_index]
 
                 # temporary destination of customer
-                temp_destination = customer.select_destination(self.floor, self.direction, self.floorList, available_floor)
+                temp_destination = customer.next_stop(self.floor)
                 
                 # if elevator serves floors between customer's destination
-                if (advance_toward(self.floor, temp_destination) in available_floor):
+                if (temp_destination in available_floor):
                     riders.append(customer)
                     self.queue_array.pop(index)
                     space -= 1
@@ -167,27 +200,31 @@ class Queue:
             # Call registration after elevator left
             self.env.process(self.updatePanel())
 
+
 class Floor:
-    def __init__(self, env, floorList, floor, floorIndex, direction, IAT, distination_dist, group_setting, cid_gen, EVENT:Event, 
+    def __init__(self, env, floorList, floor, floorIndex, direction, IAT, distination_dist, group_setting, cid_gen, EVENT:Event, path_finder:Path_finder, 
                  queue_logger:Queue_logger=None,
                  customer_logger:Customer_logger=None):
         self.env = env
         self.floor = floor
         self.direction = direction
         self.floorList = floorList
+        self.group_setting = group_setting
+        self.path_finder = path_finder
 
         # customer behaviors data
         self.IAT = IAT
         self.distination_dist = distination_dist if len(distination_dist) == 1 else distination_dist/distination_dist.sum()
 
         # start process
-        self.queue = Queue(env, floorList, floor, floorIndex, direction, group_setting, EVENT, 
+        self.queue = Queue(env, floorList, floor, floorIndex, direction, group_setting, EVENT, path_finder, 
                             queue_logger=queue_logger, customer_logger=customer_logger)
         self.source_proc = env.process(self.Source(env))
 
         # global
         self.cid_gen = cid_gen
         self.customer_logger = customer_logger
+
 
     def Source(self, env):
         while True:
@@ -206,7 +243,7 @@ class Floor:
             for i in range(number_of_arrival):
                 
                 # 3. customer destination based on given posibility
-                customer = Customer(self.cid_gen)
+                customer = Customer(self.group_setting, self.path_finder, self.cid_gen)
                 customer.destination = np.random.choice(self.distination_dist.index, p=self.distination_dist)
 
                 if(not self.customer_logger is None):

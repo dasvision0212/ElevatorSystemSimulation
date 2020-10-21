@@ -20,7 +20,7 @@ from elev_sys.animation.jt_displayer import JT_displayer
 
 class Animation:
     def __init__(self, building_name, elev_log_path, queue_log_path, stopList_log_path, customer_log_path, 
-                 elevNameList, floorList, elev_infeasible:defaultdict=ELEV_INFEASIBLE, title=None):
+                 elevNameList, floorList, elev_available_floor:defaultdict, title=None):
         self.env = Env()
 
         # extract log
@@ -70,13 +70,13 @@ class Animation:
         
         # widget
         self.building = Building(self.env, self.canvas, self.posConfig, self.building_name, 
-                                 self.elev_log, self.queue_log, elevNameList, floorList, elev_infeasible)
+                                 self.elev_log, self.queue_log, elevNameList, floorList, elev_available_floor)
         
         self.timer = Timer(self.env, self.canvas, self.posConfig)
         
         self.stopList = {
             StopList(self.env, self.canvas, self.posConfig, elevIndex, i, 
-            self.stopList_log[self.stopList_log["elevIndex"]==elevIndex], floorList, elev_infeasible) \
+            self.stopList_log[self.stopList_log["elevIndex"]==elevIndex], floorList, elev_available_floor) \
             for i, elevIndex in enumerate(elevNameList)
         }
         

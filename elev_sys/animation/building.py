@@ -6,7 +6,7 @@ from elev_sys.animation.queue import Queue
 
 
 class Building:
-    def __init__(self, env:Env, canvas, posConfig, name, elev_log, queue_log, elevNameList, floorList, elev_infeasible):
+    def __init__(self, env:Env, canvas, posConfig, name, elev_log, queue_log, elevNameList, floorList, elev_available_floor):
         self.env = env
         self.canvas = canvas
         self.posConfig = posConfig
@@ -15,8 +15,7 @@ class Building:
         self.queue_log = queue_log
 
         # draw Elevator
-        startFloorIndex = {elev_name: [floor for floor in floorList if floor not in infeasible][0] for \
-                            elev_name, infeasible in elev_infeasible.items()}
+        startFloorIndex = {elev_name: available[0] for elev_name, available in elev_available_floor.items()}
 
         self.elevators = {name:Elevator(self.env, self.canvas, self.posConfig, name, i, 
                                         self.elev_log[self.elev_log["name"]==name], floorList, startFloorIndex[name]) \
