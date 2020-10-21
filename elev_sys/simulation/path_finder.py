@@ -41,7 +41,10 @@ def next_transfer(adjacent_list, source):
                 predecessor[v] = u
                 level[v] = level[u] + 1
                 queue.put(v)
-    return predecessor, level
+
+    isConnected = not False in visited.values()
+
+    return predecessor, level, isConnected
 
 
 def find_path(predecessor, destination):
