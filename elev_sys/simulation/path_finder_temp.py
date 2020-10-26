@@ -27,8 +27,8 @@ class Path_finder:
         
         self.map = { floor: {floor: [] for floor in floorList} for floor in floorList}
         
-        for i in floorList:
-            for j in floorList:
+        for i in floorList[:3]:
+            for j in floorList[:3]:
                 if i != j:
                     self.add_route(i,j)
         
@@ -77,21 +77,19 @@ class Path_finder:
         for path in path_list:
             
             # length threshold
-            length = len(path)
-            if length <= min_dist:
+            if len(path) <= min_dist:
+                self.map[i][j].append( path )
                 
                 # add precedents
-                for i in range(length-1):
-                    
-                    # skip if path had been recorded
-                    
-                    value = (path[i+1], length-i-2)
-                    if value in self.map[path[i]][path[-1]]:
-                        break
-                    self.map[path[i]][path[-1]].append( value )
+#                 for i in range(length-1):
+#                     value = (path[i+1], length-i-2)
+#                     if value in self.map[path[i]][path[-1]]:
+#                         break
+#                     self.map[path[i]][path[-1]].append( value )
 
 t0 = time.time()
 a = Path_finder(floor_list, group_setting)
 t1 = time.time()
 print(t1-t0)
 a.map
+
