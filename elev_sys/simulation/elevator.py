@@ -345,7 +345,7 @@ class Elevator:
                     self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
             
             # customer wait to transfer
-            elif(self.riders[i].temp_destination ==  self.current_floor):
+            elif(self.riders[i].next_stop ==  self.current_floor):
                 customer = self.riders.pop(i)
                 transfer_customers.append(customer)
 
@@ -386,7 +386,7 @@ class Elevator:
 
             # add inner calls
             for customer in riders:
-                destination = customer.next_stop(self.current_floor)
+                destination = customer.next_stop
                 self.stop_list.pushInner(self, destination)
 
             self.riders = self.riders + riders
@@ -435,8 +435,7 @@ class Elevator:
                 logging.info('[SERVING] Elev {}, Customers Aboard: \n {} '.format(self.elev_name, [vars(i) for i in riders]))
 
                 for customer in riders:
-                    temp_destination = customer.next_stop(self.current_floor)
-                    self.stop_list.pushInner(self, temp_destination)
+                    self.stop_list.pushInner(self, customer.next_stop)
                 
                 self.riders = self.riders + riders
 

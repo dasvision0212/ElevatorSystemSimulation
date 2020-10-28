@@ -134,7 +134,7 @@ class Customer_logger(Logger):
                 It is not out expectation. What we want is that the cell row["boarding_time"] is pd.nan or not. 
                 '''
                 waiting_time_list.append(self.untilTime - row["appear_time"])
-                time_in_elev_list.append(pd.NA)
+                time_in_elev_list.append(None)
                 continue
 
             if(not isinstance(row["get_off_time"], list)):

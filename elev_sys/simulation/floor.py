@@ -13,7 +13,7 @@ from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.event import Event
 from elev_sys.simulation.logger import Queue_logger, Customer_logger
 from elev_sys.simulation.utils import floor_complement, floor_to_index, index_to_floor, floor_complement
-from elev_sys.simulation.path_finder import Path_finder, next_transfer
+from elev_sys.simulation.path_finder import Path_finder
 
 
 def cid_generator():
@@ -25,26 +25,36 @@ def cid_generator():
 
 
 class Customer:
-    def __init__(self, group_setting, path_finder:Path_finder, cid_gen=None, ):
+    def __init__(self, floor, group_setting, path_finder:Path_finder, cid_gen=None, ):
         if cid_gen is not None:
             self.cid = next(cid_gen)
         else:
             self.cid = next(self._cid_generator)
 
-        self.source = None
+        self.source = floor
         self.destination = None
         self.leave_time = None
 
         self.group_setting = group_setting
-        self.path_finder = path_finder
 
-        self.temp_destination = None
+        self.path = None
+        self._current_stop_i = 0
+
+    @property
+    def next_stop(self):
+        return self.path[self._current_stop_i + 1]
+
+    def select_tour(self, distination_dist, path_finder):
+        self.destination = np.random.choice(distination_dist.index, p=distination_dist)
+        path_candidate = path_finder.map[self.source][self.destination]
+        decision = 0
+        if(len(path_candidate)-1 != 0): 
+            decision = np.random.randint(0, len(path_candidate)-1)
+        self.path = path_candidate[decision]
 
 
-    def next_stop(self, current_floor):
-        all_subGroup_set = frozenset([subGroupName for subGroupName in self.group_setting])
-        next_stop_matrix = self.path_finder.predecessor_dict[all_subGroup_set]
-        return next_stop_matrix[self.destination][current_floor]
+    def enterQueue(self):
+        self._current_stop_i + 1
 
 
 class Queue:
@@ -98,7 +108,7 @@ class Queue:
         unCalled_subGroup_name = set([subGroupName for subGroupName in self.group_setting])
         for customer in self.queue_array:
             if(unCalled_subGroup_name):
-                next_stop = customer.next_stop(self.floor)
+                next_stop = customer.next_stop
 
                 if(not next_stop is None):
                     called_subGroup = set()
@@ -144,6 +154,8 @@ class Queue:
                 self.floor, 'up' if self.direction == 1 else 'down'))
 
             # append customers to waiting queue
+            for customer in customers:
+                customer.enterQueue()
             self.queue_array = self.queue_array + customers
 
             # call registeration
@@ -172,13 +184,8 @@ class Queue:
                 elev_index     = int(elev_name[1:])
                 available_floor = self.group_setting[sub_group_name]["available_floor"][elev_index]
 
-                # temporary destination of customer
-                temp_destination = customer.next_stop(self.floor)
-                if(temp_destination != customer.destination):
-                    customer.temp_destination = temp_destination
-
                 # if elevator serves floors between customer's destination
-                if (temp_destination in available_floor):
+                if (customer.next_stop in available_floor):
                     riders.append(customer)
                     self.queue_array.pop(index)
                     space -= 1
@@ -240,13 +247,12 @@ class Floor:
             # 2. number of people of arrival group
             number_of_arrival = np.random.randint(ELEV_CONFIG.ARRIVAL_MIN, ELEV_CONFIG.ARRIVAL_MAX)
 
-
             customers = []
             for i in range(number_of_arrival):
                 
                 # 3. customer destination based on given posibility
-                customer = Customer(self.group_setting, self.path_finder, self.cid_gen)
-                customer.destination = np.random.choice(self.distination_dist.index, p=self.distination_dist)
+                customer = Customer(self.floor, self.group_setting, self.path_finder, self.cid_gen)
+                customer.select_tour(self.distination_dist, self.path_finder)
 
                 if(not self.customer_logger is None):
                     self.customer_logger.log_appear(customer.cid, self.floor, customer.destination, float(self.env.now))

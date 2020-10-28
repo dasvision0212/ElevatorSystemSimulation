@@ -32,7 +32,7 @@ def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting
 
     # initialization
     event = Event(env, floorList, sub_group_names, elevNameList)
-    path_finder = Path_finder(floorList, group_setting)
+    path_finder = Path_finder(floorList, group_setting, fileName="./path_log.json")
 
 
     # process
