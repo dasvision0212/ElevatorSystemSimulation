@@ -71,8 +71,8 @@ if(__name__ == "__main__"):
     log_folder = r"../data/log2"
     try:
         elev_logger.to_csv(joinPath(log_folder, "elev_log.csv"))
-    except PermissionError:
-        pass
+    except PermissionError as e:
+        raise e
     
     try:
         queue_logger.to_csv(joinPath(log_folder, "queue_log.csv"))
