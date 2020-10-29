@@ -30,14 +30,18 @@ class SubGroup:
     def assignCalls(self):
         while True:
             mission = yield self.EVENT.CALL[self.sub_group_name]
+            # self.EVENT.CALL_RECV[]
 
             # decide candidate given the call's floor and direction
             candidate = self.bestCandidate(mission)
-            
+            direction, source = mission
+            # if (source == '8') & (direction == 1):
+            #     print(candidate,'99999999999999999999')
             # pass call over to elevator
             self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
-            yield self.elevators[candidate].FINISH_EVENT
-            
+            self.elevators[candidate].ASSIGN_EVENT = self.env.event() 
+            # yield self.elevators[candidate].FINISH_EVENT
+
             logging.info('[AssignCalls] Succeed')
 
 
@@ -78,8 +82,8 @@ class SubGroup:
         direction, source = mission
 
         # Penalty
-        DIFFERENT_DIR_BIAS = 10
-        SAME_DIR_BACK_BIAS = 20
+        DIFFERENT_DIR_BIAS = 20
+        SAME_DIR_BACK_BIAS = 40
 
         # Initial
         min_dispatching_cost = None
@@ -118,7 +122,7 @@ class SubGroup:
             
             if (source == elevator.available_floor[-1] and direction == 1) or \
                (source == elevator.available_floor[0] and direction == -1):
-                continue
+                dispatching_cost += 50
 
             if(min_dispatching_cost is None) or (dispatching_cost < min_dispatching_cost):
                 bestElevator = elevator.elev_name
@@ -127,7 +131,6 @@ class SubGroup:
             logging.warning(elevator.elev_name)
             logging.warning("dir: {}, curr: {}".format(elevator.direction, elevator.current_floor))
             logging.warning("score: {}".format(dispatching_cost))
-            
             
         return bestElevator
 

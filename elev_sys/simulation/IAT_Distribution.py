@@ -13,11 +13,19 @@ class IAT_Distribution:
         self.section = section
 
     def getter(self, direction, floor):
+        direction_string = None
+        if direction == 1:
+            direction_string = 'up'
+        elif direction == -1:
+            direction_string = 'down'
 
         # filter row by mulitple conditions
+        if floor in self.df['Floor']:
+            return None
+        
         temp = self.df[(self.df['Location'] == self.location) & (self.df['Section'] == self.section) &
-                       (self.df['Direction'] == direction) & (self.df['Floor'] == floor)][['Distribution', 'Parameters']]
-
+                    (self.df['Direction'] == direction_string) & (self.df['Floor'] == floor)][['Distribution', 'Parameters']]
+        
         if(temp.shape[0] == 0):
             return None
         else:

@@ -32,7 +32,7 @@ if(__name__ == "__main__"):
     IAT_D = IAT_Distribution(Dist_InterArrival_file, location, timeSection)
     distination_dist = pd.read_csv(Ratio_byFloor[location]).iloc[:, 1:].set_index(
         'from').iloc[0:len(floorList)+1, 0:len(floorList)+1]
-    distination_dist = distination_dist.drop(['B2'], axis=1).drop(['B2'], axis=0)
+    # distination_dist = distination_dist.drop(['B2'], axis=1).drop(['B2'], axis=0)
 
     # sub_group_setting
     group_setting = {
@@ -46,7 +46,7 @@ if(__name__ == "__main__"):
             ],
         }
     }
-    
+
     # Enviornment Variable
     env = simpy.Environment()
     cid_gen = cid_generator()

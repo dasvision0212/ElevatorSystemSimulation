@@ -4,7 +4,7 @@ import simpy
 import numpy as np
 import pandas as pd
 import scipy.stats as st
-from collections import namedtuple
+from collections import namedtuple, defaultdict
 from copy import deepcopy
 import logging
 import itertools
@@ -12,20 +12,21 @@ from elev_sys.conf.elevator_conf import ELEV_CONFIG
 from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.event import Event
 from elev_sys.simulation.logger import Queue_logger, Customer_logger
-from elev_sys.simulation.utils import floor_complement, floor_to_index, index_to_floor, floor_complement
+from elev_sys.simulation.utils import floor_complement, floor_to_index, index_to_floor, floor_complement, compare_direction
 from elev_sys.simulation.path_finder import Path_finder
 
 
+
 def cid_generator():
-        ''' Generate unique, global customer ID.[!] In order to maintain the feasibility of Customer_logger, cid must start from 0. '''
-        i = 0
-        while True:
-            yield i
-            i += 1
+    ''' Generate unique, global customer ID.[!] In order to maintain the feasibility of Customer_logger, cid must start from 0. '''
+    i = 0
+    while True:
+        yield i
+        i += 1
 
 
 class Customer:
-    def __init__(self, floor, group_setting, path_finder:Path_finder, cid_gen=None, ):
+    def __init__(self, floor, path_finder:Path_finder, cid_gen=None, ):
         if cid_gen is not None:
             self.cid = next(cid_gen)
         else:
@@ -35,8 +36,6 @@ class Customer:
         self.destination = None
         self.leave_time = None
 
-        self.group_setting = group_setting
-
         self.path = None
         self._current_stop_i = 0
 
@@ -44,8 +43,8 @@ class Customer:
     def next_stop(self):
         return self.path[self._current_stop_i + 1]
 
-    def select_tour(self, distination_dist, path_finder):
-        self.destination = np.random.choice(distination_dist.index, p=distination_dist)
+    def select_tour(self, destination_dist, path_finder):
+        self.destination = np.random.choice(destination_dist.index, p=destination_dist)
         path_candidate = path_finder.map[self.source][self.destination]
         decision = 0
         if(len(path_candidate)-1 != 0): 
@@ -54,7 +53,7 @@ class Customer:
 
 
     def enterQueue(self):
-        self._current_stop_i + 1
+        self._current_stop_i = self._current_stop_i + 1
 
 
 class Queue:
@@ -81,7 +80,7 @@ class Queue:
 
     #     self.env.process(self.debug())
     # def debug(self):
-    #     if True:#(self.floor == '5') & (self.direction == -1):
+    #     if (self.floor == '9') & (self.direction == -1):
     #         while True:
     #             yield self.env.timeout(100)
     #             print(self.env.now,'Floor',self.floor, 'direction',self.direction, 'num:', len(self.queue_array))
@@ -105,6 +104,7 @@ class Queue:
         #                                 [frozenset(subGroup_combination) for subGroup_combination in\
         #                                  itertools.combinations(self.group_setting.keys(), subGroupNum)]
 
+
         unCalled_subGroup_name = set([subGroupName for subGroupName in self.group_setting])
         for customer in self.queue_array:
             if(unCalled_subGroup_name):
@@ -118,28 +118,27 @@ class Queue:
                             self.EVENT.CALL[subGroupName].succeed(value=mission)
                             self.EVENT.CALL[subGroupName] = self.env.event()
                             called_subGroup.update([subGroupName])
-                        
                     unCalled_subGroup_name = unCalled_subGroup_name.difference(called_subGroup)
 
-            # for sub_group_name, sub_group_setting in self.group_setting.items():
+        # for customer in self.queue_array:
+        #     for sub_group_name, sub_group_setting in self.group_setting.items():
+        #         # each elevator
+        #         for available_floor in sub_group_setting["available_floor"]:
+        #             # temporary destination of customer
+        #             temp_destination = customer.next_stop
 
-            #     # each elevator
-            #     for available_floor in sub_group_setting["available_floor"]:
-            #         # temporary destination of customer
-            #         temp_destination = customer.select_destination(self.floor, self.direction, self.floorList, available_floor)
+        #             # if elevator can arrive current floor & if elevator serves floors between customer's destination
+        #             if temp_destination in available_floor:
 
-            #         # if elevator can arrive current floor & if elevator serves floors between customer's destination
-            #         if (self.floor in available_floor) and (advance_toward(self.floor, temp_destination) in available_floor):
+        #                 mission = Mission(direction=self.direction, destination=self.floor)
 
-            #             mission = Mission(direction=self.direction, destination=self.floor)
+        #                 self.EVENT.CALL[sub_group_name].succeed(value=mission)
+        #                 self.EVENT.CALL[sub_group_name] = self.env.event()
 
-            #             self.EVENT.CALL[sub_group_name].succeed(value=mission)
-            #             self.EVENT.CALL[sub_group_name] = self.env.event()
-    
 
     def updatePanel(self):
         # delay call registration until elevator left
-        yield self.env.timeout(ELEV_CONFIG.CUSTOMER__RECALL_ELEV_TIME)
+        yield self.env.timeout(ELEV_CONFIG.CUSTOMER_RECALL_ELEV_TIME)
         self.rigisterCall()
 
 
@@ -149,13 +148,12 @@ class Queue:
             # new customer | transfer customer
             customers = yield self.arrival_event | self.EVENT.ELEV_TRANSFER[self.direction][self.floor]
             customers = list(customers.values())[0] # Unpack simPy comdition variable
-
+            # if (self.floor == '1') and (self.direction == 1):
+            #     print('number',len(customers))
             logging.info('[INFLOW] Outer Call {} Floor {} '.format(
                 self.floor, 'up' if self.direction == 1 else 'down'))
 
-            # append customers to waiting queue
-            for customer in customers:
-                customer.enterQueue()
+            
             self.queue_array = self.queue_array + customers
 
             # call registeration
@@ -174,16 +172,17 @@ class Queue:
 
             riders = []
 
-            index = 0
+            # available_floor of elevator
+            sub_group_name = elev_name[0]
+            elev_index     = int(elev_name[1:])
 
+            available_floor = self.group_setting[sub_group_name]["available_floor"][elev_index]
+
+            index = 0
             while (space > 0) & (len(self.queue_array) > 0) & (not index == len(self.queue_array)):
+                
                 customer = self.queue_array[index]
                 
-                # available_floor of elevator
-                sub_group_name = elev_name[0]
-                elev_index     = int(elev_name[1:])
-                available_floor = self.group_setting[sub_group_name]["available_floor"][elev_index]
-
                 # if elevator serves floors between customer's destination
                 if (customer.next_stop in available_floor):
                     riders.append(customer)
@@ -211,55 +210,71 @@ class Queue:
 
 
 class Floor:
-    def __init__(self, env, floorList, floor, floorIndex, direction, IAT, distination_dist, group_setting, cid_gen, EVENT:Event, path_finder:Path_finder, 
+    def __init__(self, env, floorList, floor, floorIndex, IAT_df, destination_dist, group_setting, cid_gen, EVENT:Event, path_finder:Path_finder, 
                  queue_logger:Queue_logger=None,
                  customer_logger:Customer_logger=None):
         self.env = env
         self.floor = floor
-        self.direction = direction
         self.floorList = floorList
         self.group_setting = group_setting
         self.path_finder = path_finder
 
         # customer behaviors data
-        self.IAT = IAT
-        self.distination_dist = distination_dist if len(distination_dist) == 1 else distination_dist/distination_dist.sum()
+        self.IAT = {}
+        self.source_proc = {}
+        self.queue = {}
+        self.destination_dist = {}
 
-        # start process
-        self.queue = Queue(env, floorList, floor, floorIndex, direction, group_setting, EVENT, path_finder, 
+        for direction in [-1, 1]:
+            IAT = IAT_df.getter(direction, floor)
+            if IAT:
+                self.IAT[direction] = IAT
+                self.source_proc[direction] = env.process(self.Source(env, direction))
+                if direction == 1:
+                    self.destination_dist[direction] = destination_dist[floorIndex+1:]/destination_dist[floorIndex+1:].sum()
+                elif direction == -1:
+                    self.destination_dist[direction] = destination_dist[:floorIndex]/destination_dist[:floorIndex].sum()
+            
+
+
+            self.queue[direction] = Queue(env, floorList, floor, floorIndex, direction, group_setting, EVENT, path_finder, 
                             queue_logger=queue_logger, customer_logger=customer_logger)
-        self.source_proc = env.process(self.Source(env))
 
         # global
         self.cid_gen = cid_gen
         self.customer_logger = customer_logger
 
 
-    def Source(self, env):
+    def Source(self, env, direction):
         while True:
             # 1. inter-arrival time based on given distribution
             t = -1
             while t < 0:
-                t = self.IAT['dist'].rvs(
-                    *self.IAT['params'][:-2], loc=self.IAT['params'][-2], scale=self.IAT['params'][-1], size=1)
+                t = self.IAT[direction]['dist'].rvs(
+                    *self.IAT[direction]['params'][:-2], loc=self.IAT[direction]['params'][-2], scale=self.IAT[direction]['params'][-1], size=1)
             yield self.env.timeout(t)
 
             # 2. number of people of arrival group
             number_of_arrival = np.random.randint(ELEV_CONFIG.ARRIVAL_MIN, ELEV_CONFIG.ARRIVAL_MAX)
 
-            customers = []
+            customers = defaultdict(list)
             for i in range(number_of_arrival):
                 
                 # 3. customer destination based on given posibility
-                customer = Customer(self.floor, self.group_setting, self.path_finder, self.cid_gen)
-                customer.select_tour(self.distination_dist, self.path_finder)
+                customer = Customer(self.floor, self.path_finder, self.cid_gen)
+                customer.select_tour(self.destination_dist[direction], self.path_finder)
 
                 if(not self.customer_logger is None):
                     self.customer_logger.log_appear(customer.cid, self.floor, customer.destination, float(self.env.now))
 
                 # 4. redirect to other elevator group
 
-                customers.append(customer)
+                next_direction = compare_direction(self.floor, customer.next_stop)
+                customers[next_direction].append(customer)
 
-            self.queue.arrival_event.succeed(value=customers)
-            self.queue.arrival_event = self.env.event()
+                # if self.floor == '1':
+                #     print(self.floor, customer.destination,  customer.next_stop, next_direction)
+                
+            for di in [-1, 1]:
+                self.queue[di].arrival_event.succeed(value=customers[di])
+                self.queue[di].arrival_event = self.env.event()

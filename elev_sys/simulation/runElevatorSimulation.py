@@ -15,7 +15,7 @@ from elev_sys.conf.NTUH_conf import ELEVATOR_GROUP
 
 import logging
 
-def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, 
+def runElevatorSimulation(env, IAT_D, destination_dist, floorList, group_setting, 
                           randomSeed, untilTime=4400, cid_gen=None, 
                           customer_logger:Customer_logger=None, 
                           elev_logger:Elev_logger=None, 
@@ -36,17 +36,11 @@ def runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting
 
 
     # process
-    floors_upward = [Floor(env, floorList, floorName, floorIndex, 1, IAT_D.getter('up', floorName), 
-                            distination_dist.loc[floorName][floorName.lstrip("0"):], group_setting, cid_gen, event, path_finder, 
-                            queue_logger=queue_logger, customer_logger=customer_logger) \
-                                for floorIndex, floorName in enumerate(floorList[:-1]) \
-                                if not IAT_D.getter('up', floorName) is None]
-    floors_downward = [Floor(env, floorList, floorName, floorIndex, -1, IAT_D.getter('down', floorName), 
-                            distination_dist.loc[floorName][:floorName.lstrip("0")], group_setting, cid_gen, event, path_finder, 
-                            queue_logger=queue_logger, customer_logger=customer_logger) \
-                                for floorIndex, floorName in enumerate(floorList[1:]) \
-                                if not IAT_D.getter('up', floorName) is None]
-    
+    floors = [Floor(env, floorList, floorName, floorIndex, IAT_D,
+                destination_dist.loc[floorName], group_setting, cid_gen, event, path_finder,
+                queue_logger=queue_logger, customer_logger=customer_logger) 
+                for floorIndex, floorName in enumerate(floorList)]
+
     elevator_group = Elevator_group(env, group_setting, floorList, event, 
                                     customer_logger=customer_logger, 
                                     elev_logger=elev_logger, 

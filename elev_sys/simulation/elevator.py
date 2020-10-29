@@ -4,14 +4,14 @@ import random
 import numpy as np
 from copy import deepcopy
 import logging
-
+from collections import defaultdict
 from elev_sys.conf.elevator_conf import ELEV_CONFIG
 from elev_sys.conf.log_conf import ELEVLOG_CONFIG
 from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.event import Event
 from elev_sys.simulation.logger import Elev_logger, Customer_logger, StopList_logger
 from elev_sys.animation.general import cal_floorNum
-from elev_sys.simulation.utils import cal_displacement, advance, floor_complement
+from elev_sys.simulation.utils import cal_displacement, advance, floor_complement, compare_direction
 
 
 class IndexError(Exception):
@@ -207,11 +207,11 @@ class Elevator:
 
     #     self.env.process(self.debug())
     # def debug(self):
-    #     if (self.elev_name == 'a1'):
+    #     if (self.elev_name == 'a4'):# or (self.elev_name == 'a2'):
     #         while True:
-    #             yield self.env.timeout(10)
-    #             if self.current_floor == '5':
-    #                 print(self.elev_name,self.direction, self.current_floor,'down',self.stop_list._list[-1][10:-4])
+    #             yield self.env.timeout(100)
+    #             print(self.elev_name, self.current_floor, self.direction, len(self.riders),self.stop_list._list[1])
+    #             print(self.elev_name, self.current_floor, self.direction, len(self.riders),self.stop_list._list[-1])
 
 
     def idle(self):
@@ -224,9 +224,9 @@ class Elevator:
             # first assignment
             mission = yield self.ASSIGN_EVENT
             # reactivate
-            self.ASSIGN_EVENT = self.env.event()
-            self.FINISH_EVENT.succeed()
-            self.FINISH_EVENT = self.env.event()
+            # self.ASSIGN_EVENT = self.env.event()
+            # self.FINISH_EVENT.succeed()
+            # self.FINISH_EVENT = self.env.event()
 
             logging.debug('[Assign_event - idle] Elev {}, stopList {}'.format(self.elev_name, self.stop_list))
             logging.info('[IDLE] Elev {}, Outer Call: {}'.format(self.elev_name, mission))
@@ -263,12 +263,15 @@ class Elevator:
             while not self.current_floor == nextTarget:
 
                 value = yield self.ASSIGN_EVENT | moving_proc
-
-                if self.ASSIGN_EVENT.triggered:
+                
+                if list(value.values())[0] != None:
                     mission = list(value.values())[0]
-                    self.ASSIGN_EVENT = self.env.event()
-                    self.FINISH_EVENT.succeed()
-                    self.FINISH_EVENT = self.env.event()
+                    direction, source = mission
+                    # print(mission)
+                
+                    # self.ASSIGN_EVENT = self.env.event()
+                    # self.FINISH_EVENT.succeed()
+                    # self.FINISH_EVENT = self.env.event()
                     
                     logging.info('[ONMISSION] Elev {}, New OuterCall {}'.format(
                         self.elev_name, mission))
@@ -301,7 +304,6 @@ class Elevator:
 
         try:
             while self.current_floor != destination:
-
                 # calculate traveling time for passing 1 floor
                 yield self.env.timeout(ELEV_CONFIG.ELEV_VELOCITY)
 
@@ -333,9 +335,10 @@ class Elevator:
 
         # 
         fulfill_customer = []
-        transfer_customers= []
+        transfer_customers= defaultdict(list)
         for i in range(len(self.riders)-1, -1, -1):
             # customer arrive destination
+
             if(self.riders[i].destination ==  self.current_floor):
 
                 customer = self.riders.pop(i)
@@ -345,9 +348,12 @@ class Elevator:
                     self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
             
             # customer wait to transfer
+            
             elif(self.riders[i].next_stop ==  self.current_floor):
                 customer = self.riders.pop(i)
-                transfer_customers.append(customer)
+                customer.enterQueue()
+                next_direction = compare_direction(self.current_floor, customer.next_stop)
+                transfer_customers[next_direction].append(customer)
 
                 if(not self.customer_logger is None):
                     self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
@@ -364,9 +370,10 @@ class Elevator:
         logging.info('[SERVING] Elev {}, {} Customers Leave'.format(self.elev_name, leaveNum))
 
         # transfer customer enter queue
-        if transfer_customers:
-            self.EVENT.ELEV_TRANSFER[self.direction][self.current_floor].succeed(value=transfer_customers)
-            self.EVENT.ELEV_TRANSFER[self.direction][self.current_floor] = self.env.event()
+        for di in [-1, 1]:
+            if transfer_customers[di]:
+                self.EVENT.ELEV_TRANSFER[di][self.current_floor].succeed(value=transfer_customers[di])
+                self.EVENT.ELEV_TRANSFER[di][self.current_floor] = self.env.event()
 
         # The common situation, not on the peak
         if not ((self.current_floor == self.available_floor[-1] and self.direction == 1) or \
