@@ -16,7 +16,7 @@ from elev_sys.conf.NTUH_conf import ELEVATOR_GROUP
 import logging
 
 def runElevatorSimulation(env, IAT_D, destination_dist, floorList, group_setting, 
-                          randomSeed, untilTime=4400, cid_gen=None, 
+                          randomSeed, path_finder, untilTime=4400, cid_gen=None, 
                           customer_logger:Customer_logger=None, 
                           elev_logger:Elev_logger=None, 
                           queue_logger:Queue_logger=None, 
@@ -32,7 +32,7 @@ def runElevatorSimulation(env, IAT_D, destination_dist, floorList, group_setting
 
     # initialization
     event = Event(env, floorList, sub_group_names, elevNameList)
-    path_finder = Path_finder(floorList, group_setting, fileName="./path_log.json")
+    # path_finder = Path_finder(floorList, group_setting, fileName="./path_log.json")
 
 
     # process
