@@ -32,7 +32,7 @@ def runElevatorSimulation(env, IAT_D, destination_dist, floorList, group_setting
 
     # initialization
     event = Event(env, floorList, sub_group_names, elevNameList)
-    # path_finder = Path_finder(floorList, group_setting, fileName="./path_log.json")
+    path_finder = Path_finder(floorList, group_setting, fileName="./path_log.json")
 
 
     # process
@@ -45,6 +45,7 @@ def runElevatorSimulation(env, IAT_D, destination_dist, floorList, group_setting
                                     customer_logger=customer_logger, 
                                     elev_logger=elev_logger, 
                                     stopList_logger=stopList_logger)
-
+    untilTime = 1800
+    print('run time',untilTime)
     env.run(until=untilTime)
     return elevator_group.get_statistics()

@@ -2,37 +2,23 @@ from queue import Queue
 import time
 import itertools
 
-floor_list = ["B4", "B3", "B2", "B1", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
-
-
-group_setting = {
-    'a': {
-        'available_floor': [
-            ['B4', 'B3', 'B1','1'], 
-            ['1', '2', '3', '4', '5'],
-            ['5', '6', '7', '8', '11', '12', '13', '14', '15'], 
-            ['B3', 'B2'],
-            ['8', '9', '10', '11']
-        ],
-    }
-}
 class Path_finder:
     def __init__(self, floorList, group_setting, fileName=None):
+        
+        # extract available floor list
         available_list = []
         for sub_group_name in group_setting.keys():
                 for available in group_setting[sub_group_name]['available_floor']:
-                    available_list.append(available)
+                    available_list.append([floor for floor in available if floor in floorList])
                     
         self.graph = self.adjacent(floorList, available_list)
         
         self.map = None
         if(fileName is None):
+            # compute all pair's all shortest paths
             self.map = { floor: {floor: [] for floor in floorList} for floor in floorList}
-            
-            for i in floorList[:3]:
-                for j in floorList[:3]:
-                    if i != j:
-                        self.add_route(i,j)
+            for pair in itertools.combinations(floorList,2):
+                self.add_route(*pair)
         else:
             with open(fileName, 'r') as file:
                 import json
@@ -84,18 +70,8 @@ class Path_finder:
             
             # length threshold
             if len(path) <= min_dist:
-                self.map[i][j].append( path )
-                
-                # add precedents
-#                 for i in range(length-1):
-#                     value = (path[i+1], length-i-2)
-#                     if value in self.map[path[i]][path[-1]]:
-#                         break
-#                     self.map[path[i]][path[-1]].append( value )
-
-# t0 = time.time()
-# a = Path_finder(floor_list, group_setting)
-# t1 = time.time()
-# print(t1-t0)
-# a.map
-
+               
+                # append path in bidirection
+                self.map[i][j].append( path.copy() )
+                path.reverse()
+                self.map[j][i].append( path.copy() )
