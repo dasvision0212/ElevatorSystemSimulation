@@ -409,6 +409,8 @@ class Elevator:
         # if no target, turn idle
         if nextTarget == None:
             logging.debug('[SERVING] Elev {}, nextTarget is None, {}'.format(self.elev_name, nextTarget))
+            if isWasted:
+                self.wasteStopNum += 1
             return
         
         # update direction
