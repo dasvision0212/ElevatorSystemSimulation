@@ -6,10 +6,12 @@ class Path_finder:
     def __init__(self, floorList, group_setting, fileName=None):
         
         # extract available floor list
+        self.elevNum = 0
         available_list = []
         for sub_group_name in group_setting.keys():
-                for available in group_setting[sub_group_name]['available_floor']:
-                    available_list.append([floor for floor in available if floor in floorList])
+            self.elevNum = self.elevNum + len(group_setting[sub_group_name]['available_floor'])
+            for available in group_setting[sub_group_name]['available_floor']:
+                available_list.append([floor for floor in available if floor in floorList])
                     
         self.graph = self.adjacent(floorList, available_list)
         
@@ -40,7 +42,7 @@ class Path_finder:
         
         if s == d:
             path_list.append(path.copy())
-        else:
+        elif len(path) < self.elevNum + 1:
             for i in self.graph[s]: 
                 if visited[i]== False: 
                     self.find_all_path_recursive(i, d, visited, path, path_list)
