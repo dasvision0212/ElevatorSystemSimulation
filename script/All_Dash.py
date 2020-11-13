@@ -1,21 +1,26 @@
 import dash
 import dash_html_components as html
 import dash_core_components as dcc
-from dash.dependencies import Input, Output
-import math
-import plotly.express as px
 import pandas as pd
-from random import randint
-import numpy as np
-import sys
+import dash_table
+import plotly.express as px
+
+from dash.dependencies import Input, Output
 
 
+### problem
+### statistic => encoding, "研究大樓"為亂碼
 ###########  import data  #############
-data = pd.read_csv('../data/floor_count.csv')
+statistic_data = pd.read_csv('../data/statistic_df.csv', header = 0)#,encoding= 'unicode_escape'
+ranked_data = pd.read_csv('../data/ranked_df.csv', header = 0)
 
-locationList = data.location.unique()
-elevSup_NumPairList = data.elevator_subgroup_number.unique()
-floor_policyList = data.floor_policy.unique()
+sta_locationList = statistic_data.location.unique()
+sta_policyList = statistic_data.policy.unique()
+sta_dataType = statistic_data.dataType.unique()
+
+for i in ranked_data.columns[2:]:
+    ranked_data[i] = [float(format(f, '.2f').rstrip('0').rstrip('.')) for f in ranked_data[i]]
+
 ###########  end import data  #############
 
 
@@ -24,62 +29,73 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = html.Div([
-    dcc.Tabs(id="tabs", value='tab-1', children=[
-        dcc.Tab(label='Single policy statistic', value='tab-1'),
-        dcc.Tab(label='Multiple policy comparison', value='tab-2',children=[
+    dcc.Tabs(id='tabs-example', value='tab-2', children=[
+        dcc.Tab(label='Single policy statistic', value='tab-1',children=[
             html.Div([
                 html.H2(children='stop count & floor count'),
                 html.Div([
                     html.Label('電梯組'),
                     dcc.Dropdown(
-                        id="tab2-location",
-                        options=[{'label': i, 'value': i} for i in locationList],
+                        id="location",
+                        options=[{'label': i, 'value': i} for i in sta_locationList],
                         value='研究大樓'
                     ),
                     html.Label('電梯分層政策'),
                     dcc.Dropdown(
-                            id='tab2-floor_policy',
-                            options=[{'label':i, 'value':i} for i in floor_policyList],
-                            value="all_feasible"
+                            id='policy',
+                            options=[{'label':i, 'value':i} for i in sta_policyList],
+                            value="v2-all_available"
                     )
                 ],style={'width': '15%','display': 'inline-block'}),
                 dcc.Graph(
-                    id="tab2-GraphMeasurement"
+                    id="GraphMeasurement"
                 )
-                ])
+            ])
         ]),
-    ]),
-    html.Div(id='tabs-content')
+        dcc.Tab(label='Multiple policy comparison', value='tab-2')
+    ]),html.Div(id='tabs-example-content')
 ])
 
+@app.callback(Output('tabs-example-content', 'children'),Input('tabs-example', 'value'))
+
+# def update_output_div(tab, location, policy):
+#     if tab == 'tab-1':
+#         return 'children'
+#     elif tab == 'tab-2':
+#         return 'figure'
 
 def render_content(tab):
-    if tab == 'tab-1':
-        return html.Div([
-            html.H3('Tab content 1')
-        ])
- 
+    if tab == 'tab-2':
+        return dash_table.DataTable(
+                    id='table',
+                    columns=[{"name": i, "id": i} for i in ranked_data.columns],
+                    data=ranked_data.to_dict('records'),
+                    style_cell={'position': 'relative','top':'10%', 'margin':'10% 0 0 0'},
+                    style_header={'fontWeight':'bold'},
+                    style_cell_conditional=[
+                        {
+                            'if':{'column_id':i},
+                            'textAlign': 'left'
+                        } for i in ['Unnamed: 0','policy']
+                    ],
+                    style_as_list_view=True,
+                )
+        
 
+@app.callback(Output('GraphMeasurement', 'figure'),
+            [ Input('location', 'value'),
+              Input('policy', 'value')])
 
-@app.callback(
-    Output('GraphMeasurement','figure'),
-    [Input('tab2-location','value'),
-    Input('tab2-floor_policy','value'),
-    
-    ]
-)
-
-
-def update_graph(location, floor_policy):
-    df = data[(data["location"] == location) & (data["floor_policy"] == floor_policy)]
+def update_graph(location, policy):
+    df = statistic_data[(statistic_data["location"] == location) & (statistic_data["policy"] == policy)]
     if len(df) == 0:
         pass
     else:
-        fig = px.histogram(df, x= "floor_count", title=location, facet_col="count_type", color="count_type")
+        fig = px.histogram(df, x= "data", title=location, facet_col="dataType", color="dataType")
     fig.update_layout(title_text=location)
 
     return fig
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False,port=8052)
+    app.run_server(debug=True, port=8052)
