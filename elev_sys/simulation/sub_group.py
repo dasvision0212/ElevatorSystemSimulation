@@ -3,7 +3,7 @@ import pandas as pd
 import random
 
 from elev_sys.conf.elevator_conf import ELEV_CONFIG
-from elev_sys.simulation.elevator import Elevator
+from elev_sys.simulation.elevator import Elevator, StopList
 from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.logger import (Customer_logger, Elev_logger, StopList_logger)
 from elev_sys.simulation.utils import cal_displacement
@@ -16,31 +16,41 @@ class SubGroup:
         self.EVENT = EVENT
         
         self.sub_group_name = sub_group_name
+        self.floorList = floorList
+        self._list = {
+             1: [0] * (len(floorList)),
+            -1: [0] * (len(floorList))
+        }
 
         self.elevators = dict()
         for i in range(len(sub_group_setting["available_floor"])):
             elev_name = sub_group_name + str(i)
-            self.elevators[elev_name] = Elevator(env, elev_name, floorList, sub_group_setting["available_floor"][i], self.EVENT, 
+            self.elevators[elev_name] = Elevator(env, elev_name, floorList, sub_group_setting["available_floor"][i], self._list, self.EVENT, 
                                                     customer_logger=customer_logger, 
                                                     elev_logger=elev_logger, 
                                                     stopList_logger=stopList_logger)
+        
+
         self.env.process(self.assignCalls())
 
 
     def assignCalls(self):
         while True:
             mission = yield self.EVENT.CALL[self.sub_group_name]
-            # self.EVENT.CALL_RECV[]
+            
+            # handle repeated
+            direction, destination = mission
+            
+            if self._list[direction][self.floorList.index(destination)] == 0:
+                self._list[direction][self.floorList.index(destination)] = 1
 
-            # decide candidate given the call's floor and direction
-            candidate = self.bestCandidate(mission)
-            direction, source = mission
-            # if (source == '8') & (direction == 1):
-            #     print(candidate,'99999999999999999999')
-            # pass call over to elevator
-            self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
-            self.elevators[candidate].ASSIGN_EVENT = self.env.event() 
-            # yield self.elevators[candidate].FINISH_EVENT
+                # decide candidate given the call's floor and direction
+                candidate = self.bestCandidate(mission)
+                # if candidate == 'a0':
+                #     print(candidate, mission, self.env.now)
+                # pass call over to elevator
+                self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
+                self.elevators[candidate].ASSIGN_EVENT = self.env.event()
 
             logging.info('[AssignCalls] Succeed')
 
@@ -54,7 +64,6 @@ class SubGroup:
             bestElevator = self._assign_v3(mission)
         if(ELEV_CONFIG.VERSION == 4):
             bestElevator = self._assign_v4(mission)
-
 
         logging.warning("best: {}".format(bestElevator))
         logging.warning("---------------------------------------------")
@@ -120,9 +129,16 @@ class SubGroup:
             elif isSameDirection & (not isCustomerAhead):
                 dispatching_cost  = SAME_DIR_BACK_BIAS + cal_displacement(elevator.current_floor, source) * -elevator.direction
             
+
+            # 分層+連控 (!!!!!!!)
             if (source == elevator.available_floor[-1] and direction == 1) or \
                (source == elevator.available_floor[0] and direction == -1):
                 dispatching_cost += 50
+
+            # full condition
+            
+            # if elevator.capacity - len(elevator.riders) < 1:
+            #     dispatching_cost += 100
 
             if(min_dispatching_cost is None) or (dispatching_cost < min_dispatching_cost):
                 bestElevator = elevator.elev_name
