@@ -45,7 +45,7 @@ def runElevatorSimulation(env, IAT_D, destination_dist, floorList, group_setting
                                     customer_logger=customer_logger, 
                                     elev_logger=elev_logger, 
                                     stopList_logger=stopList_logger)
-    untilTime = 1800
+    untilTime = 3600
     print('run time',untilTime)
     env.run(until=untilTime)
     return elevator_group.get_statistics()
