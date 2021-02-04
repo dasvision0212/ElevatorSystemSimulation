@@ -1,14 +1,17 @@
 from os.path import join as joinPath
-import logging
+
 import sys
+import json
+import simpy
+import logging
+import pandas as pd
 sys.path.append('../')
 
 from elev_sys.conf.NTUH_conf import ELEVATOR_GROUP, BUILDING_FLOOR
 from elev_sys.simulation.IAT_Distribution import IAT_Distribution
 from elev_sys import *
-import simpy
-import pandas as pd
-import json
+
+
 
 
 if(__name__ == "__main__"):
