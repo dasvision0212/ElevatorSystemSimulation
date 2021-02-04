@@ -58,28 +58,22 @@ app.layout = html.Div([
 
 @app.callback(Output('tabs-example-content', 'children'),Input('tabs-example', 'value'))
 
-# def update_output_div(tab, location, policy):
-#     if tab == 'tab-1':
-#         return 'children'
-#     elif tab == 'tab-2':
-#         return 'figure'
+
+
+
+# 'whiteSpace': 'normal',
+# 'max_width':'15px',
 
 def render_content(tab):
     if tab == 'tab-2':
-        return dash_table.DataTable(
-                    id='table',
-                    columns=[{"name": i, "id": i} for i in ranked_data.columns],
-                    data=ranked_data.to_dict('records'),
-                    style_cell={'position': 'relative','top':'10%', 'margin':'10% 0 0 0'},
-                    style_header={'fontWeight':'bold'},
-                    style_cell_conditional=[
-                        {
-                            'if':{'column_id':i},
-                            'textAlign': 'left'
-                        } for i in ['Unnamed: 0','policy']
-                    ],
-                    style_as_list_view=True,
-                )
+        return html.Div([
+                    dash_table.DataTable(
+                        id='table',
+                        columns=[{"name": i, "id": i} for i in ranked_data.columns],
+                        style_cell={},
+                        data=ranked_data.to_dict('records')
+                    )
+            ],style={'margin':'5% 10% 0 10%'})
         
 
 @app.callback(Output('GraphMeasurement', 'figure'),

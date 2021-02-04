@@ -19,7 +19,7 @@ if(__name__ == "__main__"):
 
     # config parameter
     buildingName = ["Research", "NHB", "SC", "SHB"]      # usable building
-    location = ["研究大樓", "北棟病床", "南棟客梯", "南棟病床"]
+    location = ["北棟病床", "研究大樓", "南棟客梯", "南棟病床"]
     untilTime = 14400
     path = '../data/BestFitDistribution.csv'
     IAT_D_section = 2                                    # inter-arrival time, time section
@@ -29,15 +29,15 @@ if(__name__ == "__main__"):
     group_setting = {
         'a': {
             'available_floor': [
-                ["B4", "B2", "1", "2", "4", "6", "8", "10", "12", "14"],
-                ["B3", "B1", "1", "3",  "5", "7", "9", "11",  "13", "15"],
+                ["B4", "B3", "B2", "B1", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
+                ["B4", "B3", "B2", "B1", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
                 ["B4", "B3", "B2", "B1", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
             ],
         }
     }
 
-    if os.path.exists("../data/simulation_multipleTimes.csv"):
-        os.remove("../data/simulation_multipleTimes.csv")
+    # if os.path.exists("../data/simulation_multipleTimes.csv"):
+    #     os.remove("../data/simulation_multipleTimes.csv")
 
     for buildingI in range(1):                          # every building
 
@@ -45,97 +45,105 @@ if(__name__ == "__main__"):
         building_name = location[buildingI]
         floorList = BUILDING_FLOOR[building_name]
         IAT_D = IAT_Distribution(path, building_name, IAT_D_section)
+        print(IAT_D)
+        break
         distination_dist = pd.read_csv('../data/FloorRatio_'+buildingName[0]+'.csv').iloc[:, 1:].set_index(
                     'from').iloc[0:len(floorList)+1, 0:len(floorList)+1]
 
-        # for sep in range(1, len(floorList)-1):            # generate policy
-        #     group_setting['a']['available_floor'] = []
-        #     if(sep < floorList.index("1")):
-        #         temp = floorList[:sep+1].copy()
-        #         temp.append("1")
-        #         group_setting['a']['available_floor'].append(temp)
-        #         group_setting['a']['available_floor'].append(floorList[sep+1:])
-        #     elif(i == floorList.index("1")):
-        #         group_setting['a']['available_floor'].append(floorList[:sep+1])
-        #         group_setting['a']['available_floor'].append(floorList[sep+1:])
-        #     else:
-        #         temp = floorList[sep+1:].copy()
-        #         temp.insert(0,"1")
-        #         group_setting['a']['available_floor'].append(floorList[:sep+1])
-        #         group_setting['a']['available_floor'].append(temp)
+        for sep in range(1, len(floorList)-1):            # generate policy
+            group_setting['a']['available_floor'] = []
+            if(sep < floorList.index("1")):
+                temp = floorList[:sep+1].copy()
+                temp.append("1")
+                group_setting['a']['available_floor'].append(temp)
+                group_setting['a']['available_floor'].append(floorList[sep+1:])
+            elif(i == floorList.index("1")):
+                group_setting['a']['available_floor'].append(floorList[:sep+1])
+                group_setting['a']['available_floor'].append(floorList[sep+1:])
+            else:
+                temp = floorList[sep+1:].copy()
+                temp.insert(0,"1")
+                group_setting['a']['available_floor'].append(floorList[:sep+1])
+                group_setting['a']['available_floor'].append(temp)
 
-        df = []                                     # output statistic
+            df = []                                     # output statistic
 
-        path_finder = Path_finder(floorList, group_setting, fileName="path_log.json")
-        for i in range(100):                          # times of simulation
-        
-            # setting parameter
-            randomSeed = int(random.rand(1)*10000)
-            env = simpy.Environment()
-            cid_gen = cid_generator()
-
-            # Global
-            customer_logger = Customer_logger(untilTime, status=True)
-            elev_logger = Elev_logger(status=True)
-            queue_logger = Queue_logger(status=True)
-            stopList_logger = StopList_logger(status=True)
-
-            returnStatistic = runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, 
-                                                    randomSeed, path_finder,2500, 
-                                                    cid_gen=cid_gen,
-                                                    customer_logger=customer_logger,
-                                                    elev_logger=elev_logger,
-                                                    queue_logger=queue_logger,
-                                                    stopList_logger=stopList_logger)
-
-            result = customer_logger.df
+            path_finder = Path_finder(floorList, group_setting, fileName="path_log.json")
+            for i in range(100):                          # times of simulation
             
-            # waiting & journey time df recording
-            df.append({
-                    'location': building_name
-                    ,'sep_floor': 'odd-even-division'
-                    ,'dataType':'waiting_time'
-                    ,'data': result['total_waiting_time'].mean()
-            })
-            df.append({
-                    'location': building_name
-                    ,'sep_floor': 'odd-even-division'
-                    ,'dataType':'journey_time'
-                    ,'data': result['journey_time'].mean()
-            })
+                # setting parameter
+                randomSeed = int(random.rand(1)*10000)
+                env = simpy.Environment()
+                cid_gen = cid_generator()
 
-            # elevator stop & floor_count df recording
-            ele_log_result = elev_logger.df
-            ele_result_floor = ele_log_result.loc[ele_log_result["action"]==1]
-            ele_result_stop = ele_log_result.loc[ele_log_result["action"]==0]
+                # Global
+                customer_logger = Customer_logger(untilTime, status=True)
+                elev_logger = Elev_logger(status=True)
+                queue_logger = Queue_logger(status=True)
+                stopList_logger = StopList_logger(status=True)
 
-            df.append({
-                    'location': building_name
-                    ,'sep_floor': 'odd-even-division'
-                    ,'dataType': "count_floor"
-                    ,'data':len(ele_result_floor)
-            })
-            df.append({
-                    'location': building_name
-                    ,'sep_floor': 'odd-even-division'
-                    ,'dataType': "count_stop"
-                    ,'data': len(ele_result_stop)
-            })
+                returnStatistic = runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, 
+                                                        randomSeed, path_finder,2500, 
+                                                        cid_gen=cid_gen,
+                                                        customer_logger=customer_logger,
+                                                        elev_logger=elev_logger,
+                                                        queue_logger=queue_logger,
+                                                        stopList_logger=stopList_logger)
+
+                result = customer_logger.df
+                
+                # waiting & journey time df recording
+                df.append({
+                        'location': building_name
+                        ,'sep_floor': 'all_available'
+                        ,'dataType':'waiting_time'
+                        ,'data': result['total_waiting_time'].mean()
+                })
+                df.append({
+                        'location': building_name
+                        ,'sep_floor': 'all_available'
+                        ,'dataType':'journey_time'
+                        ,'data': result['journey_time'].mean()
+                })
+
+                # elevator stop & floor_count df recording
+                ele_log_result = elev_logger.df
+                ele_result_floor = ele_log_result.loc[ele_log_result["action"]==1]
+                ele_result_stop = ele_log_result.loc[ele_log_result["action"]==0]
+
+                df.append({
+                        'location': building_name
+                        ,'sep_floor': 'all_available'
+                        ,'dataType': "count_floor"
+                        ,'data':len(ele_result_floor)
+                })
+                df.append({
+                        'location': building_name
+                        ,'sep_floor': 'all_available'
+                        ,'dataType': "count_stop"
+                        ,'data': len(ele_result_stop)
+                })
 
 
-            # ineffective door open
-            df.append({
-                    'location': building_name
-                    ,'sep_floor': 'odd-even-division'
-                    ,'dataType': "count_wasted"
-                    ,'data': returnStatistic['waste_stop_num'].sum()
-            })
+                # ineffective door open
+                df.append({
+                        'location': building_name
+                        ,'sep_floor': 'all_available'
+                        ,'dataType': "count_wasted"
+                        ,'data': returnStatistic['waste_stop_num'].sum()
+                })
 
-                # output n times record in one policy at once
-        df = pd.DataFrame(df)
-        df.reset_index(drop=True)
-        df.to_csv('../data/simulation_multipleTimes.csv', mode = 'a', header = False)
+                    # output n times record in one policy at once
+            df = pd.DataFrame(df)
+            df.reset_index(drop=True)
+            df.to_csv('../data/NHB_all_ava.csv', mode = 'a', header = False)
 
     # add header & output
-    statistic_df = pd.read_csv('../data/simulation_multipleTimes.csv',names=['location',  'sep_floor', 'dataType', 'data'])
-    statistic_df.to_csv('../data/simulation_multipleTimes.csv')
+    # statistic_df = pd.read_csv('../data/simulation_multipleTimes.csv',names=['location',  'sep_floor', 'dataType', 'data'])
+    # statistic_df.to_csv('../data/simulation_multipleTimes.csv')
+    statistic_df = pd.read_csv('../data/NHB_all_ava.csv',names=['location',  'sep_floor', 'dataType', 'data'])
+    statistic_df.to_csv('../data/NHB_all_ava.csv')
+
+
+
+

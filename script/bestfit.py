@@ -71,7 +71,27 @@ def best_fit_distribution(data, bins=15, ax=None):
             pass
 
     return (best_distribution.name, best_params)
-path = '../data/北棟客梯_outer_diff_floor_01_down'
-time = pd.read_csv(path).iloc[:, 1:]['time']
-diff = time_difference(time)
-best_fit_name, best_fit_params = best_fit_distribution(diff, 15)
+
+def output_best_fit_df(data_path):
+    Community_pd = pd.read_json(data_path)
+    Community_pd['time'] = Community_pd['result'].apply(lambda x:x['timestamp'])
+    Community_pd['from'] = Community_pd['result'].apply(lambda x:x['from'])
+    df = pd.DataFrame(columns=['floor','best_fit_name','best_fit_params'])
+
+    for i,row in Community_pd.groupby('from'):
+        diff = time_difference(row['time'])
+        best_fit_name, best_fit_params = best_fit_distribution(diff, 15)
+        new_row = {'floor':i,'best_fit_name':best_fit_name,'best_fit_params':best_fit_params}
+        df = df.append(new_row,ignore_index='True')
+    
+    df.to_csv(data_path[:-5]+'_BestFit.csv')
+
+
+# path = '../data/北棟客梯_outer_diff_floor_01_down'
+# time = pd.read_csv(path).iloc[:, 1:]['time']
+# diff = time_difference(time)
+# best_fit_name, best_fit_params = best_fit_distribution(diff, 15)
+
+# output every df['best_fit_name','best_fit_params'] for a field
+data_path = '../data/Field3_Hotel.json'
+output_best_fit_df(data_path)
