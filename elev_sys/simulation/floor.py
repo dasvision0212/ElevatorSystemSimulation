@@ -146,8 +146,24 @@ class Queue:
         while True:
 
             # new customer | transfer customer
-            customers = yield self.arrival_event | self.EVENT.ELEV_TRANSFER[self.direction][self.floor]
-            customers = list(customers.values())[0] # Unpack simPy comdition variable
+            resv_customers = yield self.arrival_event | self.EVENT.ELEV_TRANSFER[self.direction][self.floor]
+            customers = []
+                        
+            for resv_customer in resv_customers.values():
+                customers = customers + resv_customer
+
+            if len(customers) != 0 and "transfer" == customers[0]: #!!!
+                # print(customers)
+                customers.pop(0)
+                customers = customers[0]
+                # print(customers)
+
+            # if self.floor == "1":#!!!
+            #     print("[{}] queue.inflow on floor 1".format(self.env.now))
+            #     # pass
+            #     print("hihi", vars(customers[0]))
+                
+
             # if (self.floor == '1') and (self.direction == 1):
             #     print('number',len(customers))
             logging.info('[INFLOW] Outer Call {} Floor {} '.format(
@@ -165,8 +181,7 @@ class Queue:
     
 
     def outflow(self):
-        while True:
-
+        while True:    
             # elevator arrival
             space, elev_name = yield self.EVENT.ELEV_ARRIVAL[self.direction][self.floor]
 
@@ -202,6 +217,9 @@ class Queue:
                 self.queue_logger.log_outflow(len(self.queue_array), self.floorIndex, self.direction, float(self.env.now))
 
             # customers on board
+            if self.floor == "B4" and self.direction == 1:
+                print("[{}] queue.outflow".format(self.env.now))
+                print(vars(riders[0]))
             self.EVENT.ELEV_LEAVE[elev_name].succeed(value=riders)
             self.EVENT.ELEV_LEAVE[elev_name] = self.env.event()
 
@@ -272,9 +290,7 @@ class Floor:
                 next_direction = compare_direction(self.floor, customer.next_stop)
                 customers[next_direction].append(customer)
 
-                # if self.floor == '1':
-                #     print(self.floor, customer.destination,  customer.next_stop, next_direction)
                 
-            for di in [-1, 1]:
-                self.queue[di].arrival_event.succeed(value=customers[di])
-                self.queue[di].arrival_event = self.env.event()
+            for dir, customer_value in customers.items(): #修正過
+                self.queue[dir].arrival_event.succeed(value=customer_value)
+                self.queue[dir].arrival_event = self.env.event()

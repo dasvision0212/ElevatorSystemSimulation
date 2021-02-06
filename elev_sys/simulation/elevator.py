@@ -385,8 +385,12 @@ class Elevator:
 
         # transfer customer enter queue
         for di in [-1, 1]:
-            if transfer_customers[di]:
-                self.EVENT.ELEV_TRANSFER[di][self.current_floor].succeed(value=transfer_customers[di])
+            if len(transfer_customers[di]) > 0:
+                if self.current_floor == "1" and self.elev_name == "a0":
+                    print("[{}] transfer on floor 1".format(self.env.now[0]))
+
+
+                self.EVENT.ELEV_TRANSFER[di][self.current_floor].succeed(value=["transfer", transfer_customers[di]])
                 self.EVENT.ELEV_TRANSFER[di][self.current_floor] = self.env.event()
         
         
@@ -445,6 +449,12 @@ class Elevator:
             
             # same target floor means change direction
             else:
+                if self.elev_name == "a0":
+                    print(self.current_floor)
+
+                if self.current_floor == "B4":
+                    print("[{}] change dir".format(self.env.now[0]))
+
                 # make a turn
                 self.direction = -1*self.direction
                 self.stop_list.pop(self)
@@ -452,9 +462,15 @@ class Elevator:
 
 ## 開門時間
                 # customers on board
-                
+                # !!!
+                if self.current_floor == "B4" and self.direction == 1:
+                    print("[{}] serving starts".format(self.env.now[0]))
+
                 self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor].succeed(value=(self.capacity-len(self.riders), self.elev_name))
                 self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor] = self.env.event()
+
+                if self.current_floor == "B4" and self.direction == 1:
+                    print("[{}] serving ends".format(self.env.now[0]))
 
                 # new customers
                 riders = yield self.EVENT.ELEV_LEAVE[self.elev_name]
