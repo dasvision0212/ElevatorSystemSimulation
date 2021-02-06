@@ -13,7 +13,6 @@ from elev_sys.simulation.logger import Elev_logger, Customer_logger, StopList_lo
 from elev_sys.animation.general import cal_floorNum
 from elev_sys.simulation.utils import cal_displacement, advance, floor_complement, compare_direction
 
-
 class IndexError(Exception):
     """Exception : Wrong Index."""
     pass
@@ -185,7 +184,8 @@ class Elevator:
         self.floorList = floorList
         self.available_floor = available_floor
         self.sub_group = sub_group
-
+        self.isServing = False
+        
         # schedule list
         self.stop_list = StopList(floorList, available_floor, stopList_logger)
 
@@ -335,6 +335,7 @@ class Elevator:
         isWasted = True
     
         # Count Elevator Stop
+        self.isServing = True
         self.stopNum += 1
 
 
@@ -351,22 +352,26 @@ class Elevator:
         # 
         fulfill_customer = []
         transfer_customers= defaultdict(list)
+
         for i in range(len(self.riders)-1, -1, -1):
             # customer arrive destination
 
             if(self.riders[i].destination ==  self.current_floor):
-
+                
                 customer = self.riders.pop(i)
+                # customer.enterQueue()
                 fulfill_customer.append(customer)
 
                 if(not self.customer_logger is None):
                     self.customer_logger.log_get_off(customer.cid, self.current_floor, float(self.env.now))
             
             # customer wait to transfer
-            
-            elif(self.riders[i].next_stop ==  self.current_floor):
+            elif(self.current_floor== self.riders[i].next_stop):
                 customer = self.riders.pop(i)
+                print('Floor:', self.current_floor, 'Custnext:', customer.next_stop)
                 customer.enterQueue()
+                print('Floor:', self.current_floor, 'Customer:', customer.path[customer._current_stop_i])
+                
                 next_direction = compare_direction(self.current_floor, customer.next_stop)
                 transfer_customers[next_direction].append(customer)
 
@@ -427,10 +432,6 @@ class Elevator:
         # if no target, turn idle
         if nextTarget == None:
             logging.debug('[SERVING] Elev {}, nextTarget is None, {}'.format(self.elev_name, nextTarget))
-            if isWasted:
-                self.wasteStopNum += 1
-            yield self.env.timeout(ELEV_CONFIG.ELEV_CLOSE)
-            return
         
         # update direction
         else:
@@ -478,3 +479,4 @@ class Elevator:
             self.wasteStopNum += 1
         # Door Close
         yield self.env.timeout(ELEV_CONFIG.ELEV_CLOSE)
+        self.isServing = False

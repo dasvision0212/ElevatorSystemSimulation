@@ -4,10 +4,11 @@ import sys
 import json
 import simpy
 import logging
+import random
+import numpy as np
 import pandas as pd
 sys.path.append('../')
 
-from elev_sys.conf.NTUH_conf import ELEVATOR_GROUP, BUILDING_FLOOR
 from elev_sys.simulation.IAT_Distribution import IAT_Distribution
 from elev_sys import *
 
@@ -16,44 +17,35 @@ from elev_sys import *
 
 if(__name__ == "__main__"):
 
-    # simulation related
+    # Simulation Setting
     logging.basicConfig(level=logging.CRITICAL)
-    untilTime = 3600 * 4
-
-    # env variable
-    Ratio_byFloor = {"北棟病床": '../data/FloorRatio_NHB.csv',
-                     "研究大樓": '../data/FloorRatio_Research.csv',
-                     "南棟客梯": '../data/FloorRatio_SC.csv',
-                     "南棟病床": '../data/FloorRatio_SHB.csv'}
-
-    location = ["北棟病床", "研究大樓", "南棟客梯", "南棟病床"][0]
-    timeSection = 2
-    floorList = BUILDING_FLOOR[location]
-
-    # distribution
-    Dist_InterArrival_file = '../data/BestFitDistribution.csv'
-    IAT_D = IAT_Distribution(Dist_InterArrival_file, location, timeSection)
-    distination_dist = pd.read_csv(Ratio_byFloor[location]).iloc[:, 1:].set_index(
-        'from').iloc[0:len(floorList)+1, 0:len(floorList)+1]
-    # distination_dist = distination_dist.drop(['B2'], axis=1).drop(['B2'], axis=0)
-
-    # sub_group_setting
-    group_setting = {
-        'a': {
-            'available_floor': [
-                ['B4', 'B3', 'B1','1'], 
-                ['1', '2', '3', '4', '5'],
-                ['5', '6', '7', '8', '11', '12', '13', '14', '15'], 
-                ['B3', 'B2'],
-                ['8', '9', '10', '11']
-            ],
-        }
-    }
+    untilTime = 3600
 
     # Enviornment Variable
     env = simpy.Environment()
     cid_gen = cid_generator()
+
+    # Random State
     randomSeed = 1234
+    np.random.seed(seed = randomSeed); random.seed(randomSeed)
+
+    # Building Setting
+    floorList = ["B4", "B3", "B2", "B1", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
+
+    # Customer statistic
+    IAT_D = IAT_Distribution('../data/BestFitDistribution.csv', '北棟病床', 2)
+    distination_dist = pd.read_csv('../data/FloorRatio_NHB.csv').iloc[:, 1:].set_index('from').iloc[0:len(floorList)+1, 0:len(floorList)+1]
+
+    # Sub Group Setting
+    group_setting = {
+        'a': {
+            'available_floor': [
+                ['B4', 'B2', 'B3', 'B1', '1'],
+                ['1','2', '3', '4', '5','6', '7'],
+                ['7','8','9','10', '11', '12', '13', '14', '15']
+            ],
+        },
+    }
 
     # Define Logger
     customer_logger = Customer_logger(untilTime, status=True)
@@ -62,7 +54,8 @@ if(__name__ == "__main__"):
     stopList_logger = StopList_logger(status=True)
 
     # Simulation
-    statistics = runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, randomSeed, 14000,
+    statistics = runElevatorSimulation(env, IAT_D, distination_dist, floorList, group_setting, randomSeed,
+                          untilTime=untilTime,
                           cid_gen=cid_gen,
                           customer_logger=customer_logger,
                           elev_logger=elev_logger,
@@ -93,7 +86,7 @@ if(__name__ == "__main__"):
         pass
 
     background = dict()
-    background["buildingName"] = location
+    background["buildingName"] = '北棟病床'
     background["floorList"] = floorList
     background["sub_group_setting"] = group_setting
 

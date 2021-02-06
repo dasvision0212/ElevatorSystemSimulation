@@ -2,6 +2,7 @@ from sys import path
 from elev_sys.simulation import sub_group
 import simpy
 import numpy as np
+import random
 import pandas as pd
 import scipy.stats as st
 from collections import namedtuple, defaultdict
@@ -38,7 +39,6 @@ class Customer:
 
         self.path = None
         self._current_stop_i = 0
-
     @property
     def next_stop(self):
         return self.path[self._current_stop_i + 1]
@@ -46,10 +46,12 @@ class Customer:
     def select_tour(self, destination_dist, path_finder):
         self.destination = np.random.choice(destination_dist.index, p=destination_dist)
         path_candidate = path_finder.map[self.source][self.destination]
-        decision = 0
-        if(len(path_candidate)-1 != 0): 
-            decision = np.random.randint(0, len(path_candidate)-1)
-        self.path = path_candidate[decision]
+        # decision = 0
+        # if(len(path_candidate) > 1): 
+        #     decision = np.random.randint(0, len(path_candidate)-1)
+        # self.path = path_candidate[decision]
+        self.path = random.choice(path_candidate)
+        print(self.destination, self.path)
 
 
     def enterQueue(self):
@@ -85,62 +87,40 @@ class Queue:
     #             yield self.env.timeout(100)
     #             print(self.env.now,'Floor',self.floor, 'direction',self.direction, 'num:', len(self.queue_array))
                 
-    
-    def do_subgroup_contain(self, subGroupName, floor):
-        available_floor = self.group_setting[subGroupName]["available_floor"]
-        for available in available_floor:
-            if(floor in available):
-                return True
-
-        return False
 
 
     def rigisterCall(self):
         # Call registration when customer arrive
 
-        # subGroup_candidate_combination = list()
-        # for subGroupNum in range(len(self.group_setting.keys()), 0, -1):
-        #     subGroup_candidate_combination = subGroup_candidate_combination + \
-        #                                 [frozenset(subGroup_combination) for subGroup_combination in\
-        #                                  itertools.combinations(self.group_setting.keys(), subGroupNum)]
+        for sub_group_name, sub_group_setting in self.group_setting.items():
+            isPushed = False
+            for customer in self.queue_array:
+
+                for available_floor in sub_group_setting["available_floor"]:
+                    isPushed = self.servable(customer, available_floor)
+                    if isPushed:
+                        mission = Mission(direction=self.direction, destination=self.floor)
+                        self.EVENT.CALL[sub_group_name].succeed(value=mission)
+                        self.EVENT.CALL[sub_group_name] = self.env.event()
+                        break
+                
+                if isPushed:
+                    break
 
 
-        unCalled_subGroup_name = set([subGroupName for subGroupName in self.group_setting])
-        for customer in self.queue_array:
-            if(unCalled_subGroup_name):
-                next_stop = customer.next_stop
-
-                if(not next_stop is None):
-                    called_subGroup = set()
-                    for subGroupName in unCalled_subGroup_name:
-                        if(self.do_subgroup_contain(subGroupName, next_stop)):
-                            mission = Mission(direction=self.direction, destination=self.floor)
-                            self.EVENT.CALL[subGroupName].succeed(value=mission)
-                            self.EVENT.CALL[subGroupName] = self.env.event()
-                            called_subGroup.update([subGroupName])
-                    unCalled_subGroup_name = unCalled_subGroup_name.difference(called_subGroup)
-
-        # for customer in self.queue_array:
-        #     for sub_group_name, sub_group_setting in self.group_setting.items():
-        #         # each elevator
-        #         for available_floor in sub_group_setting["available_floor"]:
-        #             # temporary destination of customer
-        #             temp_destination = customer.next_stop
-
-        #             # if elevator can arrive current floor & if elevator serves floors between customer's destination
-        #             if temp_destination in available_floor:
-
-        #                 mission = Mission(direction=self.direction, destination=self.floor)
-
-        #                 self.EVENT.CALL[sub_group_name].succeed(value=mission)
-        #                 self.EVENT.CALL[sub_group_name] = self.env.event()
 
 
-    def updatePanel(self):
-        # delay call registration until elevator left
-        yield self.env.timeout(ELEV_CONFIG.CUSTOMER_RECALL_ELEV_TIME)
-        self.rigisterCall()
+    def servable(self, customer, available_floor):
 
+        # if elevator can arrive current floor & if elevator serves floors between customer's destination
+        isTop = (customer.next_stop  == available_floor[-1] and self.direction == 1)
+        isBottom = (customer.next_stop  == available_floor[0] and self.direction == -1)
+        isIncluded = customer.next_stop in available_floor
+        if isIncluded and not (isTop or isBottom):
+            
+            return True
+        else:
+            return False
 
     def inflow(self):
         while True:
@@ -148,6 +128,7 @@ class Queue:
             # new customer | transfer customer
             customers = yield self.arrival_event | self.EVENT.ELEV_TRANSFER[self.direction][self.floor]
             customers = list(customers.values())[0] # Unpack simPy comdition variable
+
             # if (self.floor == '1') and (self.direction == 1):
             #     print('number',len(customers))
             logging.info('[INFLOW] Outer Call {} Floor {} '.format(
@@ -179,17 +160,17 @@ class Queue:
             available_floor = self.group_setting[sub_group_name]["available_floor"][elev_index]
 
             index = 0
-            while (space > 0) & (len(self.queue_array) > 0) & (not index == len(self.queue_array)):
+            while (space > 0) and (len(self.queue_array) > 0) and (not index == len(self.queue_array)):
                 
                 customer = self.queue_array[index]
-                
+
                 # if elevator serves floors between customer's destination
-                if (customer.next_stop in available_floor):
+                if self.servable(customer, available_floor):
                     riders.append(customer)
                     self.queue_array.pop(index)
                     space -= 1
                     
-                    # micmic customer enter time
+                    # simulate customer enter time
                     yield self.env.timeout(np.random.randint(ELEV_CONFIG.WALKING_MIN, ELEV_CONFIG.WALKING_MAX))
                         
                     if(not self.customer_logger is None):
@@ -206,7 +187,7 @@ class Queue:
             self.EVENT.ELEV_LEAVE[elev_name] = self.env.event()
 
             # Call registration after elevator left
-            self.env.process(self.updatePanel())
+            self.rigisterCall()
 
 
 class Floor:

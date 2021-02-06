@@ -1,21 +1,12 @@
-testConfig = {
-    "A":{
-        "active":["B4", "B3", "B2", "B1", "1", "2", "3", "4", "5", ], 
-        "elevNum": 2
-    }, 
-    "B":{
-        "active":["1", "7", "8", "9", "10", "11", "12", "13", "14", "15"], 
-        "elevNum": 2
-    }, 
-    "C":{
-        "active":["1", "15"], 
-        "elevNum": 2
-    }
-}
-
-
 class Event:
-    def __init__(self, env, floorList, sub_group_names, elevNameList):
+    def __init__(self, env, floorList, group_setting):
+
+        sub_group_names = group_setting.keys()
+        elevNameList = []
+        for sub_group_name, sub_group_setting in group_setting.items():
+            for i in range(len(sub_group_setting["available_floor"])):
+                elevNameList.append(sub_group_name + str(i))
+
         self.env = env
 
         self.CALL = {name :env.event() for name in sub_group_names}

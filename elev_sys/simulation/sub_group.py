@@ -39,6 +39,11 @@ class SubGroup:
     #     while True:
     #         yield self.env.timeout(100)
     #         print('C',self.elevators['a4'].ASSIGN_EVENT)
+    def delayAssign(self, candidate, mission):
+        
+        yield self.env.timeout(ELEV_CONFIG.CUSTOMER_RECALL_ELEV_TIME)
+        self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
+        self.elevators[candidate].ASSIGN_EVENT = self.env.event()
 
     def assignCalls(self):
         while True:
@@ -55,12 +60,14 @@ class SubGroup:
             candidate = self.bestCandidate(mission)
 
             # pass call over to elevator
+            if (not self.elevators[candidate].isServing) and (destination == self.elevators[candidate].current_floor):
+                self.env.process(self.delayAssign(candidate, mission))
+            elif (self.elevators[candidate].isServing) and (destination == self.elevators[candidate].current_floor):
+                pass # 我們真的要call pass，不是沒寫完
+            else:    
+                self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
+                self.elevators[candidate].ASSIGN_EVENT = self.env.event()
 
-            self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
-            self.elevators[candidate].ASSIGN_EVENT = self.env.event()
-            # if (destination == '9') and (direction == -1):
-            #     print('[C]','assign to elev',candidate, 'BUTTON ', self._list[direction][self.floorList.index(destination)])
-            
             logging.info('[AssignCalls] Succeed')
 
 
@@ -75,18 +82,6 @@ class SubGroup:
         logging.warning("---------------------------------------------")
 
         return bestElevator
-
-
-    def _assign_v4(self, mission, randomPolicy_prob=0.1):
-        if(random.random() < randomPolicy_prob):
-            direction, source = mission
-            elev_candidate = [elevName for elevName, elevator in self.elevators.items()\
-                                        if not elevator.stop_list.isNA(direction, source)]
-            elevIndex = random.randint(0, len(elev_candidate)-1)
-
-            return elev_candidate[elevIndex]
-        else:
-            return self._assign_v3(mission)
 
     
     def _assign_v3(self, mission):
@@ -106,6 +101,7 @@ class SubGroup:
         logging.warning("Mission: dir {}, des {}".format(direction, source))
 
         # elevators that can arrive the mission destination
+        # 多篩一次
         elevators = [elevator for elevator in self.elevators.values() if not elevator.stop_list.isNA(direction, source)]
         for elevator in elevators:
             # condition
