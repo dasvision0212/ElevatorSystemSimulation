@@ -51,8 +51,6 @@ class Customer:
         #     decision = np.random.randint(0, len(path_candidate)-1)
         # self.path = path_candidate[decision]
         self.path = random.choice(path_candidate)
-        print(self.destination, self.path)
-
 
     def enterQueue(self):
         self._current_stop_i = self._current_stop_i + 1
