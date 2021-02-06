@@ -18,14 +18,15 @@ class SubGroup:
         self.sub_group_name = sub_group_name
         self.floorList = floorList
         self._list = {
-             1: [0] * (len(floorList)),
-            -1: [0] * (len(floorList))
+             1: [False] * (len(floorList)),
+            -1: [False] * (len(floorList))
         }
 
         self.elevators = dict()
         for i in range(len(sub_group_setting["available_floor"])):
             elev_name = sub_group_name + str(i)
-            self.elevators[elev_name] = Elevator(env, elev_name, floorList, sub_group_setting["available_floor"][i], self._list, self.EVENT, 
+            self.elevators[elev_name] = Elevator(env, elev_name, floorList, sub_group_setting["available_floor"][i], self.EVENT, 
+                                                    sub_group = self,
                                                     customer_logger=customer_logger, 
                                                     elev_logger=elev_logger, 
                                                     stopList_logger=stopList_logger)
@@ -33,25 +34,33 @@ class SubGroup:
 
         self.env.process(self.assignCalls())
 
+    #     self.env.process(self.debug())
+    # def debug(self):
+    #     while True:
+    #         yield self.env.timeout(100)
+    #         print('C',self.elevators['a4'].ASSIGN_EVENT)
 
     def assignCalls(self):
         while True:
+            candidate = None
+
             mission = yield self.EVENT.CALL[self.sub_group_name]
-            
+             
             # handle repeated
             direction, destination = mission
+            # if self._list[direction][self.floorList.index(destination)] == False:
+            #     self._list[direction][self.floorList.index(destination)] = True
+
+            # decide candidate given the call's floor and direction
+            candidate = self.bestCandidate(mission)
+
+            # pass call over to elevator
+
+            self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
+            self.elevators[candidate].ASSIGN_EVENT = self.env.event()
+            # if (destination == '9') and (direction == -1):
+            #     print('[C]','assign to elev',candidate, 'BUTTON ', self._list[direction][self.floorList.index(destination)])
             
-            if self._list[direction][self.floorList.index(destination)] == 0:
-                self._list[direction][self.floorList.index(destination)] = 1
-
-                # decide candidate given the call's floor and direction
-                candidate = self.bestCandidate(mission)
-                # if candidate == 'a0':
-                #     print(candidate, mission, self.env.now)
-                # pass call over to elevator
-                self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
-                self.elevators[candidate].ASSIGN_EVENT = self.env.event()
-
             logging.info('[AssignCalls] Succeed')
 
 
@@ -60,10 +69,7 @@ class SubGroup:
         bestElevator = str()
         direction, source = mission
 
-        if(ELEV_CONFIG.VERSION == 3):
-            bestElevator = self._assign_v3(mission)
-        if(ELEV_CONFIG.VERSION == 4):
-            bestElevator = self._assign_v4(mission)
+        bestElevator = self._assign_v3(mission)
 
         logging.warning("best: {}".format(bestElevator))
         logging.warning("---------------------------------------------")
@@ -135,8 +141,7 @@ class SubGroup:
                (source == elevator.available_floor[0] and direction == -1):
                 dispatching_cost += 50
 
-            # full condition
-            
+            ## full condition
             # if elevator.capacity - len(elevator.riders) < 1:
             #     dispatching_cost += 100
 

@@ -175,8 +175,8 @@ class StopList:
 
 
 class Elevator:
-    def __init__(self, env, elev_name, floorList, available_floor, sub_group_stop_list, EVENT: Event,
-                 customer_logger: Customer_logger=None, elev_logger: Elev_logger=None, stopList_logger:StopList_logger=None):
+    def __init__(self, env, elev_name, floorList, available_floor, EVENT, sub_group,
+                customer_logger: Customer_logger=None, elev_logger: Elev_logger=None, stopList_logger:StopList_logger=None):
         self.env = env
         self.elev_name = str(elev_name)
         self.capacity = ELEV_CONFIG.ELEV_CAPACITY
@@ -184,9 +184,8 @@ class Elevator:
         self.EVENT = EVENT
         self.floorList = floorList
         self.available_floor = available_floor
+        self.sub_group = sub_group
 
-
-        self.sub_group_stop_list = sub_group_stop_list
         # schedule list
         self.stop_list = StopList(floorList, available_floor, stopList_logger)
 
@@ -211,9 +210,11 @@ class Elevator:
 
     #     self.env.process(self.debug())
     # def debug(self):
-    #     if (self.elev_name == 'a0'):
+    #     if (self.elev_name == 'a4'):
     #         while True:
-    #             yield self.env.timeout(100)
+
+    #             yield self.env.timeout(10)
+    #             print('E',self.ASSIGN_EVENT)
     #             print(self.elev_name, self.current_floor, self.direction,'up:', len(self.riders),self.stop_list._list[1], self.env.now)
     #             print(self.elev_name, self.current_floor, self.direction,'do:',len(self.riders),self.stop_list._list[-1])
 
@@ -269,16 +270,21 @@ class Elevator:
             while not self.current_floor == nextTarget:
 
                 value = yield self.ASSIGN_EVENT | moving_proc
-                
-                if list(value.values())[0] != None:
+
+                # assign event
+                if moving_proc.triggered == False:
                     mission = list(value.values())[0]
-                    direction, source = mission
+                    
+                    direction, destination = mission
                     # print(mission)
-                
+                # 
                     # self.ASSIGN_EVENT = self.env.event()
                     # self.FINISH_EVENT.succeed()
                     # self.FINISH_EVENT = self.env.event()
-                    
+
+                    if (direction == -1) and (destination == '9') and (self.elev_name == 'a4'):
+                        print('ACCEPT', mission)
+                        
                     logging.info('[ONMISSION] Elev {}, New OuterCall {}'.format(
                         self.elev_name, mission))
 
@@ -330,6 +336,9 @@ class Elevator:
     
         # Count Elevator Stop
         self.stopNum += 1
+
+
+        self.sub_group._list[self.direction][self.floorList.index(self.current_floor)] = False
 
         # Door Opens
         yield self.env.timeout(ELEV_CONFIG.ELEV_OPEN)
@@ -413,7 +422,6 @@ class Elevator:
         nextTarget = self.stop_list.next_target(self)
 
         logging.info('[SERVING] Elev {}, NEXT TARGET {}'.format(self.elev_name, nextTarget))
-        self.sub_group_stop_list[self.direction][self.floorList.index(self.current_floor)] = 0
 
         
         # if no target, turn idle
