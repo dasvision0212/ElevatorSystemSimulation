@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 sys.path.append('../')
 
-from elev_sys.simulation.utils import IAT_Distribution
+from elev_sys.simulation.IAT_Distribution import IAT_Distribution
 from elev_sys import *
 
 
@@ -33,8 +33,8 @@ if(__name__ == "__main__"):
     floorList = ["B4", "B3", "B2", "B1", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
 
     # Customer statistic
-    IAT_D = IAT_Distribution('../data/InterArriavalTime.csv', '北棟病床', 2)
-    distination_dist = pd.read_csv('../data/DestinationProbability.csv').iloc[:, 1:].set_index('from').iloc[0:len(floorList)+1, 0:len(floorList)+1]
+    IAT_D = IAT_Distribution('../data/BestFitDistribution.csv', '北棟病床', 2)
+    distination_dist = pd.read_csv('../data/FloorRatio_NHB.csv').iloc[:, 1:].set_index('from').iloc[0:len(floorList)+1, 0:len(floorList)+1]
 
     # Sub Group Setting
     group_setting = {
