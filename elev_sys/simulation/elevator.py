@@ -206,7 +206,8 @@ class Elevator:
 
             # first assignment
             mission = yield self.ASSIGN_EVENT
-                
+            if (self.elev_name == 'a1'):
+                print(self.env.now, mission)
             # reactivate
             # self.ASSIGN_EVENT = self.env.event()
             # self.FINISH_EVENT.succeed()
@@ -253,14 +254,14 @@ class Elevator:
                     mission = list(value.values())[0]
                     
                     direction, destination = mission
-                    # print(mission)
-                # 
+                    if (self.elev_name == 'a1'):
+                        print(self.env.now, mission)
+                    if (self.elev_name == 'a1')and(destination == '1') and (direction == 1):
+                        print(self.env.now, '++mission')
+
                     # self.ASSIGN_EVENT = self.env.event()
                     # self.FINISH_EVENT.succeed()
                     # self.FINISH_EVENT = self.env.event()
-
-                    if (direction == -1) and (destination == '9') and (self.elev_name == 'a4'):
-                        print('ACCEPT', mission)
                         
                     logging.info('[ONMISSION] Elev {}, New OuterCall {}'.format(
                         self.elev_name, mission))
@@ -323,8 +324,8 @@ class Elevator:
         self.stopNum += 1
 
 
-        self.sub_group._list[self.direction][self.floorList.index(self.current_floor)] = False
-
+        if (self.elev_name == 'a1') and (self.current_floor == '1') and (self.direction == 1):
+            print(self.env.now, 'aboard')
         # Door Opens
         yield self.env.timeout(ELEV_CONFIG.ELEV_OPEN)
 
@@ -383,7 +384,6 @@ class Elevator:
                (self.current_floor == self.available_floor[0] and self.direction == -1)):
             
             # elevator signal queue
-            
             self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor].succeed(value=(self.capacity-len(self.riders), self.elev_name))
             self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor] = self.env.event()
             
