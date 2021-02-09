@@ -59,10 +59,13 @@ class SubGroup:
             candidate = self.bestCandidate(mission)
 
             # pass call over to elevator
-            if (not self.elevators[candidate].isServing) and (destination == self.elevators[candidate].current_floor):
-                self.env.process(self.delayAssign(candidate, mission))
-            elif (self.elevators[candidate].isServing) and (destination == self.elevators[candidate].current_floor):
-                pass # 我們真的要call pass，不是沒寫完
+            if destination == self.elevators[candidate].current_floor:
+                if not self.elevators[candidate].isServing:
+                    self.env.process(self.delayAssign(candidate, mission))
+            # if (not self.elevators[candidate].isServing) and (destination == self.elevators[candidate].current_floor):
+            #     self.env.process(self.delayAssign(candidate, mission))
+            # elif (self.elevators[candidate].isServing) and (destination == self.elevators[candidate].current_floor):
+            #     pass # 我們真的要call pass，不是沒寫完
             else:    
                 self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
                 self.elevators[candidate].ASSIGN_EVENT = self.env.event()

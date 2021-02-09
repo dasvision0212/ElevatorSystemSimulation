@@ -146,31 +146,6 @@ class StopList:
             return True
         else:
             return False
-    
-    # def floor_rank(self, elev, direction, destination):
-
-    #     curr_index = self.index[elev.direction][elev.current_floor]
-    #     # same direction, front
-    #     if(direction == elev.direction):
-    #         floor_diff = cal_displacement(elev.current, destination)
-    #         if(floor_diff * direction > 0):
-    #             return floor_diff
-        
-    #     # diffrent direction        
-    #     change_point_index = curr_index
-    #     for i, state in enumerate(self._list[elev.direction][curr_index:]):
-    #         if state == StopList.ACTIVE:
-    #             change_point_index += 1
-
-    #     if(direction != elev.direction):
-    #         return cal_displacement(elev.current, self.reversed_index[elev.direction][change_point_index]) * elev.direction + \
-    #                abs(cal_displacement(self.reversed_index[elev.direction][change_point_index], destination))
-
-    #     # same direction, back
-    #     for i, state in enumerate(self._list[-elev.direction][:curr_index]):
-    #         if state == StopList.ACTIVE:
-    #             return self.reversed_index[elev.direction][i]
-
 
 class Elevator:
     def __init__(self, env, elev_name, floorList, available_floor, EVENT, sub_group,
@@ -367,9 +342,7 @@ class Elevator:
             # customer wait to transfer
             elif(self.current_floor== self.riders[i].next_stop):
                 customer = self.riders.pop(i)
-                print('Floor:', self.current_floor, 'Custnext:', customer.next_stop)
                 customer.enterQueue()
-                print('Floor:', self.current_floor, 'Customer:', customer.path[customer._current_stop_i])
                 
                 next_direction = compare_direction(self.current_floor, customer.next_stop)
                 transfer_customers[next_direction].append(customer)
@@ -449,8 +422,6 @@ class Elevator:
                 self.direction = -1*self.direction
                 self.stop_list.pop(self)
 
-
-## 開門時間
                 # customers on board
                 
                 self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor].succeed(value=(self.capacity-len(self.riders), self.elev_name))
