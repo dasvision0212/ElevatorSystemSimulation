@@ -7,11 +7,10 @@ import logging
 from collections import defaultdict
 from elev_sys.conf.elevator_conf import ELEV_CONFIG
 from elev_sys.conf.log_conf import ELEVLOG_CONFIG
-from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.event import Event
 from elev_sys.simulation.logger import Elev_logger, Customer_logger, StopList_logger
 from elev_sys.animation.general import cal_floorNum
-from elev_sys.simulation.utils import cal_displacement, advance, floor_complement, compare_direction
+from elev_sys.simulation.utils import cal_displacement, advance, floor_complement, compare_direction, Mission
 
 class IndexError(Exception):
     """Exception : Wrong Index."""
@@ -147,31 +146,6 @@ class StopList:
             return True
         else:
             return False
-    
-    # def floor_rank(self, elev, direction, destination):
-
-    #     curr_index = self.index[elev.direction][elev.current_floor]
-    #     # same direction, front
-    #     if(direction == elev.direction):
-    #         floor_diff = cal_displacement(elev.current, destination)
-    #         if(floor_diff * direction > 0):
-    #             return floor_diff
-        
-    #     # diffrent direction        
-    #     change_point_index = curr_index
-    #     for i, state in enumerate(self._list[elev.direction][curr_index:]):
-    #         if state == StopList.ACTIVE:
-    #             change_point_index += 1
-
-    #     if(direction != elev.direction):
-    #         return cal_displacement(elev.current, self.reversed_index[elev.direction][change_point_index]) * elev.direction + \
-    #                abs(cal_displacement(self.reversed_index[elev.direction][change_point_index], destination))
-
-    #     # same direction, back
-    #     for i, state in enumerate(self._list[-elev.direction][:curr_index]):
-    #         if state == StopList.ACTIVE:
-    #             return self.reversed_index[elev.direction][i]
-
 
 class Elevator:
     def __init__(self, env, elev_name, floorList, available_floor, EVENT, sub_group,
@@ -321,9 +295,9 @@ class Elevator:
             while self.current_floor != destination:
                 # calculate traveling time for passing 1 floor
                 if self.interrupt_time is not None:
-                    left_time = ELEV_CONFIG.ELEV_VELOCITY - (self.interrupt_time - self.move_start_time)
+                    left_time_to_move = ELEV_CONFIG.ELEV_VELOCITY - (self.interrupt_time - self.move_start_time)
                     self.interrupt_time = None
-                    yield self.env.timeout(left_time)
+                    yield self.env.timeout(left_time_to_move)
                 else:
                     self.move_start_time = self.env.now
                     yield self.env.timeout(ELEV_CONFIG.ELEV_VELOCITY)
@@ -378,9 +352,7 @@ class Elevator:
             # customer wait to transfer
             elif(self.current_floor== self.riders[i].next_stop):
                 customer = self.riders.pop(i)
-                print('Floor:', self.current_floor, 'Custnext:', customer.next_stop)
                 customer.enterQueue()
-                print('Floor:', self.current_floor, 'Customer:', customer.path[customer._current_stop_i])
                 
                 next_direction = compare_direction(self.current_floor, customer.next_stop)
                 transfer_customers[next_direction].append(customer)
@@ -460,8 +432,6 @@ class Elevator:
                 self.direction = -1*self.direction
                 self.stop_list.pop(self)
 
-
-## 開門時間
                 # customers on board
                 
                 self.EVENT.ELEV_ARRIVAL[self.direction][self.current_floor].succeed(value=(self.capacity-len(self.riders), self.elev_name))

@@ -10,10 +10,9 @@ from copy import deepcopy
 import logging
 import itertools
 from elev_sys.conf.elevator_conf import ELEV_CONFIG
-from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.event import Event
 from elev_sys.simulation.logger import Queue_logger, Customer_logger
-from elev_sys.simulation.utils import floor_complement, floor_to_index, index_to_floor, floor_complement, compare_direction
+from elev_sys.simulation.utils import floor_complement, floor_to_index, index_to_floor, floor_complement, compare_direction, Mission
 from elev_sys.simulation.path_finder import Path_finder
 
 
@@ -94,7 +93,7 @@ class Queue:
             for customer in self.queue_array:
 
                 for available_floor in sub_group_setting["available_floor"]:
-                    isPushed = self.servable(customer, available_floor)
+                    isPushed = customer.next_stop in available_floor
                     if isPushed:
                         mission = Mission(direction=self.direction, destination=self.floor)
                         self.EVENT.CALL[sub_group_name].succeed(value=mission)
@@ -103,19 +102,6 @@ class Queue:
                 
                 if isPushed:
                     break
-
-
-
-
-    def servable(self, customer, available_floor):
-
-        # if elevator can arrive current floor & if elevator serves floors between customer's destination
-        isIncluded = customer.next_stop in available_floor
-        if isIncluded:
-            
-            return True
-        else:
-            return False
 
     def inflow(self):
         while True:
@@ -160,7 +146,7 @@ class Queue:
                 customer = self.queue_array[index]
 
                 # if elevator serves floors between customer's destination
-                if self.servable(customer, available_floor):
+                if customer.next_stop in available_floor:
                     riders.append(customer)
                     self.queue_array.pop(index)
                     space -= 1
