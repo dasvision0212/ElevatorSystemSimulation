@@ -208,6 +208,9 @@ class Elevator:
         self.wasteStopNum = 0
         self.moveFloorNum = 0
 
+        self.move_start_time = 0
+        self.interrupt_time = None
+
     #     self.env.process(self.debug())
     # def debug(self):
     #     if (self.elev_name == 'a4'):
@@ -300,6 +303,7 @@ class Elevator:
                     # target changed, interrupt current mission
                     if temp != nextTarget:
                         moving_proc.interrupt()
+                        self.interrupt_time = self.env.now
                         moving_proc = self.env.process(self.moving(nextTarget, self.current_floor))
 
             logging.info('[ONMISSION] Elev {}, Arrive At {} Floor'.format(self.elev_name, self.current_floor))
@@ -316,7 +320,13 @@ class Elevator:
         try:
             while self.current_floor != destination:
                 # calculate traveling time for passing 1 floor
-                yield self.env.timeout(ELEV_CONFIG.ELEV_VELOCITY)
+                if self.interrupt_time is not None:
+                    left_time = ELEV_CONFIG.ELEV_VELOCITY - (self.interrupt_time - self.move_start_time)
+                    self.interrupt_time = None
+                    yield self.env.timeout(left_time)
+                else:
+                    self.move_start_time = self.env.now
+                    yield self.env.timeout(ELEV_CONFIG.ELEV_VELOCITY)
 
                 # advance 1 floor
                 self.current_floor = advance(self.current_floor, self.direction)
