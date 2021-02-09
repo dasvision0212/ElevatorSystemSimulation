@@ -90,8 +90,7 @@ class Queue:
         # Call registration when customer arrive
 
         for sub_group_name, sub_group_setting in self.group_setting.items():
-<<<<<<< HEAD
-
+            
             if not self.buttonPushed[sub_group_name]:
 
                 for customer in self.queue_array:
@@ -107,17 +106,6 @@ class Queue:
                             break
                     
                     if self.buttonPushed[sub_group_name]:
-=======
-            isPushed = False # 需要改成attribute形式
-            for customer in self.queue_array:
-
-                for available_floor in sub_group_setting["available_floor"]:
-                    isPushed = customer.next_stop in available_floor
-                    if isPushed:
-                        mission = Mission(direction=self.direction, destination=self.floor)
-                        self.EVENT.CALL[sub_group_name].succeed(value=mission)
-                        self.EVENT.CALL[sub_group_name] = self.env.event()
->>>>>>> 30977edbcc5701aecdb1b560c05246c21ddd3ba5
                         break
 
     def inflow(self):
