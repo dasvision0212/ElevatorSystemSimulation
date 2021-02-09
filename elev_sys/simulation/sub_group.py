@@ -58,17 +58,22 @@ class SubGroup:
             # decide candidate given the call's floor and direction
             candidate = self.bestCandidate(mission)
 
+
+            if (destination == '1') and (direction == 1):
+                print(self.env.now, 'Receive')
+
+                
             # pass call over to elevator
             if destination == self.elevators[candidate].current_floor:
                 if not self.elevators[candidate].isServing:
                     self.env.process(self.delayAssign(candidate, mission))
-            # if (not self.elevators[candidate].isServing) and (destination == self.elevators[candidate].current_floor):
-            #     self.env.process(self.delayAssign(candidate, mission))
-            # elif (self.elevators[candidate].isServing) and (destination == self.elevators[candidate].current_floor):
-            #     pass # 我們真的要call pass，不是沒寫完
             else:    
                 self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
                 self.elevators[candidate].ASSIGN_EVENT = self.env.event()
+
+
+                if (destination == '1') and (direction == 1):
+                    print(self.env.now, 'Assign', candidate)
 
             logging.info('[AssignCalls] Succeed')
 

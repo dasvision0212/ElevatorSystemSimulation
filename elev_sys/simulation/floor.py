@@ -65,10 +65,11 @@ class Queue:
         self.direction = direction
         self.queue_array = []
         self.arrival_event = self.env.event()
-
         self.group_setting = group_setting
         self.path_finder = path_finder
 
+        self.buttonPushed = {sub_group_name: False for sub_group_name in self.group_setting.keys()}
+        
         # start process
         self.inflow_proc = self.env.process(self.inflow())
         self.outflow_proc = self.env.process(self.outflow())
@@ -90,19 +91,23 @@ class Queue:
         # Call registration when customer arrive
 
         for sub_group_name, sub_group_setting in self.group_setting.items():
-            isPushed = False
-            for customer in self.queue_array:
 
-                for available_floor in sub_group_setting["available_floor"]:
-                    isPushed = customer.next_stop in available_floor
-                    if isPushed:
-                        mission = Mission(direction=self.direction, destination=self.floor)
-                        self.EVENT.CALL[sub_group_name].succeed(value=mission)
-                        self.EVENT.CALL[sub_group_name] = self.env.event()
+            if not self.buttonPushed[sub_group_name]:
+
+                for customer in self.queue_array:
+                    for available_floor in sub_group_setting["available_floor"]:
+
+                        if customer.next_stop in available_floor:
+                            mission = Mission(direction=self.direction, destination=self.floor)
+                            self.EVENT.CALL[sub_group_name].succeed(value=mission)
+                            self.EVENT.CALL[sub_group_name] = self.env.event()
+                            if (self.floor == '1') and (self.direction == 1):
+                                print(self.env.now, 'CALL')
+                            self.buttonPushed[sub_group_name] = True
+                            break
+                    
+                    if self.buttonPushed[sub_group_name]:
                         break
-                
-                if isPushed:
-                    break
 
     def inflow(self):
         while True:
@@ -132,11 +137,14 @@ class Queue:
 
             # elevator arrival
             space, elev_name = yield self.EVENT.ELEV_ARRIVAL[self.direction][self.floor]
-
+            if (self.floor == '1') and (self.direction == 1):
+                print(self.env.now, 'outflow')
             riders = []
 
             # available_floor of elevator
             sub_group_name = elev_name[0]
+            self.buttonPushed[sub_group_name] = False
+
             elev_index     = int(elev_name[1:])
 
             available_floor = self.group_setting[sub_group_name]["available_floor"][elev_index]
