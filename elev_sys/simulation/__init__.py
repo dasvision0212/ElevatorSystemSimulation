@@ -1,4 +1,4 @@
-from elev_sys.simulation.IAT_Distribution import IAT_Distribution
+from elev_sys.simulation.utils import IAT_Distribution
 from elev_sys.simulation.event import Event
 from elev_sys.simulation.floor import Floor, cid_generator
 from elev_sys.simulation.elevator import Elevator

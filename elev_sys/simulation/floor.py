@@ -10,10 +10,9 @@ from copy import deepcopy
 import logging
 import itertools
 from elev_sys.conf.elevator_conf import ELEV_CONFIG
-from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.event import Event
 from elev_sys.simulation.logger import Queue_logger, Customer_logger
-from elev_sys.simulation.utils import floor_complement, floor_to_index, index_to_floor, floor_complement, compare_direction
+from elev_sys.simulation.utils import floor_complement, floor_to_index, index_to_floor, floor_complement, compare_direction, Mission
 from elev_sys.simulation.path_finder import Path_finder
 
 

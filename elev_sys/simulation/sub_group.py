@@ -4,9 +4,8 @@ import random
 
 from elev_sys.conf.elevator_conf import ELEV_CONFIG
 from elev_sys.simulation.elevator import Elevator, StopList
-from elev_sys.simulation.simple_data_structure import Mission
 from elev_sys.simulation.logger import (Customer_logger, Elev_logger, StopList_logger)
-from elev_sys.simulation.utils import cal_displacement
+from elev_sys.simulation.utils import cal_displacement, Mission
 
 
 class SubGroup:
