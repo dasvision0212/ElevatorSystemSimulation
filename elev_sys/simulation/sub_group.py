@@ -40,7 +40,13 @@ class SubGroup:
     #         print('C',self.elevators['a4'].ASSIGN_EVENT)
     def delayAssign(self, candidate, mission):
         
-        yield self.env.timeout(ELEV_CONFIG.CUSTOMER_RECALL_ELEV_TIME)
+        print(self.env.now,  self.elevators[candidate].move_start_time)
+        print(candidate)
+        left_time_to_move = ELEV_CONFIG.ELEV_VELOCITY - \
+                            (self.env.now - self.elevators[candidate].move_start_time) + \
+                            ELEV_CONFIG.ELEV_VELOCITY_BUFFER
+        yield self.env.timeout(left_time_to_move)
+
         self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
         self.elevators[candidate].ASSIGN_EVENT = self.env.event()
 
@@ -64,10 +70,23 @@ class SubGroup:
 
                 
             # pass call over to elevator
-            if destination == self.elevators[candidate].current_floor:
+            if self.elevators[candidate].direction == 0:
+                self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
+                self.elevators[candidate].ASSIGN_EVENT = self.env.event()
+
+            elif destination == self.elevators[candidate].current_floor:
                 if not self.elevators[candidate].isServing:
                     self.env.process(self.delayAssign(candidate, mission))
+<<<<<<< HEAD
             else:    
+=======
+            
+            # if (not self.elevators[candidate].isServing) and (destination == self.elevators[candidate].current_floor):
+            #     self.env.process(self.delayAssign(candidate, mission))
+            # elif (self.elevators[candidate].isServing) and (destination == self.elevators[candidate].current_floor):
+            #     pass # 我們真的要call pass，不是沒寫完
+            else:
+>>>>>>> 30977edbcc5701aecdb1b560c05246c21ddd3ba5
                 self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
                 self.elevators[candidate].ASSIGN_EVENT = self.env.event()
 

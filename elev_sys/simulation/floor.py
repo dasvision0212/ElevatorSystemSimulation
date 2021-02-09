@@ -24,13 +24,9 @@ def cid_generator():
         yield i
         i += 1
 
-
 class Customer:
-    def __init__(self, floor, path_finder:Path_finder, cid_gen=None, ):
-        if cid_gen is not None:
-            self.cid = next(cid_gen)
-        else:
-            self.cid = next(self._cid_generator)
+    def __init__(self, floor, destination_dist, path_finder:Path_finder, cid_gen=None):
+        self.cid = next(cid_gen)
 
         self.source = floor
         self.destination = None
@@ -38,11 +34,14 @@ class Customer:
 
         self.path = None
         self._current_stop_i = 0
+
+        self._select_tour(destination_dist, path_finder)
+
     @property
     def next_stop(self):
         return self.path[self._current_stop_i + 1]
 
-    def select_tour(self, destination_dist, path_finder):
+    def _select_tour(self, destination_dist, path_finder):
         self.destination = np.random.choice(destination_dist.index, p=destination_dist)
         path_candidate = path_finder.map[self.source][self.destination]
         # decision = 0
@@ -200,13 +199,12 @@ class Floor:
             IAT = IAT_df.getter(direction, floor)
             if IAT:
                 self.IAT[direction] = IAT
-                self.source_proc[direction] = env.process(self.Source(env, direction))
+                self.source_proc[direction] = env.process(self.Source(direction))
                 if direction == 1:
                     self.destination_dist[direction] = destination_dist[floorIndex+1:]/destination_dist[floorIndex+1:].sum()
                 elif direction == -1:
                     self.destination_dist[direction] = destination_dist[:floorIndex]/destination_dist[:floorIndex].sum()
             
-
 
             self.queue[direction] = Queue(env, floorList, floor, floorIndex, direction, group_setting, EVENT, path_finder, 
                             queue_logger=queue_logger, customer_logger=customer_logger)
@@ -216,7 +214,7 @@ class Floor:
         self.customer_logger = customer_logger
 
 
-    def Source(self, env, direction):
+    def Source(self, direction):
         while True:
             # 1. inter-arrival time based on given distribution
             t = -1
@@ -232,8 +230,7 @@ class Floor:
             for i in range(number_of_arrival):
                 
                 # 3. customer destination based on given posibility
-                customer = Customer(self.floor, self.path_finder, self.cid_gen)
-                customer.select_tour(self.destination_dist[direction], self.path_finder)
+                customer = Customer(self.floor, self.destination_dist[direction], self.path_finder, self.cid_gen)
 
                 if(not self.customer_logger is None):
                     self.customer_logger.log_appear(customer.cid, self.floor, customer.destination, float(self.env.now))
