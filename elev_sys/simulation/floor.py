@@ -67,8 +67,6 @@ class Queue:
         self.group_setting = group_setting
         self.path_finder = path_finder
 
-        self.buttonPushed = {sub_group_name: False for sub_group_name in self.group_setting.keys()}
-        
         # start process
         self.inflow_proc = self.env.process(self.inflow())
         self.outflow_proc = self.env.process(self.outflow())
@@ -88,41 +86,36 @@ class Queue:
 
     def rigisterCall(self):
         # Call registration when customer arrive
-
+        
         for sub_group_name, sub_group_setting in self.group_setting.items():
-            
-            if not self.buttonPushed[sub_group_name]:
+            if not self.EVENT.buttonPushed[self.floor][sub_group_name]:
 
                 for customer in self.queue_array:
-                    for available_floor in sub_group_setting["available_floor"]:
+                    if self.EVENT.buttonPushed[self.floor][sub_group_name]:
+                        break
 
-                        if customer.next_stop in available_floor:
+                    for available_floor in sub_group_setting["available_floor"]:
+                        if (customer.next_stop in available_floor) and (self.floor in available_floor):
+                            print(f'{self.env.now} 3.[CALL] floor {self.floor} direction {self.direction}')
+                            
+                            self.EVENT.buttonPushed[self.floor][sub_group_name] = True
                             mission = Mission(direction=self.direction, destination=self.floor)
                             self.EVENT.CALL[sub_group_name].succeed(value=mission)
                             self.EVENT.CALL[sub_group_name] = self.env.event()
-                            if (self.floor == '1') and (self.direction == 1):
-                                print(self.env.now, 'CALL')
-                            self.buttonPushed[sub_group_name] = True
                             break
-                    
-                    if self.buttonPushed[sub_group_name]:
-                        break
 
     def inflow(self):
         while True:
-
             # new customer | transfer customer
             customers = yield self.arrival_event | self.EVENT.ELEV_TRANSFER[self.direction][self.floor]
             customers = list(customers.values())[0] # Unpack simPy comdition variable
 
-            # if (self.floor == '1') and (self.direction == 1):
-            #     print('number',len(customers))
             logging.info('[INFLOW] Outer Call {} Floor {} '.format(
                 self.floor, 'up' if self.direction == 1 else 'down'))
 
-            
             self.queue_array = self.queue_array + customers
 
+            print(f'{self.env.now} 2.[QUEUE] floor {self.floor} direction {self.direction} number {len(self.queue_array)}')
             # call registeration
             self.rigisterCall()
 
@@ -136,13 +129,13 @@ class Queue:
 
             # elevator arrival
             space, elev_name = yield self.EVENT.ELEV_ARRIVAL[self.direction][self.floor]
-            if (self.floor == '1') and (self.direction == 1):
-                print(self.env.now, 'outflow')
+            
             riders = []
 
             # available_floor of elevator
             sub_group_name = elev_name[0]
-            self.buttonPushed[sub_group_name] = False
+
+            self.EVENT.buttonPushed[self.floor][sub_group_name] = False
 
             elev_index     = int(elev_name[1:])
 
@@ -197,6 +190,7 @@ class Floor:
 
         for direction in [-1, 1]:
             IAT = IAT_df.getter(direction, floor)
+            
             if IAT:
                 self.IAT[direction] = IAT
                 self.source_proc[direction] = env.process(self.Source(direction))
@@ -221,6 +215,7 @@ class Floor:
             while t < 0:
                 t = self.IAT[direction]['dist'].rvs(
                     *self.IAT[direction]['params'][:-2], loc=self.IAT[direction]['params'][-2], scale=self.IAT[direction]['params'][-1], size=1)
+            
             yield self.env.timeout(t)
 
             # 2. number of people of arrival group
@@ -240,9 +235,8 @@ class Floor:
                 next_direction = compare_direction(self.floor, customer.next_stop)
                 customers[next_direction].append(customer)
 
-                # if self.floor == '1':
-                #     print(self.floor, customer.destination,  customer.next_stop, next_direction)
-                
             for di in [-1, 1]:
-                self.queue[di].arrival_event.succeed(value=customers[di])
-                self.queue[di].arrival_event = self.env.event()
+                if len(customers[di]) > 0:
+                    print(f'{self.env.now} 1.[ARRIVE] floor {self.floor} direction {di} number {len(customers[di])}')
+                    self.queue[di].arrival_event.succeed(value=customers[di])
+                    self.queue[di].arrival_event = self.env.event()

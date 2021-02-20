@@ -8,7 +8,7 @@ class Event:
                 elevNameList.append(sub_group_name + str(i))
 
         self.env = env
-
+        self.buttonPushed = {floor : {sub_group: False for sub_group in sub_group_names} for floor in floorList}
         self.CALL = {name :env.event() for name in sub_group_names}
         self.ELEV_ARRIVAL = { 1: {i: env.event() for i in floorList},
                              -1: {i: env.event() for i in floorList}}

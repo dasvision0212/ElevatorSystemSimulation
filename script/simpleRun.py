@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 sys.path.append('../')
 
-from elev_sys.simulation.IAT_Distribution import IAT_Distribution
+from elev_sys.simulation.utils import IAT_Distribution
 from elev_sys import *
 
 
@@ -19,7 +19,7 @@ if(__name__ == "__main__"):
 
     # Simulation Setting
     logging.basicConfig(level=logging.CRITICAL)
-    untilTime = 3600
+    untilTime = 3000
 
     # Enviornment Variable
     env = simpy.Environment()
@@ -30,21 +30,39 @@ if(__name__ == "__main__"):
     np.random.seed(seed = randomSeed); random.seed(randomSeed)
 
     # Building Setting
-    floorList = ["B4", "B3", "B2", "B1", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
+    floorList = ['1', '2','3','4','5']
 
     # Customer statistic
-    IAT_D = IAT_Distribution('../data/BestFitDistribution.csv', '北棟病床', 2)
-    distination_dist = pd.read_csv('../data/FloorRatio_NHB.csv').iloc[:, 1:].set_index('from').iloc[0:len(floorList)+1, 0:len(floorList)+1]
+    # IAT_D = IAT_Distribution('../data/BestFitDistribution.csv', '北棟病床', 2)
+    # distination_dist = pd.read_csv('../data/FloorRatio_NHB.csv').iloc[:, 1:].set_index('from').iloc[0:len(floorList)+1, 0:len(floorList)+1]
+    # distination_dist = pd.read_csv('../data/FloorRatio_NHB.csv').iloc[:, 1:].set_index('from').loc[floorList,floorList]
+    
+    IAT_D = IAT_Distribution('../data/IAT.csv')
+    distination_dist = pd.DataFrame([
+        [0, 0.25, 0.25, 0.25, 0.25],
+        [0.25, 0, 0.25, 0.25, 0.25],
+        [0.25, 0.25, 0, 0.25, 0.25],
+        [0.25, 0.25, 0.25, 0, 0.25],
+        [0.25, 0.25, 0.25, 0.25, 0]
+    ], index=floorList, columns = floorList)
 
     # Sub Group Setting
     group_setting = {
         'a': {
             'available_floor': [
-                ['B4', 'B2', 'B3', 'B1', '1'],
-                ['1','2', '3', '4', '5','6', '7'],
-                ['7','8','9','10', '11', '12', '13', '14', '15']
+                ['1', '2', '3'],
             ],
         },
+        'b': {
+            'available_floor': [
+                ['3', '4', '5'],
+            ],
+        },
+        # 'c': {
+        #     'available_floor': [
+        #         ['3', '4', '5'],
+        #     ],
+        # },
     }
 
     # Define Logger

@@ -39,16 +39,21 @@ class SubGroup:
     #         yield self.env.timeout(100)
     #         print('C',self.elevators['a4'].ASSIGN_EVENT)
     def delayAssign(self, candidate, mission):
+        last_floor = self.elevators[candidate].current_floor
+        while True:
+            yield self.env.timeout(0.1)
+            if last_floor != self.elevators[candidate].current_floor:
+                self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
+                self.elevators[candidate].ASSIGN_EVENT = self.env.event()
+                break
         
-        print(self.env.now,  self.elevators[candidate].move_start_time)
-        print(candidate)
-        left_time_to_move = ELEV_CONFIG.ELEV_VELOCITY - \
-                            (self.env.now - self.elevators[candidate].move_start_time) + \
-                            ELEV_CONFIG.ELEV_VELOCITY_BUFFER
-        yield self.env.timeout(left_time_to_move)
+        # left_time_to_move = ELEV_CONFIG.ELEV_VELOCITY - \
+        #                     (self.env.now - self.elevators[candidate].move_start_time) + \
+        #                     ELEV_CONFIG.ELEV_VELOCITY_BUFFER + ELEV_CONFIG.ELEV_CLOSE
+        # yield self.env.timeout(left_time_to_move)
 
-        self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
-        self.elevators[candidate].ASSIGN_EVENT = self.env.event()
+        # self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
+        # self.elevators[candidate].ASSIGN_EVENT = self.env.event()
 
     def assignCalls(self):
         while True:
@@ -58,32 +63,30 @@ class SubGroup:
              
             # handle repeated
             direction, destination = mission
-            # if self._list[direction][self.floorList.index(destination)] == False:
-            #     self._list[direction][self.floorList.index(destination)] = True
 
             # decide candidate given the call's floor and direction
             candidate = self.bestCandidate(mission)
-
-
-            if (destination == '1') and (direction == 1):
-                print(self.env.now, 'Receive')
-
-                
+            print(f'{self.env.now} 3.[CONTROL] mission {mission}')
+            
             # pass call over to elevator
             if self.elevators[candidate].direction == 0:
                 self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
                 self.elevators[candidate].ASSIGN_EVENT = self.env.event()
 
+                print(f'{self.env.now} 4.[ASSIGN] candidate {candidate} (idle)')
+
             elif destination == self.elevators[candidate].current_floor:
                 if not self.elevators[candidate].isServing:
                     self.env.process(self.delayAssign(candidate, mission))
+                    print(f'{self.env.now} 4.[ASSIGN] candidate {candidate} (not serving & same)')
+                else:
+                    self.EVENT.buttonPushed[mission.destination][self.sub_group_name] = False
+                    print(f'{self.env.now} 4.[ASSIGN] candidate {candidate} (serving & same)')
             else:    
                 self.elevators[candidate].ASSIGN_EVENT.succeed(value=mission)
                 self.elevators[candidate].ASSIGN_EVENT = self.env.event()
 
-
-                if (destination == '1') and (direction == 1):
-                    print(self.env.now, 'Assign', candidate)
+                print(f'{self.env.now} 4.[ASSIGN] candidate {candidate} (onmission)')
 
             logging.info('[AssignCalls] Succeed')
 
@@ -120,6 +123,7 @@ class SubGroup:
         # elevators that can arrive the mission destination
         # 多篩一次
         elevators = [elevator for elevator in self.elevators.values() if not elevator.stop_list.isNA(direction, source)]
+
         for elevator in elevators:
             # condition
             isSameDirection = (direction == elevator.direction)

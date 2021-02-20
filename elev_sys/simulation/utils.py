@@ -8,33 +8,25 @@ class IAT_Distribution:
     inter-arrival time distribution
     '''
 
-    def __init__(self, path, location, section):
+    def __init__(self, path):
         self.df = pd.read_csv(path)
-        self.df["Floor"] = self.df["Floor"].apply(lambda x: x.lstrip('0'))
-        self.location = location
-        self.section = section
+        # self.df["floor"] = self.df["floor"].apply(lambda x: x.lstrip('0'))
 
     def getter(self, direction, floor):
-        direction_string = None
-        if direction == 1:
-            direction_string = 'up'
-        elif direction == -1:
-            direction_string = 'down'
 
-        # filter row by mulitple conditions
-        if floor in self.df['Floor']:
-            return None
+        # # filter row by mulitple conditions
+        # if floor in self.df['floor']:
+        #     return None
         
-        temp = self.df[(self.df['Location'] == self.location) & (self.df['Section'] == self.section) &
-                    (self.df['Direction'] == direction_string) & (self.df['Floor'] == floor)][['Distribution', 'Parameters']]
+        temp = self.df[(self.df['direction'] == direction) & (self.df['floor'].astype(str) == floor)][['dist', 'parameters']]
         
         if(temp.shape[0] == 0):
             return None
         else:
             # return distribution name and parsed parameters
             return {
-                'dist': getattr(st, temp['Distribution'].values[0]),
-                'params': self.params_parser(temp['Parameters'].values[0])
+                'dist': getattr(st, temp['dist'].values[0]),
+                'params': self.params_parser(temp['parameters'].values[0])
             }
 
     @staticmethod
