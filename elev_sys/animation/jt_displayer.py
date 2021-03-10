@@ -5,6 +5,8 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import numpy as np
 import tkinter as tk
 from PIL import Image, ImageTk
+from copy import deepcopy
+import json
 
 
 class JT_displayer:
@@ -13,7 +15,9 @@ class JT_displayer:
         self.env = env
         self.canvas = canvas
         self.posConfig = posConfig
-        self.log = customer_log
+        self.log = deepcopy(customer_log)
+        self.log = self.log.loc[self.log.isSuccessful, :]
+        self.log["leave_time"] = self.log["get_off_time"].apply(lambda x:x[-1])
         self.log.sort_values('leave_time', inplace=True)
 
         self.logPtr = 0
@@ -37,7 +41,7 @@ class JT_displayer:
         
         while(self.logPtr <= self.log.shape[0]-1):
             currentRecord = self.log.iloc[self.logPtr,]
-            if(currentRecord["leave_time"] > self.env.now[0]):
+            if(currentRecord["leave_time"].seconds > self.env.now[0]):
                 break
             
             if(len(self.mean_JT) == 0):
@@ -79,10 +83,10 @@ class JT_displayer:
                     self.statPic = self.canvas.create_image((self.posConfig.jt_block.left, self.posConfig.jt_block.top), 
                                                              anchor="nw", image=self.img)
                     self.canvas.delete(self.rectangle)
-                    self.rectangle != None
+                    self.rectangle = None
                 else:
-                    self.canvas.itemconfigure(self.statPic, img=self.img)
-                plt.close(fig)
+                    self.canvas.itemconfigure(self.statPic, image=self.img)
+
 
             self.logPtr += 1
         self.canvas.after(self.env.delay_by_interval(1), self.update)

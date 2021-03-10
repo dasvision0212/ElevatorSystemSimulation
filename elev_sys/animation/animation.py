@@ -11,11 +11,12 @@ from elev_sys.conf.log_conf  import ELEVLOG_CONFIG
 from elev_sys.animation.building  import Building
 from elev_sys.conf.animation_conf import (colConfig, posConfig)
 from elev_sys.animation.env import Env
-from elev_sys.animation.general import cal_floorNum
+from elev_sys.animation.utils import cal_floorNum
 from elev_sys.animation.timer import Timer
 from elev_sys.animation.stopList import StopList
 from elev_sys.animation.wt_displayer import WT_displayer
 from elev_sys.animation.jt_displayer import JT_displayer
+import json
 
 
 class Animation:
@@ -33,8 +34,12 @@ class Animation:
         self.stopList_log = pd.read_csv(stopList_log_path)
         self.stopList_log["elevIndex"] = self.stopList_log["elevIndex"].astype(str)
 
-        # self.customer_log = pd.read_csv(customer_log_path, usecols=["boarding_time", "waiting_time", "leave_time", "journey_time"])
-        # self.customer_log = self.customer_log.applymap(lambda x:datetime.timedelta(seconds=x))
+        self.customer_log = pd.read_csv(customer_log_path, usecols=["boarding_time", "total_waiting_time", "get_off_time", "journey_time", "isSuccessful"])
+        processing_col = self.customer_log.loc[:, ["total_waiting_time", "journey_time"]]
+        processing_col = processing_col.applymap(lambda x:datetime.timedelta(seconds=int(x)) if not pd.isna(x) else x)
+        for col_name in ["boarding_time", "get_off_time"]:
+            self.customer_log[col_name] = self.customer_log["get_off_time"].apply(lambda x:[datetime.timedelta(seconds=int(i)) for i in json.loads(x)] if not pd.isna(x) else x)
+        
 
         # the stuff about tkinter
         self.posConfig = posConfig(len(elevNameList), cal_floorNum(floorList))
@@ -80,8 +85,8 @@ class Animation:
             for i, elevIndex in enumerate(elevNameList)
         }
         
-        # self.wt_displayer = WT_displayer(self.env, self.canvas, self.posConfig, deepcopy(self.customer_log))
-        # self.jt_displayer = JT_displayer(self.env, self.canvas, self.posConfig, deepcopy(self.customer_log))
+        self.wt_displayer = WT_displayer(self.env, self.canvas, self.posConfig, self.customer_log)
+        self.jt_displayer = JT_displayer(self.env, self.canvas, self.posConfig, self.customer_log)
 
         # # layout line
         self.canvas.create_line(0, self.posConfig.wt_block.top-20, 

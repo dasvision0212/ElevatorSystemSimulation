@@ -42,12 +42,16 @@ class Elevator:
     def up(self):
         self.canvas.move(self.riderLabel, 0, -(self.posConfig.elev_gap_v + self.posConfig.elev_height))
         self.canvas.move(self.elev, 0, -(self.posConfig.elev_gap_v + self.posConfig.elev_height))
+#         comment part tis originally used to make 過度動畫. 目的是讓阿電梯移動時不要一層樓直接跳，要慢慢移動。
+#         尚未完工，也沒必要繼續，因為通常會大加速。
 #         self.coord1[1] -= (self.posConfig.elev_gap_v + self.posConfig.elev_height)/SMOOTH
 #         self.coord1[1] -= (self.posConfig.elev_gap_v + self.posConfig.elev_height)/SMOOTH
     
     def down(self):
         self.canvas.move(self.riderLabel, 0, (self.posConfig.elev_gap_v + self.posConfig.elev_height))
-        self.canvas.move(self.elev, 0, (self.posConfig.elev_gap_v + self.posConfig.elev_height)) 
+        self.canvas.move(self.elev, 0, (self.posConfig.elev_gap_v + self.posConfig.elev_height))
+#         comment part tis originally used to make 過度動畫. 目的是讓阿電梯移動時不要一層樓直接跳，要慢慢移動。
+#         尚未完工，也沒必要繼續，因為通常會大加速。
 #         self.coord1[1] += (self.posConfig.elev_gap_v + self.posConfig.elev_height)/SMOOTH
 #         self.coord1[1] += (self.posConfig.elev_gap_v + self.posConfig.elev_height)/SMOOTH
     

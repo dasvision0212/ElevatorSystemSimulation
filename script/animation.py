@@ -9,7 +9,7 @@ from elev_sys import Animation
 background = None # first initialized to catch the data read from json file below
 with open("../data/log2/background.json", 'r', encoding="utf-8") as file:
     background = json.load(file)
-
+print(background)
 
 Animation(background["buildingName"], 
           "../data/log2/elev_log.csv", 

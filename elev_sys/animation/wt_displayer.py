@@ -5,6 +5,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import numpy as np
 import tkinter as tk
 from PIL import Image, ImageTk
+from copy import deepcopy
 
 
 class WT_displayer:
@@ -13,8 +14,10 @@ class WT_displayer:
         self.env = env
         self.canvas = canvas
         self.posConfig = posConfig
-        self.log = customer_log
-        self.log.sort_values('boarding_time', inplace=True)
+        self.log = deepcopy(customer_log)
+        self.log = self.log.loc[self.log.isSuccessful, :]
+        self.log["leave_time"] = self.log["get_off_time"].apply(lambda x:x[-1])
+        self.log.sort_values('leave_time', inplace=True)
 
         self.logPtr = 0
         self.mean_WT = list()
@@ -37,14 +40,14 @@ class WT_displayer:
         
         while(self.logPtr <= self.log.shape[0]-1):
             currentRecord = self.log.iloc[self.logPtr,]
-            if(currentRecord["boarding_time"] > self.env.now[0]):
+            if(currentRecord["leave_time"].seconds > self.env.now[0]):
                 break
             
             if(len(self.mean_WT) == 0):
-                self.mean_WT.append(currentRecord["waiting_time"])
+                self.mean_WT.append(currentRecord["total_waiting_time"])
             else:
                 self.mean_WT.append(self.mean_WT[self.logPtr-1] * ((self.logPtr)/(self.logPtr+1)) + \
-                                    currentRecord["waiting_time"]/(self.logPtr+1))            
+                                    currentRecord["total_waiting_time"]/(self.logPtr+1))            
 
                 dpi = 80.0
                 figsize = ((self.posConfig.wt_block.right-self.posConfig.wt_block.left)/dpi, 
@@ -67,7 +70,7 @@ class WT_displayer:
                 plt.ylabel('average waiting time(seconds)')
                 plt.xlabel('time')
 
-                plt.plot(self.log["boarding_time"][:self.logPtr+1], self.mean_WT)
+                plt.plot(self.log["leave_time"][:self.logPtr+1], self.mean_WT)
 
                 width, height = fig.get_size_inches() * fig.get_dpi()
                 width, height = int(width), int(height)
@@ -81,7 +84,7 @@ class WT_displayer:
                     self.rectangle != None
                 else:
                     self.canvas.itemconfigure(self.statPic, img=self.img)
-                plt.close(fig)
+
 
             self.logPtr += 1
         self.canvas.after(self.env.delay_by_interval(1), self.update)

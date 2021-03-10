@@ -9,7 +9,7 @@ from elev_sys.conf.elevator_conf import ELEV_CONFIG
 from elev_sys.conf.log_conf import ELEVLOG_CONFIG
 from elev_sys.simulation.event import Event
 from elev_sys.simulation.logger import Elev_logger, Customer_logger, StopList_logger
-from elev_sys.animation.general import cal_floorNum
+from elev_sys.animation.utils import cal_floorNum
 from elev_sys.simulation.utils import cal_displacement, advance, floor_complement, compare_direction, Mission
 
 class IndexError(Exception):
